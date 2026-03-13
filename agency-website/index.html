@@ -1,44 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Abraxis Solutions | Intelligent Digital Engineering</title>
-  <meta name="description"
-    content="Abraxis Solutions — Next-generation software engineering, AI integration, cloud architecture, and digital transformation.">
+  <meta name="description" content="Abraxis Solutions — Next-generation software engineering, AI integration, cloud architecture, and digital transformation.">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=General+Sans:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=General+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400;500;700;800&display=swap" rel="stylesheet">
 
   <!-- Critical inline CSS for instant paint -->
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    /* CHANGED: remove forced dark theme so global white background can work */
+    body{
+      font-family:'Inter',system-ui,sans-serif;
+      background:#ffffff;
+      color:#0f172a;
+      overflow-x:hidden;
+      -webkit-font-smoothing:antialiased
     }
-
-    html {
-      scroll-behavior: smooth
-    }
-
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: #05070e;
-      color: #edf2f7;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased
-    }
-
-    .main-content {
-      opacity: 1 !important;
-      visibility: visible !important
-    }
+    .main-content{opacity:1!important;visibility:visible!important}
   </style>
 
   <!-- Main CSS -->
@@ -48,7 +34,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 </head>
-
 <body>
 
   <!-- Scroll Progress -->
@@ -69,13 +54,13 @@
           <a href="#home" class="nav__logo">
             <div class="nav__logo-icon">
               <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 4L36 12V28L20 36L4 28V12L20 4Z" stroke="url(#logo-g)" stroke-width="2" fill="none" />
-                <path d="M20 12L28 16V24L20 28L12 24V16L20 12Z" fill="url(#logo-g)" />
+                <path d="M20 4L36 12V28L20 36L4 28V12L20 4Z" stroke="url(#logo-g)" stroke-width="2" fill="none"/>
+                <path d="M20 12L28 16V24L20 28L12 24V16L20 12Z" fill="url(#logo-g)"/>
                 <defs>
                   <linearGradient id="logo-g" x1="4" y1="4" x2="36" y2="36" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#00d4ff" />
-                    <stop offset="0.5" stop-color="#7b2dff" />
-                    <stop offset="1" stop-color="#ff2d7c" />
+                    <stop stop-color="#00d4ff"/>
+                    <stop offset="0.5" stop-color="#7b2dff"/>
+                    <stop offset="1" stop-color="#ff2d7c"/>
                   </linearGradient>
                 </defs>
               </svg>
@@ -91,9 +76,7 @@
           </div>
           <a href="#contact" class="nav__cta">
             <span>Start Project</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
           <button class="nav__toggle" id="nav-toggle" aria-label="Toggle menu">
             <span></span><span></span><span></span>
@@ -111,62 +94,70 @@
         </div>
       </nav>
 
-      <!-- ==================== HERO ==================== -->
-      <section id="home" class="hero">
-        <div class="hero__bg">
-          <div class="hero__orb hero__orb--cyan"></div>
-          <div class="hero__orb hero__orb--violet"></div>
-          <div class="hero__orb hero__orb--fuchsia"></div>
-          <div class="hero__grid"></div>
-          <canvas id="hero-particles" class="hero__particles"></canvas>
-        </div>
-        <div class="hero__container">
-          <div class="hero__badge">
-            <span class="hero__badge-dot"></span>
-            <span>Next-Generation Software Engineering</span>
-          </div>
-          <h1 class="hero__title">
-            <span class="hero__title-line">We Engineer</span>
-            <span class="hero__title-line hero__title-line--gradient">Intelligent Systems</span>
-          </h1>
-          <p class="hero__subtitle">Transforming ambitious ideas into scalable, secure, and high-performance digital
-            products for global enterprises and visionary startups.</p>
-          <div class="hero__actions">
-            <a href="#contact" class="btn btn--primary">
-              <span>Start Your Project</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
+      <!-- ==================== NEW HERO & NAV ==================== -->
+      <section class="hero-wrapper" id="home">
+        <div class="hero-card">
+          
+          <!-- NAVBAR INSIDE THE CARD -->
+          <nav class="nav-inside">
+            <a href="#home" class="nav-inside__logo">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+              <span>Abraxis</span>
             </a>
-            <a href="#services" class="btn btn--secondary">
-              <span>Explore Services</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </a>
-          </div>
-          <div class="hero__stats">
-            <div class="hero__stat">
-              <span class="hero__stat-value" data-count="250">0</span>
-              <span class="hero__stat-label">Projects Delivered</span>
+            <div class="nav-inside__links">
+              <a href="#about">About</a>
+              <a href="#services">Services</a>
+              <a href="#solutions">Solutions</a>
+              <a href="#why-choose-us">Why Choose Us</a>
+              <a href="#ai-automation">AI Automation</a>
+              <a href="#stack">Tech</a>
+              <a href="#careers">Careers</a>
             </div>
-            <div class="hero__stat-divider"></div>
-            <div class="hero__stat">
-              <span class="hero__stat-value" data-count="150">0</span>
-              <span class="hero__stat-label">Global Clients</span>
+            <a href="#contact" class="nav-inside__cta">Start Project</a>
+          </nav>
+
+          <!-- RADIAL GLOW CENTERED -->
+          <div class="hero-glow"></div>
+
+          <!-- 30 STARFIELD PARTICLES -->
+          <div class="hero-stars">
+            <!-- 30 dots generated here -->
+            <div class="hero-star"></div><div class="hero-star"></div><div class="hero-star"></div>
+            <div class="hero-star"></div><div class="hero-star"></div><div class="hero-star"></div>
+            <div class="hero-star"></div><div class="hero-star"></div><div class="hero-star"></div>
+            <div class="hero-star"></div><div class="hero-star"></div><div class="hero-star"></div>
+            <div class="hero-star"></div><div class="hero-star"></div><div class="hero-star"></div>
+            <div class="hero-star"></div><div class="hero-star"></div><div class="hero-star"></div>
+            <div class="hero-star"></div><div class="hero-star"></div><div class="hero-star"></div>
+            <div class="hero-star"></div><div class="hero-star"></div><div class="hero-star"></div>
+            <div class="hero-star"></div><div class="hero-star"></div><div class="hero-star"></div>
+            <div class="hero-star"></div><div class="hero-star"></div><div class="hero-star"></div>
+          </div>
+
+          <!-- MAIN CONTENT TEXT -->
+          <div class="hero-content-inner">
+            <h1 class="hero-headline">
+              We Engineer<br/>
+              <span class="hero-headline-gradient">Intelligent Systems</span>
+            </h1>
+            <p class="hero-subtitle">
+              Enterprise-grade platforms built for scale, security, and performance. We deliver the digital infrastructure of tomorrow, today.
+            </p>
+            
+            <div class="hero-actions">
+              <a href="#contact" class="btn-primary-pill">Deploy AI Now</a>
+              <a href="#solutions" class="btn-secondary-pill">Explore Solutions</a>
             </div>
-            <div class="hero__stat-divider"></div>
-            <div class="hero__stat">
-              <span class="hero__stat-value" data-count="99">0</span>
-              <span class="hero__stat-label">% Satisfaction</span>
+
+            <div class="hero-stats-row">
+              <span class="stat-val">250</span>
+              <div class="stat-div"></div>
+              <span class="stat-val">150</span>
+              <div class="stat-div"></div>
+              <span class="stat-val">99</span>
             </div>
           </div>
-        </div>
-        <div class="hero__scroll">
-          <span>Scroll</span>
-          <div class="hero__scroll-line">
-            <div class="hero__scroll-dot"></div>
-          </div>
+
         </div>
       </section>
 
@@ -183,21 +174,14 @@
             <div class="about__content">
               <span class="section__label">About Us</span>
               <h2 class="section__title">Redefining <span class="text-gradient">Digital Excellence</span></h2>
-              <p class="about__text">At Abraxis Solutions, we fuse cutting-edge technology with exceptional design
-                thinking. Since our inception, we've driven digital transformation for industry leaders globally,
-                crafting state-of-the-art products that dominate the modern web and cloud ecosystem.</p>
+              <p class="about__text">At Abraxis Solutions, we fuse cutting-edge technology with exceptional design thinking. Since our inception, we've driven digital transformation for industry leaders globally, crafting state-of-the-art products that dominate the modern web and cloud ecosystem.</p>
               <div class="about__mission">
                 <div class="about__mission-icon">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <circle cx="12" cy="12" r="10" />
-                    <circle cx="12" cy="12" r="6" />
-                    <circle cx="12" cy="12" r="2" />
-                  </svg>
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
                 </div>
                 <div class="about__mission-content">
                   <h3>Our Mission</h3>
-                  <p>To build intelligent, scalable, and beautifully designed digital infrastructure that propels
-                    humanity forward into the cloud era.</p>
+                  <p>To build intelligent, scalable, and beautifully designed digital infrastructure that propels humanity forward into the cloud era.</p>
                 </div>
               </div>
             </div>
@@ -205,40 +189,22 @@
               <div class="about__stat-card">
                 <span class="about__stat-value"><span data-count="250">0</span>+</span>
                 <span class="about__stat-label">Projects Delivered</span>
-                <div class="about__stat-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="1">
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                    <polyline points="22,4 12,14.01 9,11.01" />
-                  </svg></div>
+                <div class="about__stat-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg></div>
               </div>
               <div class="about__stat-card about__stat-card--purple">
                 <span class="about__stat-value"><span data-count="150">0</span>+</span>
                 <span class="about__stat-label">Global Clients</span>
-                <div class="about__stat-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="1">
-                    <circle cx="12" cy="12" r="10" />
-                    <line x1="2" y1="12" x2="22" y2="12" />
-                    <path
-                      d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                  </svg></div>
+                <div class="about__stat-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
               </div>
               <div class="about__stat-card about__stat-card--blue">
                 <span class="about__stat-value"><span data-count="10">0</span>+</span>
                 <span class="about__stat-label">Years Experience</span>
-                <div class="about__stat-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="1">
-                    <circle cx="12" cy="12" r="10" />
-                    <polyline points="12,6 12,12 16,14" />
-                  </svg></div>
+                <div class="about__stat-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div>
               </div>
               <div class="about__stat-card about__stat-card--pink">
                 <span class="about__stat-value"><span data-count="35">0</span>+</span>
                 <span class="about__stat-label">Technologies Mastered</span>
-                <div class="about__stat-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="1">
-                    <polygon
-                      points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
-                  </svg></div>
+                <div class="about__stat-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg></div>
               </div>
             </div>
           </div>
@@ -258,41 +224,35 @@
           <div class="section__header reveal">
             <span class="section__label">Why Choose Us</span>
             <h2 class="section__title">Built Different by <span class="text-gradient">Design</span></h2>
-            <p class="section__description">We don't just build software — we engineer competitive advantages. Here's
-              what sets us apart from every other agency.</p>
+            <p class="section__description">We don't just build software — we engineer competitive advantages. Here's what sets us apart from every other agency.</p>
           </div>
 
           <div class="why-choose-grid">
             <div class="why-card" data-why-card>
               <div class="why-card-icon why-card-icon--cyan">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                 </svg>
               </div>
               <h3 class="why-card-title">Speed of Delivery</h3>
-              <p class="why-card-desc">From concept to production in weeks, not months. Our streamlined processes and
-                battle-tested frameworks eliminate bottlenecks.</p>
+              <p class="why-card-desc">From concept to production in weeks, not months. Our streamlined processes and battle-tested frameworks eliminate bottlenecks.</p>
             </div>
 
             <div class="why-card" data-why-card>
               <div class="why-card-icon why-card-icon--violet">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <rect x="1" y="6" width="22" height="12" rx="2" ry="2"></rect>
                   <path d="M1 10h22"></path>
                   <path d="M6 6V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2"></path>
                 </svg>
               </div>
               <h3 class="why-card-title">Battle-Tested Architecture</h3>
-              <p class="why-card-desc">Infrastructure designed to handle millions of users from day one. Built on proven
-                patterns that scale with your growth.</p>
+              <p class="why-card-desc">Infrastructure designed to handle millions of users from day one. Built on proven patterns that scale with your growth.</p>
             </div>
 
             <div class="why-card" data-why-card>
               <div class="why-card-icon why-card-icon--magenta">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M12 2a4 4 0 0 1 4 4c0 1.95-1.4 3.58-3.25 3.93"></path>
                   <path d="M8.56 6.22A4 4 0 0 1 12 2"></path>
                   <circle cx="12" cy="12" r="2"></circle>
@@ -301,49 +261,41 @@
                 </svg>
               </div>
               <h3 class="why-card-title">AI-Powered Development</h3>
-              <p class="why-card-desc">We leverage AI copilots and intelligent toolchains to write cleaner code faster —
-                amplifying output without sacrificing quality.</p>
+              <p class="why-card-desc">We leverage AI copilots and intelligent toolchains to write cleaner code faster — amplifying output without sacrificing quality.</p>
             </div>
 
             <div class="why-card" data-why-card>
               <div class="why-card-icon why-card-icon--emerald">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                 </svg>
               </div>
               <h3 class="why-card-title">Transparent Communication</h3>
-              <p class="why-card-desc">Real-time project dashboards, weekly demos, and direct Slack access to your
-                engineering team. No black boxes, ever.</p>
+              <p class="why-card-desc">Real-time project dashboards, weekly demos, and direct Slack access to your engineering team. No black boxes, ever.</p>
             </div>
 
             <div class="why-card" data-why-card>
               <div class="why-card-icon why-card-icon--amber">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <polyline points="23 4 23 10 17 10"></polyline>
                   <polyline points="1 20 1 14 7 14"></polyline>
                   <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
                 </svg>
               </div>
               <h3 class="why-card-title">End-to-End Ownership</h3>
-              <p class="why-card-desc">From discovery to deployment to ongoing support — one team owns the entire
-                lifecycle. No handoffs, no finger-pointing.</p>
+              <p class="why-card-desc">From discovery to deployment to ongoing support — one team owns the entire lifecycle. No handoffs, no finger-pointing.</p>
             </div>
 
             <div class="why-card" data-why-card>
               <div class="why-card-icon why-card-icon--blue">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="12" cy="12" r="10"></circle>
                   <line x1="2" y1="12" x2="22" y2="12"></line>
-                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
-                  </path>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
                 </svg>
               </div>
               <h3 class="why-card-title">Global Remote Team</h3>
-              <p class="why-card-desc">Senior engineers across time zones mean your project moves forward 24 hours a
-                day. Global talent, unified standards.</p>
+              <p class="why-card-desc">Senior engineers across time zones mean your project moves forward 24 hours a day. Global talent, unified standards.</p>
             </div>
           </div>
         </div>
@@ -366,22 +318,15 @@
             <!-- Featured Large Card -->
             <div class="solution-card solution-card--featured" data-aos="fade-up" data-aos-delay="0">
               <div class="solution-card__image">
-                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
-                  alt="Enterprise Platform" loading="lazy">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="Enterprise Platform" loading="lazy">
                 <div class="solution-card__overlay"></div>
               </div>
               <div class="solution-card__content">
                 <div class="solution-card__icon solution-card__icon--pink">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="3" width="20" height="14" rx="2" />
-                    <path d="M8 21h8" />
-                    <path d="M12 17v4" />
-                  </svg>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
                 </div>
                 <h3>Enterprise Platform Engineering</h3>
-                <p>End-to-end custom platforms powering mission-critical operations for Fortune 500 companies with
-                  99.99% uptime guarantees.</p>
+                <p>End-to-end custom platforms powering mission-critical operations for Fortune 500 companies with 99.99% uptime guarantees.</p>
                 <div class="solution-card__tags">
                   <span>Microservices</span>
                   <span>High Availability</span>
@@ -394,12 +339,7 @@
             <div class="solution-card" data-aos="fade-up" data-aos-delay="100">
               <div class="solution-card__content">
                 <div class="solution-card__icon solution-card__icon--cyan">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                    <path d="M2 17l10 5 10-5" />
-                    <path d="M2 12l10 5 10-5" />
-                  </svg>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
                 </div>
                 <h3>AI-Powered Analytics</h3>
                 <p>Machine learning pipelines that transform raw data into actionable business intelligence.</p>
@@ -415,11 +355,7 @@
             <div class="solution-card" data-aos="fade-up" data-aos-delay="200">
               <div class="solution-card__content">
                 <div class="solution-card__icon solution-card__icon--purple">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
-                    <line x1="4" y1="22" x2="4" y2="15" />
-                  </svg>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
                 </div>
                 <h3>Cloud Migration & DevOps</h3>
                 <p>Seamless cloud transitions with automated CI/CD pipelines and infrastructure-as-code.</p>
@@ -433,11 +369,7 @@
           </div>
 
           <div class="solutions__cta" data-aos="fade-up" data-aos-delay="300">
-            <a href="#contact" class="btn btn--primary">Discuss Your Solution <svg width="16" height="16"
-                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12h14" />
-                <path d="m12 5 7 7-7 7" />
-              </svg></a>
+            <a href="#contact" class="btn btn--primary">Discuss Your Solution <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
           </div>
         </div>
       </section>
@@ -455,312 +387,50 @@
           <div class="stack__slider" data-aos="fade-up" data-aos-delay="100">
             <div class="stack__slider-track">
               <!-- Original items -->
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <circle cx="12" cy="12" r="3" />
-                    <path
-                      d="M12 1v4m0 14v4M4.22 4.22l2.83 2.83m9.9 9.9l2.83 2.83M1 12h4m14 0h4M4.22 19.78l2.83-2.83m9.9-9.9l2.83-2.83" />
-                  </svg></div><span>React</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5" />
-                    <line x1="12" y1="22" x2="12" y2="15.5" />
-                    <polyline points="22 8.5 12 15.5 2 8.5" />
-                  </svg></div><span>Node.js</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <path d="M4 7V4h16v3" />
-                    <path d="M9 20h6" />
-                    <path d="M12 4v16" />
-                  </svg></div><span>TypeScript</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
-                  </svg></div><span>AWS</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <rect x="2" y="2" width="20" height="8" rx="2" />
-                    <rect x="2" y="14" width="20" height="8" rx="2" />
-                    <line x1="6" y1="6" x2="6.01" y2="6" />
-                    <line x1="6" y1="18" x2="6.01" y2="18" />
-                  </svg></div><span>Docker</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                    <path d="M2 17l10 5 10-5" />
-                    <path d="M2 12l10 5 10-5" />
-                  </svg></div><span>Kubernetes</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <ellipse cx="12" cy="5" rx="9" ry="3" />
-                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
-                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
-                  </svg></div><span>PostgreSQL</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5" />
-                    <path d="M8.5 8.5v.01" />
-                    <path d="M16 15.5v.01" />
-                    <path d="M12 12v.01" />
-                    <path d="M11 17v.01" />
-                    <path d="M7 14v.01" />
-                  </svg></div><span>Next.js</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <path
-                      d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2z" />
-                    <path
-                      d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2z" />
-                  </svg></div><span>Figma</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <path
-                      d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-                  </svg></div><span>GraphQL</span>
-              </div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v4m0 14v4M4.22 4.22l2.83 2.83m9.9 9.9l2.83 2.83M1 12h4m14 0h4M4.22 19.78l2.83-2.83m9.9-9.9l2.83-2.83"/></svg></div><span>React</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5"/><line x1="12" y1="22" x2="12" y2="15.5"/><polyline points="22 8.5 12 15.5 2 8.5"/></svg></div><span>Node.js</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg></div><span>TypeScript</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg></div><span>AWS</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg></div><span>Docker</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><span>Kubernetes</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div><span>PostgreSQL</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5v.01"/><path d="M16 15.5v.01"/><path d="M12 12v.01"/><path d="M11 17v.01"/><path d="M7 14v.01"/></svg></div><span>Next.js</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2z"/></svg></div><span>Figma</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><span>GraphQL</span></div>
               <!-- Duplicate set for seamless loop -->
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <circle cx="12" cy="12" r="3" />
-                    <path
-                      d="M12 1v4m0 14v4M4.22 4.22l2.83 2.83m9.9 9.9l2.83 2.83M1 12h4m14 0h4M4.22 19.78l2.83-2.83m9.9-9.9l2.83-2.83" />
-                  </svg></div><span>React</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5" />
-                    <line x1="12" y1="22" x2="12" y2="15.5" />
-                    <polyline points="22 8.5 12 15.5 2 8.5" />
-                  </svg></div><span>Node.js</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <path d="M4 7V4h16v3" />
-                    <path d="M9 20h6" />
-                    <path d="M12 4v16" />
-                  </svg></div><span>TypeScript</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
-                  </svg></div><span>AWS</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <rect x="2" y="2" width="20" height="8" rx="2" />
-                    <rect x="2" y="14" width="20" height="8" rx="2" />
-                    <line x1="6" y1="6" x2="6.01" y2="6" />
-                    <line x1="6" y1="18" x2="6.01" y2="18" />
-                  </svg></div><span>Docker</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                    <path d="M2 17l10 5 10-5" />
-                    <path d="M2 12l10 5 10-5" />
-                  </svg></div><span>Kubernetes</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <ellipse cx="12" cy="5" rx="9" ry="3" />
-                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
-                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
-                  </svg></div><span>PostgreSQL</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5" />
-                    <path d="M8.5 8.5v.01" />
-                    <path d="M16 15.5v.01" />
-                    <path d="M12 12v.01" />
-                    <path d="M11 17v.01" />
-                    <path d="M7 14v.01" />
-                  </svg></div><span>Next.js</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <path
-                      d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2z" />
-                    <path
-                      d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2z" />
-                  </svg></div><span>Figma</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <path
-                      d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-                  </svg></div><span>GraphQL</span>
-              </div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v4m0 14v4M4.22 4.22l2.83 2.83m9.9 9.9l2.83 2.83M1 12h4m14 0h4M4.22 19.78l2.83-2.83m9.9-9.9l2.83-2.83"/></svg></div><span>React</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5"/><line x1="12" y1="22" x2="12" y2="15.5"/><polyline points="22 8.5 12 15.5 2 8.5"/></svg></div><span>Node.js</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg></div><span>TypeScript</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg></div><span>AWS</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg></div><span>Docker</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><span>Kubernetes</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div><span>PostgreSQL</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8.5 8.5v.01"/><path d="M16 15.5v.01"/><path d="M12 12v.01"/><path d="M11 17v.01"/><path d="M7 14v.01"/></svg></div><span>Next.js</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2z"/></svg></div><span>Figma</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><span>GraphQL</span></div>
             </div>
           </div>
 
           <!-- Row 2: Scrolls Right (reverse) -->
           <div class="stack__slider stack__slider--reverse" data-aos="fade-up" data-aos-delay="200">
             <div class="stack__slider-track">
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                  </svg></div><span>Security</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <rect x="4" y="4" width="16" height="16" rx="2" />
-                    <rect x="9" y="9" width="6" height="6" />
-                    <path d="M15 2v2" />
-                    <path d="M15 20v2" />
-                    <path d="M2 15h2" />
-                    <path d="M2 9h2" />
-                    <path d="M20 15h2" />
-                    <path d="M20 9h2" />
-                    <path d="M9 2v2" />
-                    <path d="M9 20v2" />
-                  </svg></div><span>Terraform</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-                  </svg></div><span>MongoDB</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <polyline points="16 18 22 12 16 6" />
-                    <polyline points="8 6 2 12 8 18" />
-                  </svg></div><span>Python</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-                  </svg></div><span>Redis</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <circle cx="12" cy="12" r="10" />
-                    <line x1="2" y1="12" x2="22" y2="12" />
-                    <path
-                      d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                  </svg></div><span>Azure</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <path d="M12 8V4H8" />
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                    <path d="M8 2v10a4 4 0 0 0 8 0V4" />
-                  </svg></div><span>Go</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <path d="M5 22h14" />
-                    <path d="M5 2h14" />
-                    <path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22" />
-                    <path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2" />
-                  </svg></div><span>Rust</span>
-              </div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><span>Security</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg></div><span>Terraform</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><span>MongoDB</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><span>Python</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><span>Redis</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><span>Azure</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 8V4H8"/><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M8 2v10a4 4 0 0 0 8 0V4"/></svg></div><span>Go</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"/><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/></svg></div><span>Rust</span></div>
               <!-- Duplicate set for seamless loop -->
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                  </svg></div><span>Security</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <rect x="4" y="4" width="16" height="16" rx="2" />
-                    <rect x="9" y="9" width="6" height="6" />
-                    <path d="M15 2v2" />
-                    <path d="M15 20v2" />
-                    <path d="M2 15h2" />
-                    <path d="M2 9h2" />
-                    <path d="M20 15h2" />
-                    <path d="M20 9h2" />
-                    <path d="M9 2v2" />
-                    <path d="M9 20v2" />
-                  </svg></div><span>Terraform</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-                  </svg></div><span>MongoDB</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <polyline points="16 18 22 12 16 6" />
-                    <polyline points="8 6 2 12 8 18" />
-                  </svg></div><span>Python</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-                  </svg></div><span>Redis</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <circle cx="12" cy="12" r="10" />
-                    <line x1="2" y1="12" x2="22" y2="12" />
-                    <path
-                      d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                  </svg></div><span>Azure</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <path d="M12 8V4H8" />
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                    <path d="M8 2v10a4 4 0 0 0 8 0V4" />
-                  </svg></div><span>Go</span>
-              </div>
-              <div class="stack__slider-item">
-                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="1.5">
-                    <path d="M5 22h14" />
-                    <path d="M5 2h14" />
-                    <path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22" />
-                    <path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2" />
-                  </svg></div><span>Rust</span>
-              </div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><span>Security</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg></div><span>Terraform</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><span>MongoDB</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><span>Python</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><span>Redis</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><span>Azure</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 8V4H8"/><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M8 2v10a4 4 0 0 0 8 0V4"/></svg></div><span>Go</span></div>
+              <div class="stack__slider-item"><div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22"/><path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2"/></svg></div><span>Rust</span></div>
             </div>
           </div>
         </div>
@@ -779,21 +449,14 @@
             <!-- Left: Description + Resume Button -->
             <div class="careers__left" data-aos="fade-right">
               <p class="careers__text">
-                We're building the next generation of intelligent software systems. Join a team of world-class
-                engineers, designers, and strategists who are passionate about pushing the boundaries of what's
-                possible.
+                We're building the next generation of intelligent software systems. Join a team of world-class engineers, designers, and strategists who are passionate about pushing the boundaries of what's possible.
               </p>
               <p class="careers__text">
-                We offer competitive compensation, remote-first culture, continuous learning opportunities, and the
-                chance to work on products that impact millions of users globally.
+                We offer competitive compensation, remote-first culture, continuous learning opportunities, and the chance to work on products that impact millions of users globally.
               </p>
               <a href="mailto:careers@abarix.com" class="careers__resume-btn">
                 Send Your Resume
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M5 12h14" />
-                  <path d="m12 5 7 7-7 7" />
-                </svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
               </a>
             </div>
 
@@ -805,11 +468,7 @@
                   <span>Remote · Full-time</span>
                 </div>
                 <div class="job-card__arrow">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M5 12h14" />
-                    <path d="m12 5 7 7-7 7" />
-                  </svg>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </div>
               </a>
 
@@ -819,11 +478,7 @@
                   <span>Remote · Full-time</span>
                 </div>
                 <div class="job-card__arrow">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M5 12h14" />
-                    <path d="m12 5 7 7-7 7" />
-                  </svg>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </div>
               </a>
 
@@ -833,11 +488,7 @@
                   <span>Remote · Full-time</span>
                 </div>
                 <div class="job-card__arrow">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M5 12h14" />
-                    <path d="m12 5 7 7-7 7" />
-                  </svg>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </div>
               </a>
             </div>
@@ -869,30 +520,14 @@
 
               <div class="testimonial-card">
                 <div class="testimonial-card__stars">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon
-                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon
-                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon
-                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon
-                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon
-                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                 </div>
                 <p class="testimonial-card__text">
-                  Abraxis completely re-architected our backend infrastructure. Response times dropped by 80% and we
-                  haven't had a single outage since launch.
+                  Abraxis completely re-architected our backend infrastructure. Response times dropped by 80% and we haven't had a single outage since launch.
                 </p>
                 <div class="testimonial-card__author">
                   <div class="testimonial-card__avatar">SK</div>
@@ -905,30 +540,14 @@
 
               <div class="testimonial-card">
                 <div class="testimonial-card__stars">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon
-                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon
-                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon
-                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon
-                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon
-                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                 </div>
                 <p class="testimonial-card__text">
-                  The AI pipeline they built processes our data 10x faster than our previous solution. Their team's
-                  expertise in machine learning is unmatched.
+                  The AI pipeline they built processes our data 10x faster than our previous solution. Their team's expertise in machine learning is unmatched.
                 </p>
                 <div class="testimonial-card__author">
                   <div class="testimonial-card__avatar">MR</div>
@@ -941,30 +560,14 @@
 
               <div class="testimonial-card">
                 <div class="testimonial-card__stars">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon
-                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon
-                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon
-                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon
-                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon
-                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                 </div>
                 <p class="testimonial-card__text">
-                  From concept to deployment in 8 weeks — they delivered a platform that handles 2M+ daily transactions
-                  without breaking a sweat. Truly elite engineering.
+                  From concept to deployment in 8 weeks — they delivered a platform that handles 2M+ daily transactions without breaking a sweat. Truly elite engineering.
                 </p>
                 <div class="testimonial-card__author">
                   <div class="testimonial-card__avatar">EW</div>
@@ -977,30 +580,14 @@
 
               <div class="testimonial-card">
                 <div class="testimonial-card__stars">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon
-                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon
-                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon
-                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon
-                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon
-                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                 </div>
                 <p class="testimonial-card__text">
-                  Their DevOps team automated our entire deployment pipeline. What used to take 3 hours now happens in
-                  minutes with zero manual intervention.
+                  Their DevOps team automated our entire deployment pipeline. What used to take 3 hours now happens in minutes with zero manual intervention.
                 </p>
                 <div class="testimonial-card__author">
                   <div class="testimonial-card__avatar">JT</div>
@@ -1013,30 +600,14 @@
 
               <div class="testimonial-card">
                 <div class="testimonial-card__stars">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon
-                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon
-                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon
-                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon
-                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon
-                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                 </div>
                 <p class="testimonial-card__text">
-                  Security was our biggest concern. Abraxis implemented a zero-trust architecture that passed every
-                  compliance audit on the first attempt.
+                  Security was our biggest concern. Abraxis implemented a zero-trust architecture that passed every compliance audit on the first attempt.
                 </p>
                 <div class="testimonial-card__author">
                   <div class="testimonial-card__avatar">AP</div>
@@ -1051,9 +622,7 @@
 
             <div class="testimonials__controls">
               <button class="testimonials__btn testimonials__btn--prev" aria-label="Previous testimonial">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M19 12H5M12 19l-7-7 7-7" />
-                </svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
               </button>
               <div class="testimonials__dots">
                 <button class="testimonials__dot active" aria-label="Go to slide 1"></button>
@@ -1063,9 +632,7 @@
                 <button class="testimonials__dot" aria-label="Go to slide 5"></button>
               </div>
               <button class="testimonials__btn testimonials__btn--next" aria-label="Next testimonial">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </button>
             </div>
           </div>
@@ -1095,8 +662,7 @@
             <div class="ai-benefits">
               <div class="ai-benefit-row" data-ai-benefit>
                 <div class="ai-benefit-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
                   </svg>
                 </div>
@@ -1108,8 +674,7 @@
 
               <div class="ai-benefit-row" data-ai-benefit>
                 <div class="ai-benefit-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 2a4 4 0 0 1 4 4c0 1.95-1.4 3.58-3.25 3.93"></path>
                     <path d="M8.56 6.22A4 4 0 0 1 12 2"></path>
                     <circle cx="12" cy="12" r="2"></circle>
@@ -1119,15 +684,13 @@
                 </div>
                 <div class="ai-benefit-text">
                   <h4 class="ai-benefit-title">Smarter Decisions</h4>
-                  <p class="ai-benefit-desc">AI surfaces patterns and insights no human analyst could catch at scale.
-                  </p>
+                  <p class="ai-benefit-desc">AI surfaces patterns and insights no human analyst could catch at scale.</p>
                 </div>
               </div>
 
               <div class="ai-benefit-row" data-ai-benefit>
                 <div class="ai-benefit-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="12" y1="1" x2="12" y2="23"></line>
                     <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
                   </svg>
@@ -1140,8 +703,7 @@
 
               <div class="ai-benefit-row" data-ai-benefit>
                 <div class="ai-benefit-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="23 4 23 10 17 10"></polyline>
                     <polyline points="1 20 1 14 7 14"></polyline>
                     <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
@@ -1156,8 +718,7 @@
 
             <a href="#contact" class="ai-cta-btn">
               See How We Automate
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
               </svg>
@@ -1166,179 +727,88 @@
         </div>
       </section>
 
-      <!-- ==================== CONTACT ==================== -->
-      <section id="contact" class="section contact">
-        <div class="section-orbs" aria-hidden="true">
-          <div class="section-orb section-orb--1"></div>
-          <div class="section-orb section-orb--2"></div>
-          <div class="section-orb section-orb--3"></div>
-          <div class="section-orb section-orb--4"></div>
-        </div>
-        <div class="contact__bg">
-          <div class="contact__orb contact__orb--1"></div>
-          <div class="contact__orb contact__orb--2"></div>
-        </div>
-        <div class="container">
-          <div class="contact__card">
-            <div class="contact__header">
-              <h2 class="section__title">Let's Build <span class="text-gradient">Together</span></h2>
-              <p>Tell us about your next big project. Our experts will assess your needs instantly.</p>
-            </div>
-            <form class="contact__form" id="contact-form">
-              <div class="contact__form-grid">
-                <div class="form-group">
-                  <label for="name">Full Name</label>
-                  <input type="text" id="name" name="name" placeholder="John Doe" required>
-                </div>
-                <div class="form-group">
-                  <label for="email">Email Address</label>
-                  <input type="email" id="email" name="email" placeholder="john@company.com" required>
-                </div>
-                <div class="form-group form-group--full">
-                  <label for="company">Company Name</label>
-                  <input type="text" id="company" name="company" placeholder="Company Ltd.">
-                </div>
-                <div class="form-group form-group--full">
-                  <label for="message">Project Details</label>
-                  <textarea id="message" name="message" rows="4" placeholder="Briefly describe your requirements..."
-                    required></textarea>
-                </div>
-              </div>
-              <button type="submit" class="btn btn--primary btn--full">
-                <span>Send Message</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <line x1="22" y1="2" x2="11" y2="13" />
-                  <polygon points="22 2 15 22 11 13 2 9 22 2" />
-                </svg>
-              </button>
-            </form>
-          </div>
-          <div class="contact__info">
-            <div class="contact__info-card">
-              <div class="contact__info-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
-              </div>
-              <div>
-                <h4>Global HQ</h4>
-                <p>100 Tech Lane, SF, California</p>
-              </div>
-            </div>
-            <div class="contact__info-card">
-              <div class="contact__info-icon contact__info-icon--purple">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                  <polyline points="22,6 12,13 2,6" />
-                </svg>
-              </div>
-              <div>
-                <h4>Email Us</h4>
-                <p>hello@abraxis.solutions</p>
-              </div>
-            </div>
-            <div class="contact__info-card">
-              <div class="contact__info-icon contact__info-icon--blue">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path
-                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                </svg>
-              </div>
-              <div>
-                <h4>Call Support</h4>
-                <p>+1 (800) 123-4567</p>
-              </div>
-            </div>
+      <!-- ==================== SECTION 3: LET'S BUILD TOGETHER ==================== -->
+      <section class="build-section" id="contact">
+        <!-- Animated Top Line -->
+        <div class="build-top-line"></div>
+        
+        <!-- 3 Background Orbs -->
+        <div class="build-orb-1"></div>
+        <div class="build-orb-2"></div>
+        <div class="build-orb-3"></div>
+
+        <!-- Centered Content -->
+        <div class="build-inner">
+          <div class="build-label">LET'S CREATE SOMETHING LEGENDARY</div>
+          
+          <h2 class="build-heading">
+            Ready to Build<br/>
+            <span>Something Extraordinary?</span>
+          </h2>
+          
+          <p class="build-subtitle">
+            From bold ideas to flawless execution — we're the engineering partner that gets it done.
+          </p>
+          
+          <div class="build-buttons">
+            <button class="build-btn-primary">Start Your Project &rarr;</button>
+            <button class="build-btn-secondary">Schedule a Call</button>
           </div>
         </div>
       </section>
 
-      <!-- ==================== FOOTER ==================== -->
-      <footer class="footer">
-        <div class="container">
-          <div class="footer__grid">
-            <div class="footer__brand">
-              <a href="#" class="footer__logo">
-                <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="32" height="32">
-                  <path d="M20 4L36 12V28L20 36L4 28V12L20 4Z" stroke="url(#fl)" stroke-width="2" fill="none" />
-                  <path d="M20 12L28 16V24L20 28L12 24V16L20 12Z" fill="url(#fl)" />
-                  <defs>
-                    <linearGradient id="fl" x1="4" y1="4" x2="36" y2="36" gradientUnits="userSpaceOnUse">
-                      <stop stop-color="#00d4ff" />
-                      <stop offset="0.5" stop-color="#7b2dff" />
-                      <stop offset="1" stop-color="#ff2d7c" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-                <span>Abraxis</span>
-              </a>
-              <p>Intelligent software architecture for ambitious global brands. We build the future of the web.</p>
-            </div>
-            <div class="footer__links">
-              <div class="footer__column">
-                <h4>Company</h4>
-                <ul>
-                  <li><a href="#about">About Us</a></li>
-                  <li><a href="#careers">Careers</a></li>
-                  <li><a href="#">News &amp; Blog</a></li>
-                  <li><a href="#contact">Contact</a></li>
-                </ul>
-              </div>
-              <div class="footer__column">
-                <h4>Services</h4>
-                <ul>
-                  <li><a href="#services">Web Development</a></li>
-                  <li><a href="#services">Cloud Tech</a></li>
-                  <li><a href="#services">AI &amp; ML</a></li>
-                  <li><a href="#services">Cybersecurity</a></li>
-                </ul>
-              </div>
-            </div>
-            <div class="footer__newsletter">
-              <h4>Subscribe</h4>
-              <p>Get the latest insights on tech and software directly to your inbox.</p>
-              <form class="footer__form">
-                <input type="email" placeholder="Email Address" required>
-                <button type="submit" aria-label="Subscribe">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </button>
-              </form>
-            </div>
-          </div>
-          <div class="footer__bottom">
-            <p>&copy; 2026 Abraxis Solutions Global. All rights reserved.</p>
-            <div class="footer__legal">
-              <a href="#">Privacy Policy</a>
-              <a href="#">Terms of Service</a>
-            </div>
-            <div class="footer__socials">
-              <a href="#" aria-label="Twitter"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg></a>
-              <a href="#" aria-label="GitHub"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                </svg></a>
-              <a href="#" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                </svg></a>
-              <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                </svg></a>
-            </div>
-          </div>
-        </div>
-        <div class="footer__glow"></div>
-      </footer>
-
     </div>
   </div>
+
+  <!-- ==================== SECTION 4: FOOTER ==================== -->
+  <footer>
+    <div class="footer-grid">
+      <!-- Column 1 -->
+      <div class="footer-brand">
+        <a href="#home" style="color: #ffffff; font-weight: 800; font-size: 1.25rem; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Abraxis
+        </a>
+        <p>Intelligent software architecture for ambitious global brands.</p>
+      </div>
+
+      <!-- Column 2 -->
+      <div class="footer-col">
+        <div class="footer-col-title">Navigation</div>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#solutions">Solutions</a>
+        <a href="#stack">Technology</a>
+        <a href="#careers">Careers</a>
+      </div>
+
+      <!-- Column 3 -->
+      <div class="footer-col">
+        <div class="footer-col-title">Company</div>
+        <a href="#why-choose-us">Why Choose Us</a>
+        <a href="#how-we-deliver">How We Deliver</a>
+        <a href="#ai-automation">AI Automation</a>
+        <a href="#careers">Open Positions</a>
+      </div>
+
+      <!-- Column 4 -->
+      <div class="footer-col">
+        <div class="footer-col-title">Contact</div>
+        <a href="#contact">Start Your Project</a>
+        <a href="#contact">Schedule a Call</a>
+        <a href="mailto:hello@abraxis.solutions">hello@abraxis.solutions</a>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+      <p>&copy; 2026 Abraxis. All rights reserved.</p>
+      <p>Built with precision.</p>
+    </div>
+  </footer>
+
+  <!-- Lenis Smooth Scroll -->
+  <script defer src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1/dist/lenis.min.js"></script>
 
   <!-- GSAP & Plugins -->
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -1351,5 +821,4 @@
   <!-- Main JS -->
   <script defer src="main.js"></script>
 </body>
-
 </html>

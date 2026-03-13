@@ -140,14 +140,12 @@
 
       // --- Hero entrance ---
       const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-      const heroBadge = document.querySelector('.hero-badge');
-      const heroTitle = document.querySelector('.hero__title');
+      const heroTitle = document.querySelector('.hero-headline');
       const heroSubtitle = document.querySelector('.hero-subtitle');
-      const heroActions = document.querySelector('.hero-buttons');
-      const heroStats = document.querySelector('.hero-stats');
+      const heroActions = document.querySelector('.hero-actions');
+      const heroStats = document.querySelector('.hero-stats-row');
 
-      if (heroBadge) heroTl.from(heroBadge, { y: 30, opacity: 0, duration: 0.8, delay: 0.2 });
-      if (heroTitle) heroTl.from(heroTitle, { y: 50, opacity: 0, duration: 1 }, '-=0.5');
+      if (heroTitle) heroTl.from(heroTitle, { y: 50, opacity: 0, duration: 1, delay: 0.2 });
       if (heroSubtitle) heroTl.from(heroSubtitle, { y: 30, opacity: 0, duration: 0.8 }, '-=0.6');
       if (heroActions) heroTl.from(heroActions, { y: 30, opacity: 0, duration: 0.8 }, '-=0.5');
       if (heroStats) heroTl.from(heroStats, { y: 30, opacity: 0, duration: 0.8 }, '-=0.4');
@@ -875,18 +873,18 @@ document.addEventListener('DOMContentLoaded', () => {
   for (let i = 0; i < 30; i++) {
     const star = document.createElement('div');
     star.classList.add('hero-star');
-    
+
     // Random position
     star.style.left = Math.random() * 100 + '%';
     star.style.top = Math.random() * 100 + '%';
-    
+
     // Random twinkle duration between 2s and 5s
     const duration = Math.random() * 3 + 2;
     star.style.setProperty('--duration', duration + 's');
-    
+
     // Random delay so they don't all blink together
     star.style.animationDelay = (Math.random() * 5) + 's';
-    
+
     starsContainer.appendChild(star);
   }
 });
@@ -896,24 +894,24 @@ document.addEventListener('DOMContentLoaded', () => {
    ============================================ */
 document.addEventListener('DOMContentLoaded', () => {
   const techColors = {
-    'React':      { color: '#61dafb', glow: 'rgba(97, 218, 251, 0.2)' },
-    'Next.js':    { color: '#ffffff', glow: 'rgba(255, 255, 255, 0.15)' },
+    'React': { color: '#61dafb', glow: 'rgba(97, 218, 251, 0.2)' },
+    'Next.js': { color: '#ffffff', glow: 'rgba(255, 255, 255, 0.15)' },
     'TypeScript': { color: '#3178c6', glow: 'rgba(49, 120, 198, 0.25)' },
-    'Node.js':    { color: '#68a063', glow: 'rgba(104, 160, 99, 0.25)' },
-    'Python':     { color: '#ffd43b', glow: 'rgba(255, 212, 59, 0.2)' },
-    'Go':         { color: '#00acd7', glow: 'rgba(0, 172, 215, 0.25)' },
+    'Node.js': { color: '#68a063', glow: 'rgba(104, 160, 99, 0.25)' },
+    'Python': { color: '#ffd43b', glow: 'rgba(255, 212, 59, 0.2)' },
+    'Go': { color: '#00acd7', glow: 'rgba(0, 172, 215, 0.25)' },
     'PostgreSQL': { color: '#336791', glow: 'rgba(51, 103, 145, 0.25)' },
-    'MongoDB':    { color: '#47a248', glow: 'rgba(71, 162, 72, 0.25)' },
-    'Redis':      { color: '#ff4438', glow: 'rgba(255, 68, 56, 0.25)' },
-    'Docker':     { color: '#2496ed', glow: 'rgba(36, 150, 237, 0.25)' },
+    'MongoDB': { color: '#47a248', glow: 'rgba(71, 162, 72, 0.25)' },
+    'Redis': { color: '#ff4438', glow: 'rgba(255, 68, 56, 0.25)' },
+    'Docker': { color: '#2496ed', glow: 'rgba(36, 150, 237, 0.25)' },
     'Kubernetes': { color: '#326ce5', glow: 'rgba(50, 108, 229, 0.25)' },
-    'AWS':        { color: '#ff9900', glow: 'rgba(255, 153, 0, 0.25)' },
-    'Azure':      { color: '#0089d6', glow: 'rgba(0, 137, 214, 0.25)' },
-    'GraphQL':    { color: '#e10098', glow: 'rgba(225, 0, 152, 0.25)' },
-    'Figma':      { color: '#f24e1e', glow: 'rgba(242, 78, 30, 0.25)' },
-    'Rust':       { color: '#ff4647', glow: 'rgba(255, 70, 71, 0.25)' },
-    'Terraform':  { color: '#7b42bc', glow: 'rgba(123, 66, 188, 0.25)' },
-    'Security':   { color: '#00d2ff', glow: 'rgba(0, 210, 255, 0.25)' },
+    'AWS': { color: '#ff9900', glow: 'rgba(255, 153, 0, 0.25)' },
+    'Azure': { color: '#0089d6', glow: 'rgba(0, 137, 214, 0.25)' },
+    'GraphQL': { color: '#e10098', glow: 'rgba(225, 0, 152, 0.25)' },
+    'Figma': { color: '#f24e1e', glow: 'rgba(242, 78, 30, 0.25)' },
+    'Rust': { color: '#ff4647', glow: 'rgba(255, 70, 71, 0.25)' },
+    'Terraform': { color: '#7b42bc', glow: 'rgba(123, 66, 188, 0.25)' },
+    'Security': { color: '#00d2ff', glow: 'rgba(0, 210, 255, 0.25)' },
   };
 
   document.querySelectorAll('.stack__slider-item').forEach(card => {
