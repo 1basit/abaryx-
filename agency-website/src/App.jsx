@@ -36,7 +36,7 @@ function App() {
       cta: "Explore AI"
     },
     {
-      title: "Cloud Native Excellence", 
+      title: "Cloud Native Excellence",
       subtitle: "Kubernetes • Serverless • Multi-Cloud Mastery",
       image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1920&h=1080&fit=crop",
       cta: "View Cloud"
@@ -89,7 +89,7 @@ function App() {
     {
       name: "Sara Malik",
       role: "CTO",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face", 
+      image: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face",
       bio: "Cloud architecture and DevOps expert",
       linkedin: "#"
     },
@@ -139,10 +139,10 @@ function App() {
   // Chatbot functions
   const sendMessage = () => {
     if (!userMessage.trim()) return;
-    
-    const newMessages = [...chatMessages, 
-      { sender: 'user', message: userMessage },
-      { sender: 'bot', message: "Thanks for your message! Our team will get back to you within 24 hours. 🚀" }
+
+    const newMessages = [...chatMessages,
+    { sender: 'user', message: userMessage },
+    { sender: 'bot', message: "Thanks for your message! Our team will get back to you within 24 hours. 🚀" }
     ];
     setChatMessages(newMessages);
     setUserMessage('');
@@ -181,14 +181,14 @@ function App() {
           </nav>
 
           <div className="flex items-center gap-4">
-            <button 
-              onClick={() => setDarkMode(!darkMode)} 
+            <button
+              onClick={() => setDarkMode(!darkMode)}
               className="p-2 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
               title="Toggle Dark Mode"
             >
               {darkMode ? '☀️' : '🌙'}
             </button>
-            <button 
+            <button
               onClick={() => setChatbotOpen(true)}
               className="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all hidden md:inline-flex"
               title="Live Chat"
@@ -201,38 +201,52 @@ function App() {
 
       {/* Hero - FIXED */}
       <section id="home" className="relative h-screen overflow-hidden pt-20">
-        <div className="absolute inset-0">
-          {heroSlides.map((slide, i) => (
-            <div key={i} className={`absolute inset-0 transition-opacity duration-1000 ${i === heroSlide ? 'opacity-100' : 'opacity-0'}`}>
-              <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
-            </div>
-          ))}
-        </div>
-
-        <div className="relative z-10 h-full flex items-center justify-center text-center text-white px-6">
-          <div className="max-w-5xl mx-auto">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight drop-shadow-2xl">
-              {heroSlides[heroSlide].title}
-            </h1>
-            <p className="text-xl md:text-2xl lg:text-3xl mb-12 max-w-3xl mx-auto opacity-90 drop-shadow-lg">
-              {heroSlides[heroSlide].subtitle}
-            </p>
-            <a href="#services" className="inline-flex px-12 py-6 bg-white text-blue-900 font-bold text-xl rounded-3xl shadow-2xl hover:shadow-3xl hover:-translate-y-2 transition-all duration-500 backdrop-blur-sm">
-              {heroSlides[heroSlide].cta} →
-            </a>
+        <div style={{
+          background: '#0a0a0a',
+          borderRadius: '20px',
+          width: 'calc(100% - 2rem)',
+          height: 'calc(100vh - 2rem)',
+          margin: '1rem auto',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'relative',
+          overflow: 'hidden'
+        }}>
+          <div className="absolute inset-0">
+            {heroSlides.map((slide, i) => (
+              <div key={i} className={`absolute inset-0 transition-opacity duration-1000 ${i === heroSlide ? 'opacity-100' : 'opacity-0'}`}>
+                <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
+              </div>
+            ))}
           </div>
-        </div>
 
-        {/* Hero Dots */}
-        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex gap-4 z-20">
-          {heroSlides.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setHeroSlide(i)}
-              className={`w-3 h-3 rounded-full transition-all duration-500 ${i === heroSlide ? 'bg-white scale-150 shadow-xl' : 'bg-white/50 hover:bg-white hover:scale-125'}`}
-            />
-          ))}
+          <div className="relative z-10 h-full flex items-center justify-center text-center text-white px-6">
+            <div className="max-w-5xl mx-auto">
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight drop-shadow-2xl">
+                {heroSlides[heroSlide].title}
+              </h1>
+              <p className="text-xl md:text-2xl lg:text-3xl mb-12 max-w-3xl mx-auto opacity-90 drop-shadow-lg">
+                {heroSlides[heroSlide].subtitle}
+              </p>
+              <a href="#services" className="inline-flex px-12 py-6 bg-white text-blue-900 font-bold text-xl rounded-3xl shadow-2xl hover:shadow-3xl hover:-translate-y-2 transition-all duration-500 backdrop-blur-sm">
+                {heroSlides[heroSlide].cta} →
+              </a>
+            </div>
+          </div>
+
+          {/* Hero Dots */}
+          <div className="absolute bottom-20 left-1/2 -translate-x-1/2 flex gap-4 z-20">
+            {heroSlides.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setHeroSlide(i)}
+                className={`w-3 h-3 rounded-full transition-all duration-500 ${i === heroSlide ? 'bg-white scale-150 shadow-xl' : 'bg-white/50 hover:bg-white hover:scale-125'}`}
+              />
+            ))}
+          </div>
         </div>
       </section>
 
@@ -249,8 +263,8 @@ function App() {
           {/* Partners Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-10 gap-8">
             {partners.map((logo, i) => (
-              <div 
-                key={i} 
+              <div
+                key={i}
                 className="group p-6 bg-white rounded-2xl shadow-lg hover:shadow-2xl hover:-translate-y-3 transition-all duration-500 border border-gray-100 h-24 flex items-center justify-center"
                 data-aos="zoom-in"
                 data-aos-delay={i * 50}
@@ -271,7 +285,7 @@ function App() {
               Our <span className="text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text">Services</span>
             </h2>
           </div>
-          
+
           {/* Service tabs and content same as previous */}
           <div className="flex flex-wrap justify-center gap-4 mb-16">
             {servicesData.map((service, index) => (
@@ -292,7 +306,7 @@ function App() {
               <div className="grid md:grid-cols-2 gap-6 mb-12">
                 {servicesData[servicesTab].features.map((feature, i) => (
                   <div key={i} className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
-                    <div className="w-10 h-10 bg-blue-600 text-white rounded-xl flex items-center justify-center font-bold">{i+1}</div>
+                    <div className="w-10 h-10 bg-blue-600 text-white rounded-xl flex items-center justify-center font-bold">{i + 1}</div>
                     <span className="font-semibold">{feature}</span>
                   </div>
                 ))}
@@ -399,34 +413,34 @@ function App() {
               <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-12 shadow-2xl">
                 <form className="space-y-6">
                   <div>
-                    <input 
-                      type="text" 
-                      placeholder="Full Name" 
-                      className="w-full p-6 rounded-2xl bg-white/20 border border-white/30 text-white placeholder-white/70 focus:outline-none focus:border-white/50 transition-all text-lg" 
+                    <input
+                      type="text"
+                      placeholder="Full Name"
+                      className="w-full p-6 rounded-2xl bg-white/20 border border-white/30 text-white placeholder-white/70 focus:outline-none focus:border-white/50 transition-all text-lg"
                     />
                   </div>
                   <div>
-                    <input 
-                      type="email" 
-                      placeholder="Email Address" 
-                      className="w-full p-6 rounded-2xl bg-white/20 border border-white/30 text-white placeholder-white/70 focus:outline-none focus:border-white/50 transition-all text-lg" 
+                    <input
+                      type="email"
+                      placeholder="Email Address"
+                      className="w-full p-6 rounded-2xl bg-white/20 border border-white/30 text-white placeholder-white/70 focus:outline-none focus:border-white/50 transition-all text-lg"
                     />
                   </div>
                   <div>
-                    <input 
-                      type="text" 
-                      placeholder="Company / Project" 
-                      className="w-full p-6 rounded-2xl bg-white/20 border border-white/30 text-white placeholder-white/70 focus:outline-none focus:border-white/50 transition-all text-lg" 
+                    <input
+                      type="text"
+                      placeholder="Company / Project"
+                      className="w-full p-6 rounded-2xl bg-white/20 border border-white/30 text-white placeholder-white/70 focus:outline-none focus:border-white/50 transition-all text-lg"
                     />
                   </div>
                   <div>
-                    <textarea 
-                      placeholder="Tell us about your project..." 
+                    <textarea
+                      placeholder="Tell us about your project..."
                       rows="6"
                       className="w-full p-6 rounded-2xl bg-white/20 border border-white/30 text-white placeholder-white/70 focus:outline-none focus:border-white/50 transition-all resize-vertical text-lg"
                     ></textarea>
                   </div>
-                  <button 
+                  <button
                     type="submit"
                     className="w-full py-6 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-xl rounded-2xl shadow-2xl hover:shadow-3xl hover:-translate-y-1 transition-all duration-300"
                   >
@@ -509,7 +523,7 @@ function App() {
             <h3 className="text-4xl md:text-5xl font-black mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text">
               Stay <span className="text-blue-400">Updated</span>
             </h3>
-            <form onSubmit={(e) => {e.preventDefault(); alert('Subscribed! 🎉')}} className="max-w-md mx-auto flex gap-4">
+            <form onSubmit={(e) => { e.preventDefault(); alert('Subscribed! 🎉') }} className="max-w-md mx-auto flex gap-4">
               <input
                 type="email"
                 placeholder="your.email@company.com"
@@ -521,7 +535,7 @@ function App() {
               </button>
             </form>
           </div>
-          
+
           <div className="text-center text-gray-400 text-lg border-t border-gray-800 pt-12">
             © 2026 Abraxis Solutions — Engineering Tomorrow's Advantage. Lahore, Pakistan.
           </div>

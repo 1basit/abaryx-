@@ -4,930 +4,1352 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Abarix Solutions | Intelligent Digital Engineering</title>
+  <title>Abraxis Solutions | Intelligent Digital Engineering</title>
+  <meta name="description"
+    content="Abraxis Solutions — Next-generation software engineering, AI integration, cloud architecture, and digital transformation.">
 
-  <!-- Google Fonts -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap"
+  <link href="https://fonts.googleapis.com/css2?family=General+Sans:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400;500;700;800&display=swap" rel="stylesheet">
+
+  <!-- Critical inline CSS for instant paint -->
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #05070e;
+      color: #edf2f7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased
+    }
+
+    .main-content {
+      opacity: 1 !important;
+      visibility: visible !important
+    }
+  </style>
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="styles.css">
 
   <!-- Swiper CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
-  <!-- AOS CSS -->
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
-  <!-- Tailwind CSS (CDN for prototype) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            navy: '#0A0F1C',
-            neon: '#00BFFF',
-            darkBlue: '#0D1426',
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            display: ['Space Grotesk', 'sans-serif'],
-          }
-        }
-      }
-    }
-  </script>
-
-  <!-- Custom Styles -->
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 </head>
 
-<body class="bg-navy text-white antialiased selection:bg-neon/30 selection:text-white">
+<body>
 
-  <!-- Global Elements -->
-  <div class="custom-cursor hidden md:block"></div>
-  <div class="scroll-progress"></div>
+  <!-- Scroll Progress -->
+  <div class="scroll-progress" id="scroll-progress"></div>
 
-  <!-- Sticky Navbar -->
-  <nav
-    class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-6 px-6 md:px-12 lg:px-24 flex justify-between items-center border-b border-white/5 bg-navy/40 backdrop-blur-md">
-    <a href="#home" class="text-2xl font-display font-bold text-gradient flex items-center gap-2 hover-trigger">
-      <i data-lucide="hexagon" class="text-neon w-8 h-8"></i> Abarix
-    </a>
-    <div class="hidden lg:flex gap-8 text-sm font-medium text-gray-300">
-      <a href="#about" class="hover:text-neon transition-colors hover-trigger">About</a>
-      <a href="#services" class="hover:text-neon transition-colors hover-trigger">Services</a>
-      <a href="#solutions" class="hover:text-neon transition-colors hover-trigger">Solutions</a>
-      <a href="#stack" class="hover:text-neon transition-colors hover-trigger">Tech</a>
-      <a href="#careers" class="hover:text-neon transition-colors hover-trigger">Careers</a>
-    </div>
-    <a href="#contact"
-      class="hidden md:flex btn-glow glass-panel text-white px-6 py-2.5 rounded-full font-medium hover:text-neon items-center gap-2 hover-trigger">
-      Let's Talk <i data-lucide="arrow-right" class="w-4 h-4"></i>
-    </a>
-    <button class="lg:hidden text-white">
-      <i data-lucide="menu" class="w-6 h-6"></i>
-    </button>
-  </nav>
+  <!-- Page Transition -->
+  <div class="page-transition">
+    <div class="page-transition__panel"></div>
+  </div>
 
-  <!-- 1. Home / Hero -->
-  <section id="home" class="relative min-h-[100vh] flex items-center justify-center pt-20 overflow-hidden">
-    <div id="vanta-bg" class="absolute inset-0 z-0 opacity-40"></div>
-    <div class="container mx-auto px-6 relative z-10 text-center flex flex-col items-center">
-      <div
-        class="inline-block px-5 py-2 rounded-full border border-neon/30 bg-neon/10 text-neon text-xs font-semibold tracking-wider uppercase mb-8 backdrop-blur-md"
-        data-aos="fade-down">
-        Next-Gen Software Agency
-      </div>
-      <h1 class="hero-title text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-tight mb-6 max-w-5xl">
-        We Build <br />
-        <span class="text-gradient">Intelligent Digital Solutions</span>
-      </h1>
-      <p class="hero-subtitle text-lg md:text-xl text-gray-400 mb-10 max-w-2xl font-light">
-        Transforming ideas into scalable, secure, and high-performance software for global enterprises and ambitious
-        startups.
-      </p>
-      <!-- Buttons Container -->
-      <div class="hero-btns mt-10 flex justify-center items-center gap-6 flex-wrap">
-        <a href="#contact"
-          class="relative px-10 py-4 rounded-xl bg-blue-600 text-white font-bold shadow-lg shadow-blue-500/40 hover:scale-105 hover:shadow-blue-500/70 transition-all duration-300 hover-trigger text-lg">
-          Get Started
-        </a>
-        <a href="#services"
-          class="px-10 py-4 rounded-xl border border-blue-500/40 text-blue-400 font-bold hover:bg-blue-500/10 transition-all duration-300 flex items-center justify-center gap-2 hover-trigger text-lg">
-          What we do <i data-lucide="arrow-right" class="w-5 h-5"></i>
-        </a>
-      </div>
-    </div>
+  <!-- Main Content -->
+  <div class="main-content loaded" id="main-content">
+    <div>
 
-    <!-- Scroll indicator -->
-    <a href="#about"
-      class="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/50 animate-bounce hover:text-neon transition-colors">
-      <i data-lucide="mouse" class="w-6 h-6 mb-2 mx-auto"></i>
-    </a>
-  </section>
-
-  <!-- 2. About Us -->
-  <section id="about" class="py-32 relative z-10 bg-navy">
-    <!-- background glow -->
-    <div
-      class="absolute right-0 top-1/2 -translate-y-1/2 w-96 h-96 bg-neon/5 rounded-full blur-[120px] pointer-events-none">
-    </div>
-
-    <div class="container mx-auto px-6 max-w-7xl">
-      <div class="flex flex-col lg:flex-row items-center gap-20">
-        <div class="lg:w-1/2" data-aos="fade-right">
-          <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">Redefining <span
-              class="text-gradient-purple">Digital Excellence</span></h2>
-          <p class="text-gray-400 mb-6 text-lg leading-relaxed">
-            At Abarix Solutions, we fuse cutting-edge technology with stunning design. Since our inception, we have
-            driven digital transformation for industry leaders globally, crafting state-of-the-art products that
-            dominate the modern web and cloud ecosystem.
-          </p>
-          <div class="glass-card p-8 mt-8 border-l-4 border-l-neon shadow-2xl shadow-neon/5 relative overflow-hidden">
-            <div class="absolute top-0 right-0 p-4 opacity-10"><i data-lucide="target" class="w-24 h-24"></i></div>
-            <h3 class="text-2xl font-display font-bold mb-3 text-white flex items-center gap-2 relative z-10">
-              Our Mission
-            </h3>
-            <p class="text-gray-300 leading-relaxed relative z-10">To build intelligent, scalable, and beautifully
-              designed digital infrastructure that propels humanity forward into the cloud era.</p>
-          </div>
-        </div>
-        <!-- Timeline & Stats -->
-        <div class="lg:w-1/2 w-full" data-aos="fade-left">
-          <div class="grid grid-cols-2 gap-6">
-            <div class="glass-card p-10 text-center float-anim group hover-trigger" style="animation-delay: 0s;">
-              <div class="text-5xl font-display font-extrabold text-white mb-2 group-hover:text-neon transition-colors">
-                <span class="stat-counter" data-target="250">0</span>+
-              </div>
-              <div class="text-xs text-gray-400 uppercase tracking-[0.2em] font-medium">Projects Delivered</div>
+      <!-- ==================== NAVIGATION ==================== -->
+      <nav class="nav" id="navbar">
+        <div class="nav__container">
+          <a href="#home" class="nav__logo">
+            <div class="nav__logo-icon">
+              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 4L36 12V28L20 36L4 28V12L20 4Z" stroke="url(#logo-g)" stroke-width="2" fill="none" />
+                <path d="M20 12L28 16V24L20 28L12 24V16L20 12Z" fill="url(#logo-g)" />
+                <defs>
+                  <linearGradient id="logo-g" x1="4" y1="4" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#00d4ff" />
+                    <stop offset="0.5" stop-color="#7b2dff" />
+                    <stop offset="1" stop-color="#ff2d7c" />
+                  </linearGradient>
+                </defs>
+              </svg>
             </div>
-            <div class="glass-card p-10 text-center float-anim group hover-trigger" style="animation-delay: 1.5s;">
-              <div
-                class="text-5xl font-display font-extrabold text-white mb-2 group-hover:text-purple-400 transition-colors">
-                <span class="stat-counter" data-target="150">0</span>+
-              </div>
-              <div class="text-xs text-gray-400 uppercase tracking-[0.2em] font-medium">Clients Worldwide</div>
-            </div>
-            <div class="glass-card p-10 text-center float-anim group hover-trigger" style="animation-delay: 0.5s;">
-              <div
-                class="text-5xl font-display font-extrabold text-white mb-2 group-hover:text-blue-400 transition-colors">
-                <span class="stat-counter" data-target="10">0</span>+
-              </div>
-              <div class="text-xs text-gray-400 uppercase tracking-[0.2em] font-medium">Years Experience</div>
-            </div>
-            <div class="glass-card p-10 text-center float-anim group hover-trigger" style="animation-delay: 2s;">
-              <div
-                class="text-5xl font-display font-extrabold text-white mb-2 group-hover:text-pink-400 transition-colors">
-                <span class="stat-counter" data-target="35">0</span>+
-              </div>
-              <div class="text-xs text-gray-400 uppercase tracking-[0.2em] font-medium">Tech Mastered</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 3. Services -->
-  <section id="services" class="py-32 relative z-0 bg-darkBlue">
-    <div
-      class="absolute top-0 right-0 w-full md:w-[600px] h-[600px] bg-neon/10 rounded-full blur-[150px] pointer-events-none">
-    </div>
-    <div
-      class="absolute bottom-0 left-0 w-full md:w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[150px] pointer-events-none">
-    </div>
-
-    <div class="container mx-auto px-6 max-w-7xl relative z-10">
-      <div class="text-center mb-20" data-aos="fade-up">
-        <span class="text-neon font-bold tracking-[0.2em] uppercase text-xs mb-4 block">What We Do</span>
-        <h2 class="text-5xl md:text-6xl font-display font-extrabold mb-6">Enterprise <span
-            class="text-gradient">Services</span></h2>
-        <p class="text-gray-400 max-w-2xl mx-auto text-lg">End-to-end software development lifecycle management to turn
-          complex problems into elegant scalable solutions.</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
-        <!-- Services Cards -->
-        <div
-          class="relative z-10 overflow-hidden rounded-2xl bg-white/5 backdrop-blur-md border border-blue-500/20 hover:border-blue-400 transition-all duration-500 p-10 group hover-trigger premium-service-card before:absolute before:-inset-1 before:bg-blue-500/10 before:blur-2xl before:rounded-2xl before:-z-10"
-          style="animation-delay: 0s" data-aos="fade-up" data-aos-delay="0">
-          <div class="absolute inset-0 overflow-hidden rounded-2xl pointer-events-none z-0">
-            <div
-              class="absolute -left-1/2 top-0 w-1/2 h-full bg-gradient-to-r from-transparent via-blue-400/30 to-transparent rotate-12 animate-shimmer">
-            </div>
-          </div>
-          <div
-            class="relative z-10 w-16 h-16 rounded-2xl bg-gradient-to-br from-neon/20 to-transparent flex items-center justify-center mb-8 group-hover:from-neon/40 transition-all border border-neon/10">
-            <i data-lucide="layout" class="text-neon w-8 h-8"></i>
-          </div>
-          <h3 class="relative z-10 text-2xl font-bold mb-4 font-display">Custom Web Dev</h3>
-          <p class="relative z-10 text-gray-400 text-sm leading-relaxed">Ultra-fast, responsive, and robust web
-            applications utilizing modern JavaScript frameworks like React, Next.js, and Vue.</p>
-        </div>
-
-        <div
-          class="relative z-10 overflow-hidden rounded-2xl bg-white/5 backdrop-blur-md border border-blue-500/20 hover:border-blue-400 transition-all duration-500 p-10 group hover-trigger premium-service-card before:absolute before:-inset-1 before:bg-blue-500/10 before:blur-2xl before:rounded-2xl before:-z-10"
-          style="animation-delay: 1s" data-aos="fade-up" data-aos-delay="100">
-          <div class="absolute inset-0 overflow-hidden rounded-2xl pointer-events-none z-0">
-            <div
-              class="absolute -left-1/2 top-0 w-1/2 h-full bg-gradient-to-r from-transparent via-blue-400/30 to-transparent rotate-12 animate-shimmer">
-            </div>
-          </div>
-          <div
-            class="relative z-10 w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500/20 to-transparent flex items-center justify-center mb-8 group-hover:from-purple-500/40 transition-all border border-purple-500/10">
-            <i data-lucide="database" class="text-purple-400 w-8 h-8"></i>
-          </div>
-          <h3 class="relative z-10 text-2xl font-bold mb-4 font-display">SaaS Product Dev</h3>
-          <p class="relative z-10 text-gray-400 text-sm leading-relaxed">Scalable, multi-tenant architectures tailored
-            to accommodate millions of users globally with high availability.</p>
-        </div>
-
-        <div
-          class="relative z-10 overflow-hidden rounded-2xl bg-white/5 backdrop-blur-md border border-blue-500/20 hover:border-blue-400 transition-all duration-500 p-10 group hover-trigger premium-service-card before:absolute before:-inset-1 before:bg-blue-500/10 before:blur-2xl before:rounded-2xl before:-z-10"
-          style="animation-delay: 2s" data-aos="fade-up" data-aos-delay="200">
-          <div class="absolute inset-0 overflow-hidden rounded-2xl pointer-events-none z-0">
-            <div
-              class="absolute -left-1/2 top-0 w-1/2 h-full bg-gradient-to-r from-transparent via-blue-400/30 to-transparent rotate-12 animate-shimmer">
-            </div>
-          </div>
-          <div
-            class="relative z-10 w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500/20 to-transparent flex items-center justify-center mb-8 group-hover:from-blue-500/40 transition-all border border-blue-500/10">
-            <i data-lucide="cloud" class="text-blue-400 w-8 h-8"></i>
-          </div>
-          <h3 class="relative z-10 text-2xl font-bold mb-4 font-display">Cloud Solutions</h3>
-          <p class="relative z-10 text-gray-400 text-sm leading-relaxed">Infrastructure modernization, containerization,
-            and management natively on AWS, Google Cloud, and Microsoft Azure.</p>
-        </div>
-
-        <div
-          class="relative z-10 overflow-hidden rounded-2xl bg-white/5 backdrop-blur-md border border-blue-500/20 hover:border-blue-400 transition-all duration-500 p-10 group hover-trigger premium-service-card before:absolute before:-inset-1 before:bg-blue-500/10 before:blur-2xl before:rounded-2xl before:-z-10"
-          style="animation-delay: 0s" data-aos="fade-up" data-aos-delay="300">
-          <div class="absolute inset-0 overflow-hidden rounded-2xl pointer-events-none z-0">
-            <div
-              class="absolute -left-1/2 top-0 w-1/2 h-full bg-gradient-to-r from-transparent via-blue-400/30 to-transparent rotate-12 animate-shimmer">
-            </div>
-          </div>
-          <div
-            class="relative z-10 w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-500/20 to-transparent flex items-center justify-center mb-8 group-hover:from-pink-500/40 transition-all border border-pink-500/10">
-            <i data-lucide="cpu" class="text-pink-400 w-8 h-8"></i>
-          </div>
-          <h3 class="relative z-10 text-2xl font-bold mb-4 font-display">AI & Machine Learning</h3>
-          <p class="relative z-10 text-gray-400 text-sm leading-relaxed">Predictive analytics, custom LLMs, and
-            generative AI models integrated securely into your core business logic.</p>
-        </div>
-
-        <div
-          class="relative z-10 overflow-hidden rounded-2xl bg-white/5 backdrop-blur-md border border-blue-500/20 hover:border-blue-400 transition-all duration-500 p-10 group hover-trigger premium-service-card before:absolute before:-inset-1 before:bg-blue-500/10 before:blur-2xl before:rounded-2xl before:-z-10"
-          style="animation-delay: 1s" data-aos="fade-up" data-aos-delay="400">
-          <div class="absolute inset-0 overflow-hidden rounded-2xl pointer-events-none z-0">
-            <div
-              class="absolute -left-1/2 top-0 w-1/2 h-full bg-gradient-to-r from-transparent via-blue-400/30 to-transparent rotate-12 animate-shimmer">
-            </div>
-          </div>
-          <div
-            class="relative z-10 w-16 h-16 rounded-2xl bg-gradient-to-br from-green-500/20 to-transparent flex items-center justify-center mb-8 group-hover:from-green-500/40 transition-all border border-green-500/10">
-            <i data-lucide="shield-check" class="text-green-400 w-8 h-8"></i>
-          </div>
-          <h3 class="relative z-10 text-2xl font-bold mb-4 font-display">Cybersecurity</h3>
-          <p class="relative z-10 text-gray-400 text-sm leading-relaxed">Military-grade protection, DevSecOps pipelines,
-            and thorough penetration testing to fortify digital assets.</p>
-        </div>
-
-        <div
-          class="relative z-10 overflow-hidden rounded-2xl bg-white/5 backdrop-blur-md border border-blue-500/20 hover:border-blue-400 transition-all duration-500 p-10 group hover-trigger premium-service-card before:absolute before:-inset-1 before:bg-blue-500/10 before:blur-2xl before:rounded-2xl before:-z-10"
-          style="animation-delay: 2s" data-aos="fade-up" data-aos-delay="500">
-          <div class="absolute inset-0 overflow-hidden rounded-2xl pointer-events-none z-0">
-            <div
-              class="absolute -left-1/2 top-0 w-1/2 h-full bg-gradient-to-r from-transparent via-blue-400/30 to-transparent rotate-12 animate-shimmer">
-            </div>
-          </div>
-          <div
-            class="relative z-10 w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500/20 to-transparent flex items-center justify-center mb-8 group-hover:from-orange-500/40 transition-all border border-orange-500/10">
-            <i data-lucide="smartphone" class="text-orange-400 w-8 h-8"></i>
-          </div>
-          <h3 class="relative z-10 text-2xl font-bold mb-4 font-display">Mobile App Dev</h3>
-          <p class="relative z-10 text-gray-400 text-sm leading-relaxed">High-performance Native (iOS/Android) and
-            cross-platform apps that deliver flawless user experiences at 120fps.</p>
-        </div>
-      </div>
-
-      <div class="mt-20 text-center">
-        <a href="services.html"
-          class="inline-flex items-center gap-3 text-white hover:text-neon transition-colors underline-animated pb-1 font-bold tracking-wide uppercase text-sm">
-          Explore all our services <i data-lucide="arrow-right" class="w-5 h-5"></i>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4. Solutions (By Business Problems) -->
-  <section id="solutions" class="py-32 relative bg-navy border-y border-white/5">
-    <div class="container mx-auto px-6 max-w-7xl">
-      <div class="flex flex-col md:flex-row justify-between items-end mb-16" data-aos="fade-up">
-        <div class="max-w-2xl">
-          <span class="text-neon font-bold tracking-[0.2em] uppercase text-xs mb-4 block">Use Cases</span>
-          <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4">Targeted <span
-              class="text-gradient">Solutions</span></h2>
-          <p class="text-gray-400 text-lg">Comprehensive architectural approaches for complex industry-specific scale
-            challenges.</p>
-        </div>
-        <div class="hidden md:block">
-          <i data-lucide="layout-grid" class="w-16 h-16 text-white/10"></i>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Large Item 1 -->
-        <div class="glass-card overflow-hidden group hover-trigger col-span-1 md:col-span-2 relative min-h-[350px]"
-          data-aos="fade-up" data-aos-delay="0">
-          <div
-            class="absolute inset-0 bg-gradient-to-t from-black via-navy/80 to-transparent z-10 transition-opacity duration-500">
-          </div>
-          <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1200"
-            class="absolute inset-0 w-full h-full object-cover z-0 scale-100 group-hover:scale-110 transition-transform duration-1000"
-            alt="Tech" />
-          <div class="p-10 h-full flex flex-col justify-end relative z-20">
-            <i data-lucide="repeat"
-              class="w-12 h-12 text-neon mb-6 bg-navy/50 p-2 rounded-xl backdrop-blur-sm border border-white/10"></i>
-            <h3 class="text-3xl font-display font-bold mb-3 text-white">Digital Transformation</h3>
-            <p class="text-gray-300 max-w-md">Modernize legacy systems, automate internal workflows, and enable
-              digital-first agility to outpace competitors.</p>
-          </div>
-        </div>
-
-        <!-- Small Item 1 -->
-        <div class="glass-card overflow-hidden group hover-trigger relative min-h-[350px]" data-aos="fade-up"
-          data-aos-delay="100">
-          <div
-            class="absolute inset-0 bg-gradient-to-b from-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0">
-          </div>
-          <div class="p-10 h-full flex flex-col justify-between relative z-20 bg-darkBlue">
-            <i data-lucide="bar-chart-3" class="w-10 h-10 text-purple-400"></i>
-            <div>
-              <h3 class="text-2xl font-bold mb-2">Analytics Dashboards</h3>
-              <p class="text-gray-400 text-sm">Real-time BI intelligence visualization engines.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Small Item 2 -->
-        <div class="glass-card overflow-hidden group hover-trigger relative min-h-[350px]" data-aos="fade-up"
-          data-aos-delay="200">
-          <div
-            class="absolute inset-0 bg-gradient-to-b from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0">
-          </div>
-          <div class="p-10 h-full flex flex-col justify-between relative z-20 bg-darkBlue">
-            <i data-lucide="bot" class="w-10 h-10 text-blue-400"></i>
-            <div>
-              <h3 class="text-2xl font-bold mb-2">Enterprise AI Agents</h3>
-              <p class="text-gray-400 text-sm">Custom LLMs integrated straight to your CRM pipelines.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Large Item 2 -->
-        <div class="glass-card overflow-hidden group hover-trigger col-span-1 md:col-span-2 relative min-h-[350px]"
-          data-aos="fade-up" data-aos-delay="300">
-          <div
-            class="absolute inset-0 bg-gradient-to-t from-black via-navy/80 to-transparent z-10 transition-opacity duration-500">
-          </div>
-          <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=1200"
-            class="absolute inset-0 w-full h-full object-cover z-0 scale-100 group-hover:scale-110 transition-transform duration-1000"
-            alt="ERP HQ" />
-          <div class="p-10 h-full flex flex-col justify-end relative z-20">
-            <i data-lucide="building-2"
-              class="w-12 h-12 text-pink-500 mb-6 bg-navy/50 p-2 rounded-xl backdrop-blur-sm border border-white/10"></i>
-            <h3 class="text-3xl font-display font-bold mb-3 text-white">Custom Supply Portals (ERP & CRM)</h3>
-            <p class="text-gray-300 max-w-md">Unified systems for massive internal management, supply chain
-              transparency, and client relationship logistics.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5. Industries We Serve & 6. Tech Stack -->
-  <section id="stack" class="py-32 relative bg-navy">
-    <!-- Abstract gradient blob center -->
-    <div
-      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-neon/5 rounded-full blur-[150px] pointer-events-none">
-    </div>
-
-    <div class="container mx-auto px-6 max-w-7xl relative z-10">
-      <!-- Industries -->
-      <div class="mb-32">
-        <h2 class="text-center text-4xl md:text-5xl font-display font-bold mb-16">Industries We <span
-            class="text-gradient">Empower</span></h2>
-        <div class="flex flex-wrap justify-center gap-4 lg:gap-6" data-aos="fade-up" data-aos-delay="100">
-          <span class="industry-badge text-lg hover-trigger">FinTech & Banking</span>
-          <span class="industry-badge text-lg hover-trigger">Healthcare & MedTech</span>
-          <span class="industry-badge text-lg hover-trigger">E-Learning & EdTech</span>
-          <span class="industry-badge text-lg hover-trigger">Real Estate</span>
-          <span class="industry-badge text-lg hover-trigger">E-commerce</span>
-          <span class="industry-badge text-lg hover-trigger">Logistics & Supply</span>
-          <span class="industry-badge text-lg hover-trigger">SaaS Startups</span>
-          <span class="industry-badge text-lg hover-trigger">GovTech</span>
-          <span class="industry-badge text-lg hover-trigger">Manufacturing</span>
-        </div>
-      </div>
-
-      <!-- Tech Stack -->
-      <div>
-        <h2 class="text-center text-4xl md:text-5xl font-display font-bold mb-8">Our <span
-            class="text-gradient">Technology Stack</span></h2>
-        <p class="text-center text-gray-400 max-w-2xl mx-auto mb-16 text-lg">We strictly leverage modern, robust, and
-          scalable technologies to ensure perfect digital performance.</p>
-
-        <div class="glass-card p-12 md:p-20">
-          <div
-            class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-x-12 gap-y-16 items-center justify-items-center opacity-90"
-            data-aos="fade-in">
-            <!-- Tech Logos (from Devicon CDN) -->
-            <div class="flex flex-col flex-col items-center gap-4 group hover-trigger">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
-                class="w-16 h-16 grayscale-hover" alt="React" />
-              <span
-                class="text-xs font-semibold tracking-wider text-gray-500 group-hover:text-white transition-colors">REACT</span>
-            </div>
-            <div class="flex flex-col items-center gap-4 group hover-trigger">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
-                class="w-16 h-16 grayscale-hover invert" alt="Next.js" />
-              <span
-                class="text-xs font-semibold tracking-wider text-gray-500 group-hover:text-white transition-colors">NEXT.JS</span>
-            </div>
-            <div class="flex flex-col items-center gap-4 group hover-trigger">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg"
-                class="w-16 h-16 grayscale-hover" alt="Tailwind CSS" />
-              <span
-                class="text-xs font-semibold tracking-wider text-gray-500 group-hover:text-white transition-colors">TAILWIND</span>
-            </div>
-            <div class="flex flex-col items-center gap-4 group hover-trigger">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
-                class="w-16 h-16 grayscale-hover" alt="TypeScript" />
-              <span
-                class="text-xs font-semibold tracking-wider text-gray-500 group-hover:text-white transition-colors">TYPESCRIPT</span>
-            </div>
-            <div class="flex flex-col items-center gap-4 group hover-trigger">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
-                class="w-16 h-16 grayscale-hover" alt="Java" />
-              <span
-                class="text-xs font-semibold tracking-wider text-gray-500 group-hover:text-white transition-colors">JAVA/SPRING</span>
-            </div>
-            <div class="flex flex-col items-center gap-4 group hover-trigger">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
-                class="w-16 h-16 grayscale-hover" alt="Node.js" />
-              <span
-                class="text-xs font-semibold tracking-wider text-gray-500 group-hover:text-white transition-colors">NODE.JS</span>
-            </div>
-            <div class="flex flex-col items-center gap-4 group hover-trigger">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
-                class="w-16 h-16 grayscale-hover" alt="Python" />
-              <span
-                class="text-xs font-semibold tracking-wider text-gray-500 group-hover:text-white transition-colors">PYTHON</span>
-            </div>
-            <div class="flex flex-col items-center gap-4 group hover-trigger">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
-                class="w-16 h-16 grayscale-hover" alt="PostgreSQL" />
-              <span
-                class="text-xs font-semibold tracking-wider text-gray-500 group-hover:text-white transition-colors">POSTGRES</span>
-            </div>
-            <div class="flex flex-col items-center gap-4 group hover-trigger">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
-                class="w-16 h-16 grayscale-hover" alt="MongoDB" />
-              <span
-                class="text-xs font-semibold tracking-wider text-gray-500 group-hover:text-white transition-colors">MONGODB</span>
-            </div>
-            <div class="flex flex-col items-center gap-4 group hover-trigger">
-              <img
-                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg"
-                class="w-20 h-20 grayscale-hover invert" alt="AWS" />
-              <span
-                class="text-xs font-semibold tracking-wider text-gray-500 group-hover:text-white transition-colors">AWS</span>
-            </div>
-            <div class="flex flex-col items-center gap-4 group hover-trigger">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg"
-                class="w-16 h-16 grayscale-hover" alt="GCP" />
-              <span
-                class="text-xs font-semibold tracking-wider text-gray-500 group-hover:text-white transition-colors">GCP</span>
-            </div>
-            <div class="flex flex-col items-center gap-4 group hover-trigger">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
-                class="w-16 h-16 grayscale-hover" alt="Docker" />
-              <span
-                class="text-xs font-semibold tracking-wider text-gray-500 group-hover:text-white transition-colors">DOCKER/K8S</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 7. Our Team -->
-  <section id="team" class="py-32 relative bg-darkBlue border-t border-white/5">
-    <div class="container mx-auto px-6 max-w-7xl">
-      <div class="text-center mb-20" data-aos="fade-up">
-        <span class="text-neon font-bold tracking-[0.2em] uppercase text-xs mb-4 block">The Brains</span>
-        <h2 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">Leadership <span
-            class="text-gradient">Team</span></h2>
-        <p class="text-gray-400 max-w-2xl mx-auto text-lg">The visionaries and elite engineers behind our
-          state-of-the-art solutions.</p>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        <!-- Team Member 1 -->
-        <div class="glass-card text-center overflow-hidden group hover-trigger" data-aos="fade-up" data-aos-delay="0">
-          <div class="relative w-full aspect-[4/5] bg-gray-800 overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=600"
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="CEO" />
-            <div
-              class="absolute inset-0 bg-gradient-to-t from-navy to-transparent opacity-90 group-hover:opacity-70 transition-opacity">
-            </div>
-            <div
-              class="absolute bottom-6 left-0 w-full flex justify-center gap-4 translate-y-12 group-hover:translate-y-0 transition-transform duration-500 opacity-0 group-hover:opacity-100 z-20">
-              <a href="#"
-                class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center hover:bg-neon hover:text-navy transition-colors text-white border border-white/20"><i
-                  data-lucide="linkedin" class="w-5 h-5"></i></a>
-              <a href="#"
-                class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center hover:bg-neon hover:text-navy transition-colors text-white border border-white/20"><i
-                  data-lucide="twitter" class="w-5 h-5"></i></a>
-            </div>
-          </div>
-          <div
-            class="p-6 relative z-30 bg-navy/80 backdrop-blur-sm group-hover:bg-navy transition-colors border-t border-white/10">
-            <h3 class="text-2xl font-bold font-display">Marcus Vance</h3>
-            <p class="text-neon text-sm font-semibold tracking-wider mt-1 uppercase">Founder & CEO</p>
-          </div>
-        </div>
-
-        <!-- Team Member 2 -->
-        <div class="glass-card text-center overflow-hidden group hover-trigger" data-aos="fade-up" data-aos-delay="100">
-          <div class="relative w-full aspect-[4/5] bg-gray-800 overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600"
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="CTO" />
-            <div
-              class="absolute inset-0 bg-gradient-to-t from-navy to-transparent opacity-90 group-hover:opacity-70 transition-opacity">
-            </div>
-            <div
-              class="absolute bottom-6 left-0 w-full flex justify-center gap-4 translate-y-12 group-hover:translate-y-0 transition-transform duration-500 opacity-0 group-hover:opacity-100 z-20">
-              <a href="#"
-                class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center hover:bg-neon hover:text-navy transition-colors text-white border border-white/20"><i
-                  data-lucide="linkedin" class="w-5 h-5"></i></a>
-              <a href="#"
-                class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center hover:bg-neon hover:text-navy transition-colors text-white border border-white/20"><i
-                  data-lucide="github" class="w-5 h-5"></i></a>
-            </div>
-          </div>
-          <div
-            class="p-6 relative z-30 bg-navy/80 backdrop-blur-sm group-hover:bg-navy transition-colors border-t border-white/10">
-            <h3 class="text-2xl font-bold font-display">Sarah Jenkins</h3>
-            <p class="text-purple-400 text-sm font-semibold tracking-wider mt-1 uppercase">Chief Tech Officer</p>
-          </div>
-        </div>
-
-        <!-- Team Member 3 -->
-        <div class="glass-card text-center overflow-hidden group hover-trigger" data-aos="fade-up" data-aos-delay="200">
-          <div class="relative w-full aspect-[4/5] bg-gray-800 overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=600"
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              alt="Lead Dev" />
-            <div
-              class="absolute inset-0 bg-gradient-to-t from-navy to-transparent opacity-90 group-hover:opacity-70 transition-opacity">
-            </div>
-            <div
-              class="absolute bottom-6 left-0 w-full flex justify-center gap-4 translate-y-12 group-hover:translate-y-0 transition-transform duration-500 opacity-0 group-hover:opacity-100 z-20">
-              <a href="#"
-                class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center hover:bg-neon hover:text-navy transition-colors text-white border border-white/20"><i
-                  data-lucide="github" class="w-5 h-5"></i></a>
-            </div>
-          </div>
-          <div
-            class="p-6 relative z-30 bg-navy/80 backdrop-blur-sm group-hover:bg-navy transition-colors border-t border-white/10">
-            <h3 class="text-2xl font-bold font-display">David Chen</h3>
-            <p class="text-blue-400 text-sm font-semibold tracking-wider mt-1 uppercase">Lead Architect</p>
-          </div>
-        </div>
-
-        <!-- Team Member 4 -->
-        <div class="glass-card text-center overflow-hidden group hover-trigger" data-aos="fade-up" data-aos-delay="300">
-          <div class="relative w-full aspect-[4/5] bg-gray-800 overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=600"
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              alt="Design Lead" />
-            <div
-              class="absolute inset-0 bg-gradient-to-t from-navy to-transparent opacity-90 group-hover:opacity-70 transition-opacity">
-            </div>
-            <div
-              class="absolute bottom-6 left-0 w-full flex justify-center gap-4 translate-y-12 group-hover:translate-y-0 transition-transform duration-500 opacity-0 group-hover:opacity-100 z-20">
-              <a href="#"
-                class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center hover:bg-neon hover:text-navy transition-colors text-white border border-white/20"><i
-                  data-lucide="dribbble" class="w-5 h-5"></i></a>
-            </div>
-          </div>
-          <div
-            class="p-6 relative z-30 bg-navy/80 backdrop-blur-sm group-hover:bg-navy transition-colors border-t border-white/10">
-            <h3 class="text-2xl font-bold font-display">Elena Rostova</h3>
-            <p class="text-pink-400 text-sm font-semibold tracking-wider mt-1 uppercase">Head of UI/UX</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 8. Careers & 9. Testimonials inside a structured split section -->
-  <section id="careers" class="py-32 relative bg-navy overflow-hidden">
-    <!-- Decoration -->
-    <div
-      class="absolute top-0 right-0 w-full h-px bg-gradient-to-r from-transparent via-neon to-transparent opacity-30">
-    </div>
-
-    <div class="container mx-auto px-6 max-w-7xl">
-      <div class="flex flex-col lg:flex-row gap-20">
-        <!-- Careers Left -->
-        <div class="lg:w-1/2" data-aos="fade-right">
-          <span class="text-neon font-bold tracking-[0.2em] uppercase text-xs mb-4 block">Join The Elite</span>
-          <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">Open <span class="text-gradient">Positions</span>
-          </h2>
-          <p class="text-gray-400 mb-10 text-lg">We are always looking for hyper-talented engineers and designers.
-            Remote-first, competitive salary, and equity.</p>
-
-          <div class="space-y-4">
-            <div
-              class="glass-card p-6 flex justify-between items-center group hover-trigger hover:border-neon cursor-pointer transition-all">
-              <div>
-                <h4 class="text-xl font-bold mb-1 group-hover:text-neon transition-colors">Senior React Engineer</h4>
-                <span class="text-sm text-gray-500 flex items-center gap-2"><i data-lucide="map-pin"
-                    class="w-4 h-4"></i> Remote (Global)</span>
-              </div>
-              <div
-                class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-neon transition-colors group-hover:text-navy">
-                <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
-              </div>
-            </div>
-            <div
-              class="glass-card p-6 flex justify-between items-center group hover-trigger hover:border-purple-400 cursor-pointer transition-all">
-              <div>
-                <h4 class="text-xl font-bold mb-1 group-hover:text-purple-400 transition-colors">DevOps Specialist
-                  (AWS/K8s)</h4>
-                <span class="text-sm text-gray-500 flex items-center gap-2"><i data-lucide="map-pin"
-                    class="w-4 h-4"></i> New York / Remote</span>
-              </div>
-              <div
-                class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-purple-400 transition-colors group-hover:text-navy">
-                <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
-              </div>
-            </div>
-            <div
-              class="glass-card p-6 flex justify-between items-center group hover-trigger hover:border-blue-400 cursor-pointer transition-all">
-              <div>
-                <h4 class="text-xl font-bold mb-1 group-hover:text-blue-400 transition-colors">UI/UX Product Designer
-                </h4>
-                <span class="text-sm text-gray-500 flex items-center gap-2"><i data-lucide="map-pin"
-                    class="w-4 h-4"></i> London / Remote</span>
-              </div>
-              <div
-                class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-blue-400 transition-colors group-hover:text-navy">
-                <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
-              </div>
-            </div>
-          </div>
-
-          <a href="#contact"
-            class="inline-flex btn-glow glass-panel text-white px-8 py-3 rounded-full mt-10 hover:border-white/30 font-medium hover-trigger">
-            <i data-lucide="mail" class="w-5 h-5 mr-2"></i> Send us your resume
+            <span class="nav__logo-text">Abraxis</span>
           </a>
+          <div class="nav__menu">
+            <a href="#about" class="nav__link">About</a>
+            <a href="#services" class="nav__link">Services</a>
+            <a href="#solutions" class="nav__link">Solutions</a>
+            <a href="#stack" class="nav__link">Technology</a>
+            <a href="#careers" class="nav__link">Careers</a>
+          </div>
+          <a href="#contact" class="nav__cta">
+            <span>Start Project</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+          <button class="nav__toggle" id="nav-toggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+          </button>
         </div>
+        <div class="nav__mobile" id="nav-mobile">
+          <div class="nav__mobile-content">
+            <a href="#about" class="nav__mobile-link">About</a>
+            <a href="#services" class="nav__mobile-link">Services</a>
+            <a href="#solutions" class="nav__mobile-link">Solutions</a>
+            <a href="#stack" class="nav__mobile-link">Technology</a>
+            <a href="#careers" class="nav__mobile-link">Careers</a>
+            <a href="#contact" class="nav__mobile-cta">Start Project</a>
+          </div>
+        </div>
+      </nav>
 
-        <!-- Testimonials Right -->
-        <div class="lg:w-1/2 w-full" data-aos="fade-left">
-          <span class="text-neon font-bold tracking-[0.2em] uppercase text-xs mb-4 block">Proven Track Record</span>
-          <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">Client <span
-              class="text-gradient">Feedback</span></h2>
+      <!-- ==================== HERO ==================== -->
+      <section id="home" class="hero">
+        <div class="hero__bg">
+          <div class="hero__orb hero__orb--cyan"></div>
+          <div class="hero__orb hero__orb--violet"></div>
+          <div class="hero__orb hero__orb--fuchsia"></div>
+          <div class="hero__grid"></div>
+          <canvas id="hero-particles" class="hero__particles"></canvas>
+        </div>
+        <div class="hero__container">
+          <div class="hero__badge">
+            <span class="hero__badge-dot"></span>
+            <span>Next-Generation Software Engineering</span>
+          </div>
+          <h1 class="hero__title">
+            <span class="hero__title-line">We Engineer</span>
+            <span class="hero__title-line hero__title-line--gradient">Intelligent Systems</span>
+          </h1>
+          <p class="hero__subtitle">Transforming ambitious ideas into scalable, secure, and high-performance digital
+            products for global enterprises and visionary startups.</p>
+          <div class="hero__actions">
+            <a href="#contact" class="btn btn--primary">
+              <span>Start Your Project</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+            <a href="#services" class="btn btn--secondary">
+              <span>Explore Services</span>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </a>
+          </div>
+          <div class="hero__stats">
+            <div class="hero__stat">
+              <span class="hero__stat-value" data-count="250">0</span>
+              <span class="hero__stat-label">Projects Delivered</span>
+            </div>
+            <div class="hero__stat-divider"></div>
+            <div class="hero__stat">
+              <span class="hero__stat-value" data-count="150">0</span>
+              <span class="hero__stat-label">Global Clients</span>
+            </div>
+            <div class="hero__stat-divider"></div>
+            <div class="hero__stat">
+              <span class="hero__stat-value" data-count="99">0</span>
+              <span class="hero__stat-label">% Satisfaction</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero__scroll">
+          <span>Scroll</span>
+          <div class="hero__scroll-line">
+            <div class="hero__scroll-dot"></div>
+          </div>
+        </div>
+      </section>
 
-          <div class="swiper testimonials-slider w-full pb-16 mt-10">
-            <div class="swiper-wrapper">
-              <!-- Slide 1 -->
-              <div class="swiper-slide !w-[350px]">
-                <div class="glass-card p-8 h-full relative cursor-grab">
-                  <i data-lucide="quote" class="text-neon/20 w-16 h-16 absolute top-4 right-4 z-0"></i>
-                  <div class="relative z-10">
-                    <div class="flex items-center gap-2 text-neon mb-6">
-                      <i data-lucide="star" class="w-4 h-4 fill-neon"></i>
-                      <i data-lucide="star" class="w-4 h-4 fill-neon"></i>
-                      <i data-lucide="star" class="w-4 h-4 fill-neon"></i>
-                      <i data-lucide="star" class="w-4 h-4 fill-neon"></i>
-                      <i data-lucide="star" class="w-4 h-4 fill-neon"></i>
-                    </div>
-                    <p class="text-gray-300 mb-8 italic text-lg line-clamp-4">"Abarix completely transformed our legacy
-                      infrastructure. Their team delivered a robust Next.js and AWS solution that 10x'd our application
-                      speed."</p>
-                    <div class="flex items-center gap-4 border-t border-white/10 pt-6">
-                      <img
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=150&h=150&q=80"
-                        alt="Client" class="w-12 h-12 rounded-full ring-2 ring-neon/50">
-                      <div>
-                        <h4 class="font-bold text-white">James Wilson</h4>
-                        <span class="text-xs text-gray-500 uppercase tracking-wider">VP of Eng, FinSecure</span>
-                      </div>
-                    </div>
-                  </div>
+      <!-- ==================== ABOUT ==================== -->
+      <section id="about" class="section about">
+        <div class="section-orbs" aria-hidden="true">
+          <div class="section-orb section-orb--1"></div>
+          <div class="section-orb section-orb--2"></div>
+          <div class="section-orb section-orb--3"></div>
+          <div class="section-orb section-orb--4"></div>
+        </div>
+        <div class="container">
+          <div class="about__grid">
+            <div class="about__content">
+              <span class="section__label">About Us</span>
+              <h2 class="section__title">Redefining <span class="text-gradient">Digital Excellence</span></h2>
+              <p class="about__text">At Abraxis Solutions, we fuse cutting-edge technology with exceptional design
+                thinking. Since our inception, we've driven digital transformation for industry leaders globally,
+                crafting state-of-the-art products that dominate the modern web and cloud ecosystem.</p>
+              <div class="about__mission">
+                <div class="about__mission-icon">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="10" />
+                    <circle cx="12" cy="12" r="6" />
+                    <circle cx="12" cy="12" r="2" />
+                  </svg>
                 </div>
-              </div>
-              <!-- Slide 2 -->
-              <div class="swiper-slide !w-[350px]">
-                <div class="glass-card p-8 h-full relative cursor-grab">
-                  <i data-lucide="quote" class="text-purple-500/20 w-16 h-16 absolute top-4 right-4 z-0"></i>
-                  <div class="relative z-10">
-                    <div class="flex items-center gap-2 text-purple-400 mb-6">
-                      <i data-lucide="star" class="w-4 h-4 fill-purple-400"></i>
-                      <i data-lucide="star" class="w-4 h-4 fill-purple-400"></i>
-                      <i data-lucide="star" class="w-4 h-4 fill-purple-400"></i>
-                      <i data-lucide="star" class="w-4 h-4 fill-purple-400"></i>
-                      <i data-lucide="star" class="w-4 h-4 fill-purple-400"></i>
-                    </div>
-                    <p class="text-gray-300 mb-8 italic text-lg line-clamp-4">"The UI/UX design they handled for our
-                      SaaS was stunning. Pair that with absolutely flawless API architecture, and you have a world-class
-                      agency."</p>
-                    <div class="flex items-center gap-4 border-t border-white/10 pt-6">
-                      <img
-                        src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=facearea&facepad=2&w=150&h=150&q=80"
-                        alt="Client" class="w-12 h-12 rounded-full ring-2 ring-purple-500/50">
-                      <div>
-                        <h4 class="font-bold text-white">Samantha Lee</h4>
-                        <span class="text-xs text-gray-500 uppercase tracking-wider">CEO, ScaleForce</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- Slide 3 -->
-              <div class="swiper-slide !w-[350px]">
-                <div class="glass-card p-8 h-full relative cursor-grab">
-                  <i data-lucide="quote" class="text-blue-500/20 w-16 h-16 absolute top-4 right-4 z-0"></i>
-                  <div class="relative z-10">
-                    <div class="flex items-center gap-2 text-blue-400 mb-6">
-                      <i data-lucide="star" class="w-4 h-4 fill-blue-400"></i>
-                      <i data-lucide="star" class="w-4 h-4 fill-blue-400"></i>
-                      <i data-lucide="star" class="w-4 h-4 fill-blue-400"></i>
-                      <i data-lucide="star" class="w-4 h-4 fill-blue-400"></i>
-                      <i data-lucide="star" class="w-4 h-4 fill-blue-400"></i>
-                    </div>
-                    <p class="text-gray-300 mb-8 italic text-lg line-clamp-4">"Absolutely professional from day 1 to
-                      launch. They delivered our native iOS and Android apps ahead of schedule with zero major bugs."
-                    </p>
-                    <div class="flex items-center gap-4 border-t border-white/10 pt-6">
-                      <img
-                        src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=facearea&facepad=2&w=150&h=150&q=80"
-                        alt="Client" class="w-12 h-12 rounded-full ring-2 ring-blue-500/50">
-                      <div>
-                        <h4 class="font-bold text-white">Daniel Foster</h4>
-                        <span class="text-xs text-gray-500 uppercase tracking-wider">CTO, HealthSync</span>
-                      </div>
-                    </div>
-                  </div>
+                <div class="about__mission-content">
+                  <h3>Our Mission</h3>
+                  <p>To build intelligent, scalable, and beautifully designed digital infrastructure that propels
+                    humanity forward into the cloud era.</p>
                 </div>
               </div>
             </div>
-            <div class="swiper-pagination !bottom-0"></div>
+            <div class="about__stats">
+              <div class="about__stat-card">
+                <span class="about__stat-value"><span data-count="250">0</span>+</span>
+                <span class="about__stat-label">Projects Delivered</span>
+                <div class="about__stat-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                    <polyline points="22,4 12,14.01 9,11.01" />
+                  </svg></div>
+              </div>
+              <div class="about__stat-card about__stat-card--purple">
+                <span class="about__stat-value"><span data-count="150">0</span>+</span>
+                <span class="about__stat-label">Global Clients</span>
+                <div class="about__stat-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="2" y1="12" x2="22" y2="12" />
+                    <path
+                      d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                  </svg></div>
+              </div>
+              <div class="about__stat-card about__stat-card--blue">
+                <span class="about__stat-value"><span data-count="10">0</span>+</span>
+                <span class="about__stat-label">Years Experience</span>
+                <div class="about__stat-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12,6 12,12 16,14" />
+                  </svg></div>
+              </div>
+              <div class="about__stat-card about__stat-card--pink">
+                <span class="about__stat-value"><span data-count="35">0</span>+</span>
+                <span class="about__stat-label">Technologies Mastered</span>
+                <div class="about__stat-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1">
+                    <polygon
+                      points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+                  </svg></div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      <!-- ============================================
+           Why Choose Us Section
+           ============================================ -->
+      <section class="why-choose-section" id="why-choose-us">
+        <!-- Animated Orbs -->
+        <div class="why-orb why-orb-1"></div>
+        <div class="why-orb why-orb-2"></div>
+        <div class="why-orb why-orb-3"></div>
+
+        <div class="container">
+          <div class="section__header reveal">
+            <span class="section__label">Why Choose Us</span>
+            <h2 class="section__title">Built Different by <span class="text-gradient">Design</span></h2>
+            <p class="section__description">We don't just build software — we engineer competitive advantages. Here's
+              what sets us apart from every other agency.</p>
+          </div>
+
+          <div class="why-choose-grid">
+            <div class="why-card" data-why-card>
+              <div class="why-card-icon why-card-icon--cyan">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+              </div>
+              <h3 class="why-card-title">Speed of Delivery</h3>
+              <p class="why-card-desc">From concept to production in weeks, not months. Our streamlined processes and
+                battle-tested frameworks eliminate bottlenecks.</p>
+            </div>
+
+            <div class="why-card" data-why-card>
+              <div class="why-card-icon why-card-icon--violet">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="1" y="6" width="22" height="12" rx="2" ry="2"></rect>
+                  <path d="M1 10h22"></path>
+                  <path d="M6 6V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2"></path>
+                </svg>
+              </div>
+              <h3 class="why-card-title">Battle-Tested Architecture</h3>
+              <p class="why-card-desc">Infrastructure designed to handle millions of users from day one. Built on proven
+                patterns that scale with your growth.</p>
+            </div>
+
+            <div class="why-card" data-why-card>
+              <div class="why-card-icon why-card-icon--magenta">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2a4 4 0 0 1 4 4c0 1.95-1.4 3.58-3.25 3.93"></path>
+                  <path d="M8.56 6.22A4 4 0 0 1 12 2"></path>
+                  <circle cx="12" cy="12" r="2"></circle>
+                  <path d="M12 14v4"></path>
+                  <path d="M10 22h4"></path>
+                </svg>
+              </div>
+              <h3 class="why-card-title">AI-Powered Development</h3>
+              <p class="why-card-desc">We leverage AI copilots and intelligent toolchains to write cleaner code faster —
+                amplifying output without sacrificing quality.</p>
+            </div>
+
+            <div class="why-card" data-why-card>
+              <div class="why-card-icon why-card-icon--emerald">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+              </div>
+              <h3 class="why-card-title">Transparent Communication</h3>
+              <p class="why-card-desc">Real-time project dashboards, weekly demos, and direct Slack access to your
+                engineering team. No black boxes, ever.</p>
+            </div>
+
+            <div class="why-card" data-why-card>
+              <div class="why-card-icon why-card-icon--amber">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="23 4 23 10 17 10"></polyline>
+                  <polyline points="1 20 1 14 7 14"></polyline>
+                  <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                </svg>
+              </div>
+              <h3 class="why-card-title">End-to-End Ownership</h3>
+              <p class="why-card-desc">From discovery to deployment to ongoing support — one team owns the entire
+                lifecycle. No handoffs, no finger-pointing.</p>
+            </div>
+
+            <div class="why-card" data-why-card>
+              <div class="why-card-icon why-card-icon--blue">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                  </path>
+                </svg>
+              </div>
+              <h3 class="why-card-title">Global Remote Team</h3>
+              <p class="why-card-desc">Senior engineers across time zones mean your project moves forward 24 hours a
+                day. Global talent, unified standards.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== SOLUTIONS ==================== -->
+      <section id="solutions" class="section solutions">
+        <div class="solutions__bg">
+          <div class="solutions__orb solutions__orb--1"></div>
+          <div class="solutions__orb solutions__orb--2"></div>
+        </div>
+        <div class="container">
+          <div class="section__header" data-aos="fade-up">
+            <span class="section__label">Our Solutions</span>
+            <h2 class="section__title">Tailored Digital Solutions</h2>
+            <p class="section__description">Enterprise-grade platforms built for scale, security, and performance.</p>
+          </div>
+
+          <div class="solutions__grid">
+            <!-- Featured Large Card -->
+            <div class="solution-card solution-card--featured" data-aos="fade-up" data-aos-delay="0">
+              <div class="solution-card__image">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
+                  alt="Enterprise Platform" loading="lazy">
+                <div class="solution-card__overlay"></div>
+              </div>
+              <div class="solution-card__content">
+                <div class="solution-card__icon solution-card__icon--pink">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="3" width="20" height="14" rx="2" />
+                    <path d="M8 21h8" />
+                    <path d="M12 17v4" />
+                  </svg>
+                </div>
+                <h3>Enterprise Platform Engineering</h3>
+                <p>End-to-end custom platforms powering mission-critical operations for Fortune 500 companies with
+                  99.99% uptime guarantees.</p>
+                <div class="solution-card__tags">
+                  <span>Microservices</span>
+                  <span>High Availability</span>
+                  <span>Enterprise</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Smaller Card 1 -->
+            <div class="solution-card" data-aos="fade-up" data-aos-delay="100">
+              <div class="solution-card__content">
+                <div class="solution-card__icon solution-card__icon--cyan">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                    <path d="M2 17l10 5 10-5" />
+                    <path d="M2 12l10 5 10-5" />
+                  </svg>
+                </div>
+                <h3>AI-Powered Analytics</h3>
+                <p>Machine learning pipelines that transform raw data into actionable business intelligence.</p>
+                <div class="solution-card__tags">
+                  <span>ML/AI</span>
+                  <span>Data Pipeline</span>
+                  <span>Real-time</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Smaller Card 2 -->
+            <div class="solution-card" data-aos="fade-up" data-aos-delay="200">
+              <div class="solution-card__content">
+                <div class="solution-card__icon solution-card__icon--purple">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+                    <line x1="4" y1="22" x2="4" y2="15" />
+                  </svg>
+                </div>
+                <h3>Cloud Migration & DevOps</h3>
+                <p>Seamless cloud transitions with automated CI/CD pipelines and infrastructure-as-code.</p>
+                <div class="solution-card__tags">
+                  <span>AWS/Azure/GCP</span>
+                  <span>Terraform</span>
+                  <span>K8s</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="solutions__cta" data-aos="fade-up" data-aos-delay="300">
+            <a href="#contact" class="btn btn--primary">Discuss Your Solution <svg width="16" height="16"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg></a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== TECHNOLOGY STACK ==================== -->
+      <section id="stack" class="section stack">
+        <div class="container">
+          <div class="section__header" data-aos="fade-up">
+            <span class="section__label">Technology Stack</span>
+            <h2 class="section__title">Tools We Master</h2>
+            <p class="section__description">Enterprise-grade technologies powering our solutions.</p>
+          </div>
+
+          <!-- Row 1: Scrolls Left -->
+          <div class="stack__slider" data-aos="fade-up" data-aos-delay="100">
+            <div class="stack__slider-track">
+              <!-- Original items -->
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <circle cx="12" cy="12" r="3" />
+                    <path
+                      d="M12 1v4m0 14v4M4.22 4.22l2.83 2.83m9.9 9.9l2.83 2.83M1 12h4m14 0h4M4.22 19.78l2.83-2.83m9.9-9.9l2.83-2.83" />
+                  </svg></div><span>React</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5" />
+                    <line x1="12" y1="22" x2="12" y2="15.5" />
+                    <polyline points="22 8.5 12 15.5 2 8.5" />
+                  </svg></div><span>Node.js</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <path d="M4 7V4h16v3" />
+                    <path d="M9 20h6" />
+                    <path d="M12 4v16" />
+                  </svg></div><span>TypeScript</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
+                  </svg></div><span>AWS</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <rect x="2" y="2" width="20" height="8" rx="2" />
+                    <rect x="2" y="14" width="20" height="8" rx="2" />
+                    <line x1="6" y1="6" x2="6.01" y2="6" />
+                    <line x1="6" y1="18" x2="6.01" y2="18" />
+                  </svg></div><span>Docker</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                    <path d="M2 17l10 5 10-5" />
+                    <path d="M2 12l10 5 10-5" />
+                  </svg></div><span>Kubernetes</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <ellipse cx="12" cy="5" rx="9" ry="3" />
+                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+                  </svg></div><span>PostgreSQL</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5" />
+                    <path d="M8.5 8.5v.01" />
+                    <path d="M16 15.5v.01" />
+                    <path d="M12 12v.01" />
+                    <path d="M11 17v.01" />
+                    <path d="M7 14v.01" />
+                  </svg></div><span>Next.js</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <path
+                      d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2z" />
+                    <path
+                      d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2z" />
+                  </svg></div><span>Figma</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <path
+                      d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                  </svg></div><span>GraphQL</span>
+              </div>
+              <!-- Duplicate set for seamless loop -->
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <circle cx="12" cy="12" r="3" />
+                    <path
+                      d="M12 1v4m0 14v4M4.22 4.22l2.83 2.83m9.9 9.9l2.83 2.83M1 12h4m14 0h4M4.22 19.78l2.83-2.83m9.9-9.9l2.83-2.83" />
+                  </svg></div><span>React</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5" />
+                    <line x1="12" y1="22" x2="12" y2="15.5" />
+                    <polyline points="22 8.5 12 15.5 2 8.5" />
+                  </svg></div><span>Node.js</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <path d="M4 7V4h16v3" />
+                    <path d="M9 20h6" />
+                    <path d="M12 4v16" />
+                  </svg></div><span>TypeScript</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" />
+                  </svg></div><span>AWS</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <rect x="2" y="2" width="20" height="8" rx="2" />
+                    <rect x="2" y="14" width="20" height="8" rx="2" />
+                    <line x1="6" y1="6" x2="6.01" y2="6" />
+                    <line x1="6" y1="18" x2="6.01" y2="18" />
+                  </svg></div><span>Docker</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                    <path d="M2 17l10 5 10-5" />
+                    <path d="M2 12l10 5 10-5" />
+                  </svg></div><span>Kubernetes</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <ellipse cx="12" cy="5" rx="9" ry="3" />
+                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+                  </svg></div><span>PostgreSQL</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5" />
+                    <path d="M8.5 8.5v.01" />
+                    <path d="M16 15.5v.01" />
+                    <path d="M12 12v.01" />
+                    <path d="M11 17v.01" />
+                    <path d="M7 14v.01" />
+                  </svg></div><span>Next.js</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <path
+                      d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2z" />
+                    <path
+                      d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2z" />
+                  </svg></div><span>Figma</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <path
+                      d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                  </svg></div><span>GraphQL</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Row 2: Scrolls Right (reverse) -->
+          <div class="stack__slider stack__slider--reverse" data-aos="fade-up" data-aos-delay="200">
+            <div class="stack__slider-track">
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg></div><span>Security</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <rect x="4" y="4" width="16" height="16" rx="2" />
+                    <rect x="9" y="9" width="6" height="6" />
+                    <path d="M15 2v2" />
+                    <path d="M15 20v2" />
+                    <path d="M2 15h2" />
+                    <path d="M2 9h2" />
+                    <path d="M20 15h2" />
+                    <path d="M20 9h2" />
+                    <path d="M9 2v2" />
+                    <path d="M9 20v2" />
+                  </svg></div><span>Terraform</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                  </svg></div><span>MongoDB</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <polyline points="16 18 22 12 16 6" />
+                    <polyline points="8 6 2 12 8 18" />
+                  </svg></div><span>Python</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                  </svg></div><span>Redis</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="2" y1="12" x2="22" y2="12" />
+                    <path
+                      d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                  </svg></div><span>Azure</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <path d="M12 8V4H8" />
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                    <path d="M8 2v10a4 4 0 0 0 8 0V4" />
+                  </svg></div><span>Go</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <path d="M5 22h14" />
+                    <path d="M5 2h14" />
+                    <path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22" />
+                    <path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2" />
+                  </svg></div><span>Rust</span>
+              </div>
+              <!-- Duplicate set for seamless loop -->
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg></div><span>Security</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <rect x="4" y="4" width="16" height="16" rx="2" />
+                    <rect x="9" y="9" width="6" height="6" />
+                    <path d="M15 2v2" />
+                    <path d="M15 20v2" />
+                    <path d="M2 15h2" />
+                    <path d="M2 9h2" />
+                    <path d="M20 15h2" />
+                    <path d="M20 9h2" />
+                    <path d="M9 2v2" />
+                    <path d="M9 20v2" />
+                  </svg></div><span>Terraform</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                  </svg></div><span>MongoDB</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <polyline points="16 18 22 12 16 6" />
+                    <polyline points="8 6 2 12 8 18" />
+                  </svg></div><span>Python</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                  </svg></div><span>Redis</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="2" y1="12" x2="22" y2="12" />
+                    <path
+                      d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                  </svg></div><span>Azure</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <path d="M12 8V4H8" />
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                    <path d="M8 2v10a4 4 0 0 0 8 0V4" />
+                  </svg></div><span>Go</span>
+              </div>
+              <div class="stack__slider-item">
+                <div class="tech-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <path d="M5 22h14" />
+                    <path d="M5 2h14" />
+                    <path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22" />
+                    <path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2" />
+                  </svg></div><span>Rust</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== CAREERS ==================== -->
+      <section id="careers" class="section careers">
+        <div class="container">
+          <div class="section__header" data-aos="fade-up">
+            <span class="section__label">Join Our Team</span>
+            <h2 class="section__title">Open Positions</h2>
+            <p class="section__description">Shape the future of technology with us.</p>
+          </div>
+
+          <div class="careers__grid">
+            <!-- Left: Description + Resume Button -->
+            <div class="careers__left" data-aos="fade-right">
+              <p class="careers__text">
+                We're building the next generation of intelligent software systems. Join a team of world-class
+                engineers, designers, and strategists who are passionate about pushing the boundaries of what's
+                possible.
+              </p>
+              <p class="careers__text">
+                We offer competitive compensation, remote-first culture, continuous learning opportunities, and the
+                chance to work on products that impact millions of users globally.
+              </p>
+              <a href="mailto:careers@abarix.com" class="careers__resume-btn">
+                Send Your Resume
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
+              </a>
+            </div>
+
+            <!-- Right: 3 Job Cards -->
+            <div class="careers__right" data-aos="fade-left">
+              <a href="mailto:careers@abarix.com?subject=Senior Full-Stack Engineer" class="job-card">
+                <div class="job-card__info">
+                  <h4>Senior Full-Stack Engineer</h4>
+                  <span>Remote · Full-time</span>
+                </div>
+                <div class="job-card__arrow">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14" />
+                    <path d="m12 5 7 7-7 7" />
+                  </svg>
+                </div>
+              </a>
+
+              <a href="mailto:careers@abarix.com?subject=ML/AI Research Engineer" class="job-card job-card--purple">
+                <div class="job-card__info">
+                  <h4>ML / AI Research Engineer</h4>
+                  <span>Remote · Full-time</span>
+                </div>
+                <div class="job-card__arrow">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14" />
+                    <path d="m12 5 7 7-7 7" />
+                  </svg>
+                </div>
+              </a>
+
+              <a href="mailto:careers@abarix.com?subject=Cloud DevOps Architect" class="job-card job-card--pink">
+                <div class="job-card__info">
+                  <h4>Cloud & DevOps Architect</h4>
+                  <span>Remote · Full-time</span>
+                </div>
+                <div class="job-card__arrow">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14" />
+                    <path d="m12 5 7 7-7 7" />
+                  </svg>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== TESTIMONIALS (moved AFTER stack) ==================== -->
+      <section id="testimonials" class="section testimonials">
+        <div class="section-orbs" aria-hidden="true">
+          <div class="section-orb section-orb--1"></div>
+          <div class="section-orb section-orb--2"></div>
+          <div class="section-orb section-orb--3"></div>
+          <div class="section-orb section-orb--4"></div>
+        </div>
+        <div class="container">
+          <div class="section__header">
+            <span class="section__label reveal">Client Success</span>
+            <h2 class="section__title reveal">
+              Proven Track <span class="text-gradient">Record</span>
+            </h2>
+            <p class="section__description reveal">
+              Hear from the teams we've helped scale, optimize, and transform.
+            </p>
+          </div>
+
+          <div class="testimonials__slider">
+            <div class="testimonials__track">
+
+              <div class="testimonial-card">
+                <div class="testimonial-card__stars">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                </div>
+                <p class="testimonial-card__text">
+                  Abraxis completely re-architected our backend infrastructure. Response times dropped by 80% and we
+                  haven't had a single outage since launch.
+                </p>
+                <div class="testimonial-card__author">
+                  <div class="testimonial-card__avatar">SK</div>
+                  <div class="testimonial-card__author-info">
+                    <h4>Sarah Kim</h4>
+                    <span>CTO, FinScale Technologies</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testimonial-card">
+                <div class="testimonial-card__stars">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                </div>
+                <p class="testimonial-card__text">
+                  The AI pipeline they built processes our data 10x faster than our previous solution. Their team's
+                  expertise in machine learning is unmatched.
+                </p>
+                <div class="testimonial-card__author">
+                  <div class="testimonial-card__avatar">MR</div>
+                  <div class="testimonial-card__author-info">
+                    <h4>Marcus Rodriguez</h4>
+                    <span>VP Engineering, DataVault AI</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testimonial-card">
+                <div class="testimonial-card__stars">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                </div>
+                <p class="testimonial-card__text">
+                  From concept to deployment in 8 weeks — they delivered a platform that handles 2M+ daily transactions
+                  without breaking a sweat. Truly elite engineering.
+                </p>
+                <div class="testimonial-card__author">
+                  <div class="testimonial-card__avatar">EW</div>
+                  <div class="testimonial-card__author-info">
+                    <h4>Elena Wu</h4>
+                    <span>CEO, NexaPay</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testimonial-card">
+                <div class="testimonial-card__stars">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                </div>
+                <p class="testimonial-card__text">
+                  Their DevOps team automated our entire deployment pipeline. What used to take 3 hours now happens in
+                  minutes with zero manual intervention.
+                </p>
+                <div class="testimonial-card__author">
+                  <div class="testimonial-card__avatar">JT</div>
+                  <div class="testimonial-card__author-info">
+                    <h4>James Torres</h4>
+                    <span>Head of Ops, CloudMatrix</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="testimonial-card">
+                <div class="testimonial-card__stars">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon
+                      points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                </div>
+                <p class="testimonial-card__text">
+                  Security was our biggest concern. Abraxis implemented a zero-trust architecture that passed every
+                  compliance audit on the first attempt.
+                </p>
+                <div class="testimonial-card__author">
+                  <div class="testimonial-card__avatar">AP</div>
+                  <div class="testimonial-card__author-info">
+                    <h4>Anika Patel</h4>
+                    <span>CISO, MedSecure Health</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="testimonials__controls">
+              <button class="testimonials__btn testimonials__btn--prev" aria-label="Previous testimonial">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <div class="testimonials__dots">
+                <button class="testimonials__dot active" aria-label="Go to slide 1"></button>
+                <button class="testimonials__dot" aria-label="Go to slide 2"></button>
+                <button class="testimonials__dot" aria-label="Go to slide 3"></button>
+                <button class="testimonials__dot" aria-label="Go to slide 4"></button>
+                <button class="testimonials__dot" aria-label="Go to slide 5"></button>
+              </div>
+              <button class="testimonials__btn testimonials__btn--next" aria-label="Next testimonial">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           AI Automation Section
+           ============================================ -->
+      <section class="ai-automation-section" id="ai-automation">
+        <!-- Animated glow orbs -->
+        <div class="ai-orb ai-orb-1"></div>
+        <div class="ai-orb ai-orb-2"></div>
+        <div class="ai-orb ai-orb-3"></div>
+
+        <div class="ai-automation-inner">
+          <!-- Left: Three.js Globe -->
+          <div class="ai-globe-wrapper">
+            <canvas id="ai-globe-canvas"></canvas>
+          </div>
+
+          <!-- Right: Text Content -->
+          <div class="ai-text-side">
+            <span class="ai-label">The Future Is Now</span>
+            <h2 class="ai-heading">Why AI Automation is No Longer Optional</h2>
+
+            <div class="ai-benefits">
+              <div class="ai-benefit-row" data-ai-benefit>
+                <div class="ai-benefit-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                  </svg>
+                </div>
+                <div class="ai-benefit-text">
+                  <h4 class="ai-benefit-title">10x Faster Operations</h4>
+                  <p class="ai-benefit-desc">Automate repetitive tasks and free your team for what matters most.</p>
+                </div>
+              </div>
+
+              <div class="ai-benefit-row" data-ai-benefit>
+                <div class="ai-benefit-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2a4 4 0 0 1 4 4c0 1.95-1.4 3.58-3.25 3.93"></path>
+                    <path d="M8.56 6.22A4 4 0 0 1 12 2"></path>
+                    <circle cx="12" cy="12" r="2"></circle>
+                    <path d="M12 14v4"></path>
+                    <path d="M10 22h4"></path>
+                  </svg>
+                </div>
+                <div class="ai-benefit-text">
+                  <h4 class="ai-benefit-title">Smarter Decisions</h4>
+                  <p class="ai-benefit-desc">AI surfaces patterns and insights no human analyst could catch at scale.
+                  </p>
+                </div>
+              </div>
+
+              <div class="ai-benefit-row" data-ai-benefit>
+                <div class="ai-benefit-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="1" x2="12" y2="23"></line>
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                  </svg>
+                </div>
+                <div class="ai-benefit-text">
+                  <h4 class="ai-benefit-title">Reduce Costs by 60%</h4>
+                  <p class="ai-benefit-desc">Replace manual workflows with intelligent systems that cost a fraction.</p>
+                </div>
+              </div>
+
+              <div class="ai-benefit-row" data-ai-benefit>
+                <div class="ai-benefit-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00b4d8" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="23 4 23 10 17 10"></polyline>
+                    <polyline points="1 20 1 14 7 14"></polyline>
+                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                  </svg>
+                </div>
+                <div class="ai-benefit-text">
+                  <h4 class="ai-benefit-title">24/7 Without Fatigue</h4>
+                  <p class="ai-benefit-desc">Automated systems execute perfectly at 3am just as well as 3pm.</p>
+                </div>
+              </div>
+            </div>
+
+            <a href="#contact" class="ai-cta-btn">
+              See How We Automate
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== CONTACT ==================== -->
+      <section id="contact" class="section contact">
+        <div class="section-orbs" aria-hidden="true">
+          <div class="section-orb section-orb--1"></div>
+          <div class="section-orb section-orb--2"></div>
+          <div class="section-orb section-orb--3"></div>
+          <div class="section-orb section-orb--4"></div>
+        </div>
+        <div class="contact__bg">
+          <div class="contact__orb contact__orb--1"></div>
+          <div class="contact__orb contact__orb--2"></div>
+        </div>
+        <div class="container">
+          <div class="contact__card">
+            <div class="contact__header">
+              <h2 class="section__title">Let's Build <span class="text-gradient">Together</span></h2>
+              <p>Tell us about your next big project. Our experts will assess your needs instantly.</p>
+            </div>
+            <form class="contact__form" id="contact-form">
+              <div class="contact__form-grid">
+                <div class="form-group">
+                  <label for="name">Full Name</label>
+                  <input type="text" id="name" name="name" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email Address</label>
+                  <input type="email" id="email" name="email" placeholder="john@company.com" required>
+                </div>
+                <div class="form-group form-group--full">
+                  <label for="company">Company Name</label>
+                  <input type="text" id="company" name="company" placeholder="Company Ltd.">
+                </div>
+                <div class="form-group form-group--full">
+                  <label for="message">Project Details</label>
+                  <textarea id="message" name="message" rows="4" placeholder="Briefly describe your requirements..."
+                    required></textarea>
+                </div>
+              </div>
+              <button type="submit" class="btn btn--primary btn--full">
+                <span>Send Message</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="22" y1="2" x2="11" y2="13" />
+                  <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                </svg>
+              </button>
+            </form>
+          </div>
+          <div class="contact__info">
+            <div class="contact__info-card">
+              <div class="contact__info-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+              </div>
+              <div>
+                <h4>Global HQ</h4>
+                <p>100 Tech Lane, SF, California</p>
+              </div>
+            </div>
+            <div class="contact__info-card">
+              <div class="contact__info-icon contact__info-icon--purple">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
+              </div>
+              <div>
+                <h4>Email Us</h4>
+                <p>hello@abraxis.solutions</p>
+              </div>
+            </div>
+            <div class="contact__info-card">
+              <div class="contact__info-icon contact__info-icon--blue">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+              </div>
+              <div>
+                <h4>Call Support</h4>
+                <p>+1 (800) 123-4567</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== FOOTER ==================== -->
+      <footer class="footer">
+        <div class="container">
+          <div class="footer__grid">
+            <div class="footer__brand">
+              <a href="#" class="footer__logo">
+                <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="32" height="32">
+                  <path d="M20 4L36 12V28L20 36L4 28V12L20 4Z" stroke="url(#fl)" stroke-width="2" fill="none" />
+                  <path d="M20 12L28 16V24L20 28L12 24V16L20 12Z" fill="url(#fl)" />
+                  <defs>
+                    <linearGradient id="fl" x1="4" y1="4" x2="36" y2="36" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#00d4ff" />
+                      <stop offset="0.5" stop-color="#7b2dff" />
+                      <stop offset="1" stop-color="#ff2d7c" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <span>Abraxis</span>
+              </a>
+              <p>Intelligent software architecture for ambitious global brands. We build the future of the web.</p>
+            </div>
+            <div class="footer__links">
+              <div class="footer__column">
+                <h4>Company</h4>
+                <ul>
+                  <li><a href="#about">About Us</a></li>
+                  <li><a href="#careers">Careers</a></li>
+                  <li><a href="#">News &amp; Blog</a></li>
+                  <li><a href="#contact">Contact</a></li>
+                </ul>
+              </div>
+              <div class="footer__column">
+                <h4>Services</h4>
+                <ul>
+                  <li><a href="#services">Web Development</a></li>
+                  <li><a href="#services">Cloud Tech</a></li>
+                  <li><a href="#services">AI &amp; ML</a></li>
+                  <li><a href="#services">Cybersecurity</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="footer__newsletter">
+              <h4>Subscribe</h4>
+              <p>Get the latest insights on tech and software directly to your inbox.</p>
+              <form class="footer__form">
+                <input type="email" placeholder="Email Address" required>
+                <button type="submit" aria-label="Subscribe">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </form>
+            </div>
+          </div>
+          <div class="footer__bottom">
+            <p>&copy; 2026 Abraxis Solutions Global. All rights reserved.</p>
+            <div class="footer__legal">
+              <a href="#">Privacy Policy</a>
+              <a href="#">Terms of Service</a>
+            </div>
+            <div class="footer__socials">
+              <a href="#" aria-label="Twitter"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg></a>
+              <a href="#" aria-label="GitHub"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                </svg></a>
+              <a href="#" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                </svg></a>
+              <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                </svg></a>
+            </div>
+          </div>
+        </div>
+        <div class="footer__glow"></div>
+      </footer>
+
     </div>
-  </section>
+  </div>
 
-  <!-- 10. Contact Us -->
-  <section id="contact" class="py-32 relative bg-darkBlue">
-    <div class="container mx-auto px-6 max-w-5xl">
-      <div class="glass-card p-10 md:p-16 border-neon/30 relative overflow-hidden" data-aos="zoom-in">
-        <div class="absolute -top-40 -right-40 w-96 h-96 bg-neon/20 rounded-full blur-[100px]"></div>
-        <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-purple-600/20 rounded-full blur-[100px]"></div>
+  <!-- GSAP & Plugins -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
 
-        <div class="text-center relative z-10 mb-12">
-          <h2 class="text-4xl md:text-5xl font-display font-bold mb-4">Let's Build <span
-              class="text-gradient">Together</span></h2>
-          <p class="text-gray-400 text-lg">Tell us about your next big project. Our experts will assess your needs
-            instantly.</p>
-        </div>
+  <!-- Swiper -->
+  <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-        <form class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="col-span-1">
-            <label class="block text-xs uppercase tracking-widest text-gray-500 font-bold mb-2">Full Name</label>
-            <input type="text" class="w-full modern-input rounded-xl px-4 py-4 hover-trigger" placeholder="John Doe">
-          </div>
-          <div class="col-span-1">
-            <label class="block text-xs uppercase tracking-widest text-gray-500 font-bold mb-2">Email Address</label>
-            <input type="email" class="w-full modern-input rounded-xl px-4 py-4 hover-trigger"
-              placeholder="john@company.com">
-          </div>
-          <div class="col-span-1 md:col-span-2">
-            <label class="block text-xs uppercase tracking-widest text-gray-500 font-bold mb-2">Company Name</label>
-            <input type="text" class="w-full modern-input rounded-xl px-4 py-4 hover-trigger"
-              placeholder="Company Ltd.">
-          </div>
-          <div class="col-span-1 md:col-span-2">
-            <label class="block text-xs uppercase tracking-widest text-gray-500 font-bold mb-2">Project Details</label>
-            <textarea rows="4" class="w-full modern-input rounded-xl px-4 py-4 hover-trigger resize-none"
-              placeholder="Briefly describe your requirements..."></textarea>
-          </div>
-          <div class="col-span-1 md:col-span-2 mt-4 text-center">
-            <button type="button"
-              class="border-animate-btn text-white px-12 py-5 rounded-full font-bold shadow-[0_0_20px_rgba(0,191,255,0.4)] w-full md:w-auto hover-trigger text-lg hover:scale-105 transition-transform flex items-center justify-center gap-3 mx-auto">
-              Send Message <i data-lucide="send" class="w-5 h-5"></i>
-            </button>
-          </div>
-        </form>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20 text-center relative z-10" data-aos="fade-up">
-        <div>
-          <i data-lucide="map-pin" class="w-8 h-8 text-neon mx-auto mb-4"></i>
-          <h4 class="text-lg font-bold mb-1">Global HQ</h4>
-          <p class="text-gray-400">100 Tech Lane, SF, California</p>
-        </div>
-        <div>
-          <i data-lucide="mail" class="w-8 h-8 text-purple-400 mx-auto mb-4"></i>
-          <h4 class="text-lg font-bold mb-1">Email Us</h4>
-          <p class="text-gray-400">hello@abarix.solutions</p>
-        </div>
-        <div>
-          <i data-lucide="phone" class="w-8 h-8 text-blue-400 mx-auto mb-4"></i>
-          <h4 class="text-lg font-bold mb-1">Call Support</h4>
-          <p class="text-gray-400">+1 (800) 123-4567</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="bg-navy border-t border-white/10 pt-20 pb-10 relative overflow-hidden">
-    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-32 bg-neon/10 blur-[100px] rounded-[100%]">
-    </div>
-    <div class="container mx-auto px-6 max-w-7xl relative z-10">
-      <div
-        class="flex flex-col md:flex-row justify-between items-center md:items-start gap-10 mb-16 border-b border-white/5 pb-16 text-center md:text-left">
-        <div class="md:w-1/3">
-          <a href="#"
-            class="text-3xl font-display font-bold text-gradient flex items-center justify-center md:justify-start gap-2 mb-6">
-            <i data-lucide="hexagon" class="text-neon w-8 h-8"></i> Abarix
-          </a>
-          <p class="text-gray-400 text-sm leading-relaxed max-w-md mx-auto md:mx-0">
-            Intelligent software architecture for ambitious global brands. We build the future of the web.
-          </p>
-        </div>
-        <div class="flex gap-16 text-sm">
-          <div>
-            <h4 class="text-white font-bold tracking-wider uppercase mb-6">Company</h4>
-            <ul class="space-y-4 text-gray-400">
-              <li><a href="#about" class="hover:text-neon transition-colors">About Us</a></li>
-              <li><a href="#careers" class="hover:text-neon transition-colors">Careers</a></li>
-              <li><a href="#" class="hover:text-neon transition-colors">News & Blog</a></li>
-              <li><a href="#contact" class="hover:text-neon transition-colors">Contact</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="text-white font-bold tracking-wider uppercase mb-6">Services</h4>
-            <ul class="space-y-4 text-gray-400">
-              <li><a href="#services" class="hover:text-neon transition-colors">Web Dev</a></li>
-              <li><a href="#services" class="hover:text-neon transition-colors">Cloud Tech</a></li>
-              <li><a href="#services" class="hover:text-neon transition-colors">AI & ML</a></li>
-              <li><a href="#services" class="hover:text-neon transition-colors">Cybersecurity</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="md:w-1/4">
-          <h4 class="text-white font-bold tracking-wider uppercase mb-6 text-center md:text-left">Subscribe</h4>
-          <p class="text-gray-400 text-xs mb-4 text-center md:text-left">Get the latest insights on tech and software
-            directly to your inbox.</p>
-          <div class="flex bg-white/5 border border-white/10 rounded-full overflow-hidden p-1">
-            <input type="email" placeholder="Email Address"
-              class="bg-transparent border-none outline-none text-white px-4 py-2 w-full text-sm">
-            <button class="bg-neon text-navy px-4 py-2 rounded-full font-bold hover:bg-white transition-colors">
-              <i data-lucide="arrow-right" class="w-4 h-4"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div class="flex flex-col md:flex-row justify-between items-center pt-6 text-gray-500 text-xs">
-        <p>&copy; 2026 Abarix Solutions Global. All rights reserved.</p>
-        <div class="flex gap-6 mt-4 md:mt-0">
-          <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
-          <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
-        </div>
-        <div class="flex gap-4 mt-4 md:mt-0">
-          <a href="#" class="hover:text-neon transition-colors hover-trigger"><i data-lucide="twitter"
-              class="w-4 h-4"></i></a>
-          <a href="#" class="hover:text-neon transition-colors hover-trigger"><i data-lucide="github"
-              class="w-4 h-4"></i></a>
-          <a href="#" class="hover:text-neon transition-colors hover-trigger"><i data-lucide="linkedin"
-              class="w-4 h-4"></i></a>
-          <a href="#" class="hover:text-neon transition-colors hover-trigger"><i data-lucide="instagram"
-              class="w-4 h-4"></i></a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- JS Core Libraries via CDN -->
-  <!-- GSAP & ScrollTrigger -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <!-- Lenis Smooth Scroll -->
-  <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
-  <!-- Three.js (For Vanta.js) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-  <!-- Vanta.Net Background -->
-  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
-  <!-- Swiper.js Slider -->
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <!-- AOS Animate On Scroll -->
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-
-  <!-- Custom Logic -->
-  <script src="main.js"></script>
+  <!-- Main JS -->
+  <script defer src="main.js"></script>
 </body>
 
 </html>
