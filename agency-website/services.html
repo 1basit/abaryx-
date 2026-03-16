@@ -1,213 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Services | Abarix Solutions</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Services | Abraxis Solutions</title>
+  <meta name="description" content="Abraxis Solutions — Full-spectrum digital engineering services including custom development, AI/ML, cloud architecture, and cybersecurity.">
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <!-- AOS CSS -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
-    <!-- Tailwind CSS (CDN for prototype) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        navy: '#0A0F1C',
-                        neon: '#00BFFF',
-                        darkBlue: '#0D1426',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        display: ['Space Grotesk', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-
-    <!-- Custom Styles -->
-    <link rel="stylesheet" href="styles.css">
+  <!-- Main CSS (shared with index) -->
+  <link rel="stylesheet" href="styles.css">
 </head>
+<body>
 
-<body class="bg-navy text-white antialiased selection:bg-neon/30 selection:text-white relative">
+  <!-- Scroll Progress -->
+  <div class="scroll-progress" id="scroll-progress"></div>
 
-    <!-- Global Background Animation Base -->
-    <div class="fixed inset-0 pointer-events-none z-[-2]">
-        <div class="absolute inset-0 bg-gradient-to-br from-navy via-[#0c152d] to-navy opacity-80"></div>
+  <!-- ==================== HERO ==================== -->
+  <section class="services-page-hero">
+    <div class="services-page-hero__card">
+
+      <!-- Nav -->
+      <nav class="services-page-nav">
+        <a href="index.html" class="services-page-nav__logo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+            <path d="M2 17l10 5 10-5"/>
+            <path d="M2 12l10 5 10-5"/>
+          </svg>
+          <span>Abraxis</span>
+        </a>
+        <div class="services-page-nav__links">
+          <a href="index.html#about">About</a>
+          <a href="services.html" class="active">Services</a>
+          <a href="index.html#solutions">Solutions</a>
+          <a href="index.html#why-choose-us">Why Choose Us</a>
+          <a href="index.html#stack">Tech</a>
+          <a href="index.html#ai-automation">AI Automation</a>
+          <a href="index.html#careers">Careers</a>
+        </div>
+        <a href="index.html#contact" class="services-page-nav__cta">Let's Talk</a>
+      </nav>
+
+      <!-- Glow -->
+      <div class="services-page-hero__glow"></div>
+
+      <!-- Stars -->
+      <div class="hero-stars" id="hero-stars"></div>
+
+      <!-- Content -->
+      <div class="services-page-hero__content">
+        <div class="services-page-hero__badge">
+          <span class="services-page-hero__badge-dot"></span>
+          <span>Our Capabilities</span>
+        </div>
+
+        <h1 class="services-page-hero__title">Engineering Digital Excellence</h1>
+
+        <p class="services-page-hero__subtitle">
+          Enterprise software, AI-powered systems, and scalable cloud architectures crafted to accelerate your digital transformation.
+        </p>
+
+        <div class="services-page-hero__tags">
+          <span class="services-page-hero__tag services-page-hero__tag--blue">AI</span>
+          <span class="services-page-hero__tag services-page-hero__tag--cyan">CLOUD</span>
+          <span class="services-page-hero__tag services-page-hero__tag--purple">DEVOPS</span>
+          <span class="services-page-hero__tag services-page-hero__tag--pink">SAAS</span>
+          <span class="services-page-hero__tag services-page-hero__tag--emerald">SECURITY</span>
+          <span class="services-page-hero__tag services-page-hero__tag--amber">AUTOMATION</span>
+          <span class="services-page-hero__tag services-page-hero__tag--blue">DATA</span>
+        </div>
+
+        <div class="services-page-hero__actions">
+          <a href="index.html#contact" class="btn-primary-pill">Start Your Project</a>
+          <a href="index.html#solutions" class="btn-secondary-pill">Explore Solutions</a>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <!-- Global Elements -->
-    <div class="custom-cursor hidden md:block"></div>
-    <div class="scroll-progress"></div>
+  <!-- ==================== DIVIDER ==================== -->
+  <div class="services-divider"></div>
 
-    <!-- Sticky Navbar -->
-    <nav
-        class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-6 px-6 md:px-12 lg:px-24 flex justify-between items-center border-b border-white/5 bg-navy/80 backdrop-blur-md">
-        <a href="index.html"
-            class="text-2xl font-display font-bold text-gradient flex items-center gap-2 hover-trigger">
-            <i data-lucide="hexagon" class="text-neon w-8 h-8"></i> Abarix
+  <!-- ==================== SERVICE CATEGORIES ==================== -->
+  <section class="services-page-categories">
+    <div class="container">
+
+      <!-- Section Header -->
+      <div class="section-header">
+        <span class="section-label">What We Build</span>
+        <h2 class="section-title">Our Service <span class="gradient-text">Categories</span></h2>
+      </div>
+
+      <!-- ── Category 1: Development ── -->
+      <div class="services-category">
+        <div class="services-category__header">
+          <div class="services-category__icon services-category__icon--cyan">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <div>
+            <h3 class="services-category__title">Development</h3>
+            <div class="services-category__line services-category__line--cyan"></div>
+          </div>
+        </div>
+        <div class="services-category__grid">
+          <div class="service-detail-card" style="--card-accent: linear-gradient(90deg, #00b4d8, #7c3aed)">
+            <h4>Full-Stack Web Applications</h4>
+            <p>Production-grade React, Next.js, and Node.js applications with TypeScript, real-time capabilities, and API-first architecture.</p>
+            <div class="service-detail-card__tags">
+              <span>React</span><span>Next.js</span><span>Node.js</span><span>TypeScript</span>
+            </div>
+          </div>
+          <div class="service-detail-card" style="--card-accent: linear-gradient(90deg, #00b4d8, #7c3aed)">
+            <h4>Mobile App Development</h4>
+            <p>Cross-platform mobile apps with React Native and Flutter — native performance with shared codebases for iOS and Android.</p>
+            <div class="service-detail-card__tags">
+              <span>React Native</span><span>Flutter</span><span>iOS</span><span>Android</span>
+            </div>
+          </div>
+          <div class="service-detail-card" style="--card-accent: linear-gradient(90deg, #00b4d8, #7c3aed)">
+            <h4>API & Microservices</h4>
+            <p>RESTful and GraphQL APIs with event-driven microservices, message queues, and service mesh architecture for complex systems.</p>
+            <div class="service-detail-card__tags">
+              <span>GraphQL</span><span>REST</span><span>gRPC</span><span>Kafka</span>
+            </div>
+          </div>
+          <div class="service-detail-card" style="--card-accent: linear-gradient(90deg, #00b4d8, #7c3aed)">
+            <h4>E-Commerce & SaaS Platforms</h4>
+            <p>Custom e-commerce solutions and multi-tenant SaaS platforms with subscription billing, analytics dashboards, and admin portals.</p>
+            <div class="service-detail-card__tags">
+              <span>Stripe</span><span>Multi-tenant</span><span>SaaS</span><span>Headless CMS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Category 2: AI & Intelligence ── -->
+      <div class="services-category">
+        <div class="services-category__header">
+          <div class="services-category__icon services-category__icon--purple">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <div>
+            <h3 class="services-category__title">AI & Intelligence</h3>
+            <div class="services-category__line services-category__line--purple"></div>
+          </div>
+        </div>
+        <div class="services-category__grid">
+          <div class="service-detail-card" style="--card-accent: linear-gradient(90deg, #7c3aed, #f43f5e)">
+            <h4>Machine Learning Pipelines</h4>
+            <p>End-to-end ML systems — data ingestion, feature engineering, model training, and deployment with monitoring and A/B testing.</p>
+            <div class="service-detail-card__tags">
+              <span>Python</span><span>TensorFlow</span><span>PyTorch</span><span>MLflow</span>
+            </div>
+          </div>
+          <div class="service-detail-card" style="--card-accent: linear-gradient(90deg, #7c3aed, #f43f5e)">
+            <h4>LLM & Generative AI Integration</h4>
+            <p>Custom GPT integrations, RAG systems, AI chatbots, and intelligent document processing powered by large language models.</p>
+            <div class="service-detail-card__tags">
+              <span>OpenAI</span><span>LangChain</span><span>RAG</span><span>Fine-tuning</span>
+            </div>
+          </div>
+          <div class="service-detail-card" style="--card-accent: linear-gradient(90deg, #7c3aed, #f43f5e)">
+            <h4>Computer Vision & NLP</h4>
+            <p>Image recognition, object detection, sentiment analysis, and text extraction systems for automated content processing.</p>
+            <div class="service-detail-card__tags">
+              <span>OpenCV</span><span>YOLO</span><span>spaCy</span><span>Hugging Face</span>
+            </div>
+          </div>
+          <div class="service-detail-card" style="--card-accent: linear-gradient(90deg, #7c3aed, #f43f5e)">
+            <h4>Predictive Analytics & BI</h4>
+            <p>Data-driven forecasting, anomaly detection, and real-time business intelligence dashboards for strategic decision-making.</p>
+            <div class="service-detail-card__tags">
+              <span>Spark</span><span>dbt</span><span>Looker</span><span>Snowflake</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Category 3: Infrastructure & Security ── -->
+      <div class="services-category">
+        <div class="services-category__header">
+          <div class="services-category__icon services-category__icon--emerald">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <h3 class="services-category__title">Infrastructure & Security</h3>
+            <div class="services-category__line services-category__line--emerald"></div>
+          </div>
+        </div>
+        <div class="services-category__grid">
+          <div class="service-detail-card" style="--card-accent: linear-gradient(90deg, #00c896, #00b4d8)">
+            <h4>Cloud Architecture & Migration</h4>
+            <p>Multi-cloud strategy, lift-and-shift migrations, and cloud-native redesigns for AWS, Azure, and Google Cloud Platform.</p>
+            <div class="service-detail-card__tags">
+              <span>AWS</span><span>Azure</span><span>GCP</span><span>Multi-cloud</span>
+            </div>
+          </div>
+          <div class="service-detail-card" style="--card-accent: linear-gradient(90deg, #00c896, #00b4d8)">
+            <h4>DevOps & CI/CD Automation</h4>
+            <p>Automated build, test, and deployment pipelines with infrastructure-as-code, GitOps workflows, and container orchestration.</p>
+            <div class="service-detail-card__tags">
+              <span>Terraform</span><span>Kubernetes</span><span>GitHub Actions</span><span>ArgoCD</span>
+            </div>
+          </div>
+          <div class="service-detail-card" style="--card-accent: linear-gradient(90deg, #00c896, #00b4d8)">
+            <h4>Cybersecurity & Compliance</h4>
+            <p>Zero-trust security architecture, penetration testing, vulnerability assessment, and SOC 2 / HIPAA / GDPR compliance.</p>
+            <div class="service-detail-card__tags">
+              <span>Zero Trust</span><span>SOC 2</span><span>Pen Testing</span><span>GDPR</span>
+            </div>
+          </div>
+          <div class="service-detail-card" style="--card-accent: linear-gradient(90deg, #00c896, #00b4d8)">
+            <h4>Performance & Reliability Engineering</h4>
+            <p>Load testing, chaos engineering, observability stacks, and SRE practices to achieve 99.99% uptime guarantees.</p>
+            <div class="service-detail-card__tags">
+              <span>Grafana</span><span>Prometheus</span><span>Datadog</span><span>SRE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== CTA ==================== -->
+  <section class="services-page-cta">
+    <div class="services-page-cta__orb services-page-cta__orb--1"></div>
+    <div class="services-page-cta__orb services-page-cta__orb--2"></div>
+    <div class="services-page-cta__inner">
+      <h2>Ready to get <span class="gradient-text">started</span>?</h2>
+      <p>Tell us about your project and we'll match you with the right team of engineers, architects, and designers.</p>
+      <a href="index.html#contact" class="services-page-cta__btn">Start Your Project →</a>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Abraxis
         </a>
-        <div class="hidden lg:flex gap-8 text-sm font-medium text-gray-300">
-            <a href="index.html#about"
-                class="hover:text-blue-400 nav-link-animated transition-colors hover-trigger">About</a>
-            <a href="services.html"
-                class="text-blue-400 nav-link-animated active transition-colors hover-trigger">Services</a>
-            <a href="index.html#solutions"
-                class="hover:text-blue-400 nav-link-animated transition-colors hover-trigger">Solutions</a>
-            <a href="index.html#why-choose-us"
-                class="hover:text-blue-400 nav-link-animated transition-colors hover-trigger">Why Choose Us</a>
-            <a href="index.html#ai-automation"
-                class="hover:text-blue-400 nav-link-animated transition-colors hover-trigger">AI Automation</a>
-            <a href="index.html#stack"
-                class="hover:text-blue-400 nav-link-animated transition-colors hover-trigger">Tech</a>
-            <a href="index.html#careers"
-                class="hover:text-blue-400 nav-link-animated transition-colors hover-trigger">Careers</a>
-        </div>
-        <a href="index.html#contact"
-            class="hidden md:flex btn-glow glass-panel text-white px-6 py-2.5 rounded-full font-medium hover:text-neon items-center gap-2 hover-trigger">
-            Let's Talk <i data-lucide="arrow-right" class="w-4 h-4"></i>
-        </a>
-        <button class="lg:hidden text-white">
-            <i data-lucide="menu" class="w-6 h-6"></i>
-        </button>
-    </nav>
+        <p>Intelligent software architecture for ambitious global brands.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Navigation</div>
+        <a href="index.html#about">About</a>
+        <a href="services.html">Services</a>
+        <a href="index.html#solutions">Solutions</a>
+        <a href="index.html#stack">Technology</a>
+        <a href="index.html#careers">Careers</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Company</div>
+        <a href="index.html#why-choose-us">Why Choose Us</a>
+        <a href="index.html#ai-automation">AI Automation</a>
+        <a href="index.html#testimonials">Testimonials</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contact</div>
+        <a href="index.html#contact">Start Your Project</a>
+        <a href="mailto:hello@abraxis.solutions">hello@abraxis.solutions</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Abraxis. All rights reserved.</p>
+      <p>Built with precision.</p>
+    </div>
+  </footer>
 
-    <!-- 🔹 A. SERVICES HERO -->
-    <section id="services-hero"
-        class="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-navy to-[#05080f] pt-32 pb-20">
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
-        <!-- Mouse Glow Wrap -->
-        <div id="hero-mouse-glow"
-            class="absolute top-0 left-0 w-[500px] h-[500px] bg-blue-500/15 rounded-full blur-[120px] pointer-events-none hidden md:block">
-        </div>
-
-        <!-- Radial Glow Background -->
-        <div
-            class="absolute -top-40 -left-40 w-[600px] h-[600px] bg-blue-600/20 rounded-full blur-[140px] animate-[borderGlowPulse_4s_infinite]">
-        </div>
-        <div
-            class="absolute -bottom-40 -right-40 w-[600px] h-[600px] bg-cyan-500/20 rounded-full blur-[140px] animate-[borderGlowPulse_5s_infinite]">
-        </div>
-        <!-- Extra violet orb -->
-        <div
-            class="absolute top-1/2 left-1/4 w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[120px] animate-[borderGlowPulse_6s_infinite]">
-        </div>
-
-        <!-- Subtle Grid Overlay -->
-        <div
-            class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none"
-            style="mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 100%);">
-        </div>
-
-        <!-- Vertical Light Beam -->
-        <div
-            class="absolute top-0 left-1/2 -translate-x-1/2 w-[2px] h-full bg-gradient-to-b from-blue-500/40 via-transparent to-transparent pointer-events-none">
-        </div>
-
-        <!-- Content -->
-        <div class="relative z-10 text-center max-w-5xl px-6 flex flex-col items-center">
-
-            <!-- Glowing badge -->
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-blue-500/20 bg-blue-500/5 backdrop-blur-sm mb-8" data-aos="fade-down" data-aos-delay="0">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(0,255,170,0.5)]"></span>
-                <span class="text-xs font-semibold tracking-widest uppercase text-blue-300">Our Capabilities</span>
-            </div>
-
-            <h1 class="text-5xl md:text-7xl font-display font-black leading-tight bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-600 bg-clip-text text-transparent animate-[gradientMove_6s_linear_infinite] [background-size:200%_auto] drop-shadow-[0_0_30px_rgba(0,191,255,0.3)]"
-                data-aos="fade-down" data-aos-delay="100">
-                Engineering Digital Excellence
-            </h1>
-
-            <p class="mt-8 text-lg md:text-xl text-gray-400 max-w-3xl mx-auto font-light leading-relaxed"
-                data-aos="fade-up" data-aos-delay="200">
-                Enterprise software, AI-powered systems, and scalable cloud architectures
-                crafted to accelerate your digital transformation.
-            </p>
-
-            <!-- Floating Tech Keywords -->
-            <div class="mt-8 flex flex-wrap justify-center gap-3" data-aos="fade-up" data-aos-delay="300">
-                <span class="px-3 py-1.5 text-xs font-semibold tracking-wider text-blue-300 border border-blue-500/20 rounded-full bg-blue-500/5 hover:bg-blue-500/10 hover:border-blue-400/40 transition-all duration-300 hover:-translate-y-0.5">AI</span>
-                <span class="px-3 py-1.5 text-xs font-semibold tracking-wider text-cyan-300 border border-cyan-500/20 rounded-full bg-cyan-500/5 hover:bg-cyan-500/10 hover:border-cyan-400/40 transition-all duration-300 hover:-translate-y-0.5">CLOUD</span>
-                <span class="px-3 py-1.5 text-xs font-semibold tracking-wider text-purple-300 border border-purple-500/20 rounded-full bg-purple-500/5 hover:bg-purple-500/10 hover:border-purple-400/40 transition-all duration-300 hover:-translate-y-0.5">DEVOPS</span>
-                <span class="px-3 py-1.5 text-xs font-semibold tracking-wider text-pink-300 border border-pink-500/20 rounded-full bg-pink-500/5 hover:bg-pink-500/10 hover:border-pink-400/40 transition-all duration-300 hover:-translate-y-0.5">SAAS</span>
-                <span class="px-3 py-1.5 text-xs font-semibold tracking-wider text-emerald-300 border border-emerald-500/20 rounded-full bg-emerald-500/5 hover:bg-emerald-500/10 hover:border-emerald-400/40 transition-all duration-300 hover:-translate-y-0.5">SECURITY</span>
-                <span class="px-3 py-1.5 text-xs font-semibold tracking-wider text-amber-300 border border-amber-500/20 rounded-full bg-amber-500/5 hover:bg-amber-500/10 hover:border-amber-400/40 transition-all duration-300 hover:-translate-y-0.5">AUTOMATION</span>
-                <span class="px-3 py-1.5 text-xs font-semibold tracking-wider text-blue-300 border border-blue-500/20 rounded-full bg-blue-500/5 hover:bg-blue-500/10 hover:border-blue-400/40 transition-all duration-300 hover:-translate-y-0.5">DATA</span>
-            </div>
-
-            <!-- CTA Buttons -->
-            <div class="mt-12 flex flex-col sm:flex-row justify-center gap-6" data-aos="fade-up" data-aos-delay="400">
-                <a href="index.html#contact" class="relative px-8 py-4 rounded-xl bg-neon text-navy font-bold 
-                          shadow-[0_0_30px_rgba(0,191,255,0.4)] hover:bg-white hover:text-navy
-                          hover:scale-105 hover:shadow-[0_0_50px_rgba(0,191,255,0.5)] transition-all duration-300 hover-trigger
-                          overflow-hidden group">
-                    <span class="relative z-10">Start Your Project</span>
-                    <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                </a>
-
-                <a href="index.html#solutions" class="px-8 py-4 rounded-xl border border-neon/30 font-bold
-                          text-blue-400 hover:bg-neon/10 hover:border-neon hover:shadow-[0_0_20px_rgba(0,191,255,0.2)]
-                          transition-all duration-300 hover-trigger">
-                    Explore Solutions
-                </a>
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- 🔹 FILLER: Animated Glowing Divider -->
-    <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50 relative z-10"
-        data-aos="fade-in"></div>
-
-    <!-- 🔹 B. ORGANIZE SERVICES INTO CATEGORIES -->
-    <section class="py-24 relative overflow-hidden z-0">
-        <!-- Radial Glow Filler Background -->
-        <div class="absolute inset-0 -z-10 pointer-events-none">
-            <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[140px]"></div>
-            <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-500/5 rounded-full blur-[120px]"></div>
-        </div>
-
-        <div class="container mx-auto px-6 max-w-7xl relative z-10">
-
-            <!-- Section header -->
-            <div class="text-center mb-16" data-aos="fade-up">
-                <span class="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.2em] uppercase text-cyan-400 mb-4">
-                    <span class="w-4 h-[2px] bg-cyan-400 rounded-full shadow-[0_0_8px_rgba(0,212,255,0.6)]"></span>
-                    What We Build
-                    <span class="w-4 h-[2px] bg-cyan-400 rounded-full shadow-[0_0_8px_rgba(0,212,255,0.6)]"></span>
-                </span>
-                <h2 class="text-4xl md:text-5xl font-display font-bold bg-gradient-to-r from-white via-blue-200 to-white bg-clip-text text-transparent">
-                    Our Service Categories
-                </h2>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-16 lg:gap-10">
-
-                <!-- 🧠 1. Development -->
-                <div class="flex flex-col gap-6" data-aos="fade-up" data-aos-delay="0">
-                    <div class="mb-4">
-                        <h2
-                            class="text-3xl font-display font-bold mb-3 flex items-center gap-3 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-600 bg-clip-text text-transparent animate-[gradientMove_6s_linear_infinite] [background-size:200%_auto]">
-                            <div class="w-10 h-10 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center shadow-[0_0_15px_rgba(0,212,255,0.15)]">
-                                <i data-lucide="code-2" class="text-neon w-5 h-5"></i>
-                            </div>
-                            Development
-                        </h2>
-                        <div
-                            class="h-[2px] w-1/3 bg-gradient-to-r from-neon to-transparent rounded-full shadow-[0_0_10px_rgba(0,191,255,0.8)]">
-                        </div>
-                    </div>
-
-                    <div class="glass-card
+  <!-- Main JS (shared) -->
+  <script src="main.js" defer></script>
+</body>
+</html>
