@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: abaryx-website
+    runtime: node
+    plan: free
+    rootDir: agency-website/server
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: ZOHO_EMAIL
+        sync: false
+      - key: ZOHO_APP_PASSWORD
+        sync: false
+      - key: ZOHO_SMTP_HOST
+        value: smtp.zoho.com
+      - key: ZOHO_SMTP_PORT
+        value: 465
+      - key: FROM_NAME
+        value: Abraxis Solutions
+      - key: OWNER_EMAIL
+        value: abdulbasit@abaryx.com
+      - key: ALLOWED_ORIGIN
+        value: https://abaryx.com

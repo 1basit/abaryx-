@@ -4,15 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Our Services | Abraxis Solutions</title>
-  <meta name="description" content="Abraxis Solutions — Full-spectrum digital engineering services including custom development, AI/ML, cloud architecture, and cybersecurity.">
+  <meta name="description" content="Abraxis Solutions — full-spectrum AI and software engineering services: custom development, AI & intelligence, and infrastructure & security.">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Main CSS (shared with index) -->
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=22">
 </head>
 <body>
 
@@ -20,116 +20,121 @@
   <div class="scroll-progress" id="scroll-progress"></div>
 
   <!-- ==================== HERO ==================== -->
-  <section class="services-page-hero">
-    <div class="services-page-hero__card">
+  <section class="hero-wrapper" style="min-height: 78vh;">
+    <div class="hero-card" style="min-height: calc(78vh - 1.7rem);">
 
-      <!-- Nav -->
-      <nav class="services-page-nav">
-        <a href="index.html" class="services-page-nav__logo">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-            <path d="M2 17l10 5 10-5"/>
-            <path d="M2 12l10 5 10-5"/>
-          </svg>
-          <span>Abraxis</span>
+      <nav class="floating-nav" id="main-nav">
+        <a href="index.html" class="floating-nav-logo">
+          <img src="logo-mark.png" alt="" class="logo-icon">
+          <span class="logo-wordmark">abaryx</span>
         </a>
-        <div class="services-page-nav__links">
+        <div class="floating-nav-links">
           <a href="index.html#about">About</a>
-          <a href="services.html" class="active">Services</a>
-          <a href="index.html#solutions">Solutions</a>
-          <a href="index.html#why-choose-us">Why Choose Us</a>
-          <a href="index.html#stack">Tech</a>
-          <a href="index.html#ai-automation">AI Automation</a>
-          <a href="index.html#careers">Careers</a>
+          <a href="services.html">Services</a>
+          <a href="index.html#process">Our Process</a>
+          <a href="index.html#contact">Contact</a>
         </div>
-        <a href="index.html#contact" class="services-page-nav__cta">Let's Talk</a>
+        <a href="start-project.html" class="btn btn-dark btn-sm">Start a Project</a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
       </nav>
 
-      <!-- Glow -->
-      <div class="services-page-hero__glow"></div>
-
-      <!-- Stars -->
-      <div class="hero-stars" id="hero-stars"></div>
-
-      <!-- Content -->
-      <div class="services-page-hero__content">
-        <div class="services-page-hero__badge">
-          <span class="services-page-hero__badge-dot"></span>
-          <span>Our Capabilities</span>
+      <div class="hero-content services-hero-content">
+        <div class="eyebrow eyebrow--on-dark">
+          <span class="eyebrow-icon">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6L22 9.6l-5 4.9 1.2 7-6.2-3.4L5.8 21.5 7 14.5l-5-4.9 7.1-1z"/></svg>
+          </span>
+          <span>Full-Stack Expertise</span>
         </div>
 
-        <h1 class="services-page-hero__title">Engineering Digital Excellence</h1>
+        <h1 class="hero-heading" data-split style="font-size: clamp(2.4rem, 5.4vw, 4.25rem);">Engineering Digital <em>Excellence</em></h1>
 
-        <p class="services-page-hero__subtitle">
-          Enterprise software, AI-powered systems, and scalable cloud architectures crafted to accelerate your digital transformation.
+        <p class="hero-subtext" data-split-fade>
+          Enterprise software, AI-powered systems, and scalable cloud architecture crafted to accelerate your digital transformation.
         </p>
 
-        <div class="services-page-hero__tags">
-          <span class="services-page-hero__tag services-page-hero__tag--blue">AI</span>
-          <span class="services-page-hero__tag services-page-hero__tag--cyan">CLOUD</span>
-          <span class="services-page-hero__tag services-page-hero__tag--purple">DEVOPS</span>
-          <span class="services-page-hero__tag services-page-hero__tag--pink">SAAS</span>
-          <span class="services-page-hero__tag services-page-hero__tag--emerald">SECURITY</span>
-          <span class="services-page-hero__tag services-page-hero__tag--amber">AUTOMATION</span>
-          <span class="services-page-hero__tag services-page-hero__tag--blue">DATA</span>
+        <div class="hero-actions" style="margin-bottom: 2.5rem;">
+          <a href="start-project.html" class="btn btn-light">Start Your Project</a>
+          <a href="index.html#solutions" class="btn btn-ghost-light">Explore Solutions</a>
         </div>
 
-        <div class="services-page-hero__actions">
-          <a href="index.html#contact" class="btn-primary-pill">Start Your Project</a>
-          <a href="index.html#solutions" class="btn-secondary-pill">Explore Solutions</a>
+        <div class="marquee-row" style="max-width: 640px; margin: 0 auto;">
+          <div class="marquee-track" style="animation-duration: 22s;">
+            <span class="tag-pill">AI</span>
+            <span class="tag-pill">Cloud</span>
+            <span class="tag-pill">DevOps</span>
+            <span class="tag-pill">SaaS</span>
+            <span class="tag-pill">Security</span>
+            <span class="tag-pill">Automation</span>
+            <span class="tag-pill">Data</span>
+            <span class="tag-pill">AI</span>
+            <span class="tag-pill">Cloud</span>
+            <span class="tag-pill">DevOps</span>
+            <span class="tag-pill">SaaS</span>
+            <span class="tag-pill">Security</span>
+            <span class="tag-pill">Automation</span>
+            <span class="tag-pill">Data</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ==================== DIVIDER ==================== -->
-  <div class="services-divider"></div>
+  <!-- Mobile menu overlay -->
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="index.html#about">About</a>
+    <a href="services.html">Services</a>
+    <a href="index.html#process">Our Process</a>
+    <a href="index.html#contact">Contact</a>
+    <a href="start-project.html" class="nav-mobile-cta">Start a Project</a>
+  </div>
 
   <!-- ==================== SERVICE CATEGORIES ==================== -->
-  <section class="services-page-categories">
+  <section class="section">
     <div class="container">
-
-      <!-- Section Header -->
-      <div class="section-header">
-        <span class="section-label">What We Build</span>
-        <h2 class="section-title">Our Service <span class="gradient-text">Categories</span></h2>
+      <div class="section-head">
+        <div class="eyebrow">
+          <span class="eyebrow-icon">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6L22 9.6l-5 4.9 1.2 7-6.2-3.4L5.8 21.5 7 14.5l-5-4.9 7.1-1z"/></svg>
+          </span>
+          <span>What We Build</span>
+        </div>
+        <h2 class="heading-lg" data-split>Our Service <em>Categories</em></h2>
       </div>
 
-      <!-- ── Category 1: Development ── -->
+      <!-- Development -->
       <div class="services-category">
-        <div class="services-category__header">
-          <div class="services-category__icon services-category__icon--cyan">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        <div class="services-category-header">
+          <div class="services-category-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
           </div>
-          <div>
-            <h3 class="services-category__title">Development</h3>
-            <div class="services-category__line services-category__line--cyan"></div>
-          </div>
+          <h3>Development</h3>
         </div>
-        <div class="services-category__grid">
-          <div class="service-detail-card" style="--card-accent: linear-gradient(90deg, #00b4d8, #7c3aed)">
+        <div class="services-category-grid">
+          <div class="service-detail-card" data-reveal>
             <h4>Full-Stack Web Applications</h4>
             <p>Production-grade React, Next.js, and Node.js applications with TypeScript, real-time capabilities, and API-first architecture.</p>
             <div class="service-detail-card__tags">
               <span>React</span><span>Next.js</span><span>Node.js</span><span>TypeScript</span>
             </div>
           </div>
-          <div class="service-detail-card" style="--card-accent: linear-gradient(90deg, #00b4d8, #7c3aed)">
+          <div class="service-detail-card" data-reveal>
             <h4>Mobile App Development</h4>
             <p>Cross-platform mobile apps with React Native and Flutter — native performance with shared codebases for iOS and Android.</p>
             <div class="service-detail-card__tags">
               <span>React Native</span><span>Flutter</span><span>iOS</span><span>Android</span>
             </div>
           </div>
-          <div class="service-detail-card" style="--card-accent: linear-gradient(90deg, #00b4d8, #7c3aed)">
-            <h4>API & Microservices</h4>
+          <div class="service-detail-card" data-reveal>
+            <h4>API &amp; Microservices</h4>
             <p>RESTful and GraphQL APIs with event-driven microservices, message queues, and service mesh architecture for complex systems.</p>
             <div class="service-detail-card__tags">
               <span>GraphQL</span><span>REST</span><span>gRPC</span><span>Kafka</span>
             </div>
           </div>
-          <div class="service-detail-card" style="--card-accent: linear-gradient(90deg, #00b4d8, #7c3aed)">
-            <h4>E-Commerce & SaaS Platforms</h4>
+          <div class="service-detail-card" data-reveal>
+            <h4>E-Commerce &amp; SaaS Platforms</h4>
             <p>Custom e-commerce solutions and multi-tenant SaaS platforms with subscription billing, analytics dashboards, and admin portals.</p>
             <div class="service-detail-card__tags">
               <span>Stripe</span><span>Multi-tenant</span><span>SaaS</span><span>Headless CMS</span>
@@ -138,41 +143,38 @@
         </div>
       </div>
 
-      <!-- ── Category 2: AI & Intelligence ── -->
+      <!-- AI & Intelligence -->
       <div class="services-category">
-        <div class="services-category__header">
-          <div class="services-category__icon services-category__icon--purple">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        <div class="services-category-header">
+          <div class="services-category-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
           </div>
-          <div>
-            <h3 class="services-category__title">AI & Intelligence</h3>
-            <div class="services-category__line services-category__line--purple"></div>
-          </div>
+          <h3>AI &amp; Intelligence</h3>
         </div>
-        <div class="services-category__grid">
-          <div class="service-detail-card" style="--card-accent: linear-gradient(90deg, #7c3aed, #f43f5e)">
+        <div class="services-category-grid">
+          <div class="service-detail-card" data-reveal>
             <h4>Machine Learning Pipelines</h4>
             <p>End-to-end ML systems — data ingestion, feature engineering, model training, and deployment with monitoring and A/B testing.</p>
             <div class="service-detail-card__tags">
               <span>Python</span><span>TensorFlow</span><span>PyTorch</span><span>MLflow</span>
             </div>
           </div>
-          <div class="service-detail-card" style="--card-accent: linear-gradient(90deg, #7c3aed, #f43f5e)">
-            <h4>LLM & Generative AI Integration</h4>
+          <div class="service-detail-card" data-reveal>
+            <h4>LLM &amp; Generative AI Integration</h4>
             <p>Custom GPT integrations, RAG systems, AI chatbots, and intelligent document processing powered by large language models.</p>
             <div class="service-detail-card__tags">
               <span>OpenAI</span><span>LangChain</span><span>RAG</span><span>Fine-tuning</span>
             </div>
           </div>
-          <div class="service-detail-card" style="--card-accent: linear-gradient(90deg, #7c3aed, #f43f5e)">
-            <h4>Computer Vision & NLP</h4>
+          <div class="service-detail-card" data-reveal>
+            <h4>Computer Vision &amp; NLP</h4>
             <p>Image recognition, object detection, sentiment analysis, and text extraction systems for automated content processing.</p>
             <div class="service-detail-card__tags">
               <span>OpenCV</span><span>YOLO</span><span>spaCy</span><span>Hugging Face</span>
             </div>
           </div>
-          <div class="service-detail-card" style="--card-accent: linear-gradient(90deg, #7c3aed, #f43f5e)">
-            <h4>Predictive Analytics & BI</h4>
+          <div class="service-detail-card" data-reveal>
+            <h4>Predictive Analytics &amp; BI</h4>
             <p>Data-driven forecasting, anomaly detection, and real-time business intelligence dashboards for strategic decision-making.</p>
             <div class="service-detail-card__tags">
               <span>Spark</span><span>dbt</span><span>Looker</span><span>Snowflake</span>
@@ -181,41 +183,38 @@
         </div>
       </div>
 
-      <!-- ── Category 3: Infrastructure & Security ── -->
+      <!-- Infrastructure & Security -->
       <div class="services-category">
-        <div class="services-category__header">
-          <div class="services-category__icon services-category__icon--emerald">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <div class="services-category-header">
+          <div class="services-category-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
-          <div>
-            <h3 class="services-category__title">Infrastructure & Security</h3>
-            <div class="services-category__line services-category__line--emerald"></div>
-          </div>
+          <h3>Infrastructure &amp; Security</h3>
         </div>
-        <div class="services-category__grid">
-          <div class="service-detail-card" style="--card-accent: linear-gradient(90deg, #00c896, #00b4d8)">
-            <h4>Cloud Architecture & Migration</h4>
+        <div class="services-category-grid">
+          <div class="service-detail-card" data-reveal>
+            <h4>Cloud Architecture &amp; Migration</h4>
             <p>Multi-cloud strategy, lift-and-shift migrations, and cloud-native redesigns for AWS, Azure, and Google Cloud Platform.</p>
             <div class="service-detail-card__tags">
               <span>AWS</span><span>Azure</span><span>GCP</span><span>Multi-cloud</span>
             </div>
           </div>
-          <div class="service-detail-card" style="--card-accent: linear-gradient(90deg, #00c896, #00b4d8)">
-            <h4>DevOps & CI/CD Automation</h4>
+          <div class="service-detail-card" data-reveal>
+            <h4>DevOps &amp; CI/CD Automation</h4>
             <p>Automated build, test, and deployment pipelines with infrastructure-as-code, GitOps workflows, and container orchestration.</p>
             <div class="service-detail-card__tags">
               <span>Terraform</span><span>Kubernetes</span><span>GitHub Actions</span><span>ArgoCD</span>
             </div>
           </div>
-          <div class="service-detail-card" style="--card-accent: linear-gradient(90deg, #00c896, #00b4d8)">
-            <h4>Cybersecurity & Compliance</h4>
+          <div class="service-detail-card" data-reveal>
+            <h4>Cybersecurity &amp; Compliance</h4>
             <p>Zero-trust security architecture, penetration testing, vulnerability assessment, and SOC 2 / HIPAA / GDPR compliance.</p>
             <div class="service-detail-card__tags">
               <span>Zero Trust</span><span>SOC 2</span><span>Pen Testing</span><span>GDPR</span>
             </div>
           </div>
-          <div class="service-detail-card" style="--card-accent: linear-gradient(90deg, #00c896, #00b4d8)">
-            <h4>Performance & Reliability Engineering</h4>
+          <div class="service-detail-card" data-reveal>
+            <h4>Performance &amp; Reliability Engineering</h4>
             <p>Load testing, chaos engineering, observability stacks, and SRE practices to achieve 99.99% uptime guarantees.</p>
             <div class="service-detail-card__tags">
               <span>Grafana</span><span>Prometheus</span><span>Datadog</span><span>SRE</span>
@@ -227,50 +226,58 @@
     </div>
   </section>
 
-  <!-- ==================== CTA ==================== -->
-  <section class="services-page-cta">
-    <div class="services-page-cta__orb services-page-cta__orb--1"></div>
-    <div class="services-page-cta__orb services-page-cta__orb--2"></div>
-    <div class="services-page-cta__inner">
-      <h2>Ready to get <span class="gradient-text">started</span>?</h2>
-      <p>Tell us about your project and we'll match you with the right team of engineers, architects, and designers.</p>
-      <a href="index.html#contact" class="services-page-cta__btn">Start Your Project →</a>
+  <!-- ==================== CTA (dark panel) ==================== -->
+  <section class="section">
+    <div class="container">
+      <div class="panel-dark">
+        <div class="join-inner">
+          <h2 class="heading-lg text-on-dark" data-split>Ready to get <em>started</em>?</h2>
+          <p class="text-on-dark-muted" style="margin-bottom: 2.25rem;">Tell us about your project and we'll match you with the right team of engineers, architects, and designers.</p>
+          <div class="hero-actions">
+            <a href="start-project.html" class="btn btn-light">Start Your Project</a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- ==================== FOOTER ==================== -->
-  <footer>
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a href="index.html" class="footer-logo">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-          Abraxis
-        </a>
-        <p>Intelligent software architecture for ambitious global brands.</p>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo">
+            <img src="logo-mark.png" alt="" class="logo-icon">
+            <span class="logo-wordmark">abaryx</span>
+          </a>
+          <p>Intelligent software architecture for ambitious global brands.</p>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Navigation</div>
+          <a href="index.html#about">About</a>
+          <a href="services.html">Services</a>
+          <a href="index.html#process">Our Process</a>
+          <a href="index.html#blog">Blog</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Company</div>
+          <a href="index.html#capabilities">Capabilities</a>
+          <a href="index.html#solutions">Why Abraxis</a>
+          <a href="index.html#contact">Contact</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Stay In The Loop</div>
+          <form class="newsletter-form" id="newsletter-form-footer" style="max-width: 100%; justify-content: flex-start;">
+            <input type="email" class="newsletter-input" placeholder="Your email" required>
+            <button type="submit" class="btn btn-dark btn-sm">Join</button>
+          </form>
+          <p class="newsletter-note" id="newsletter-note-footer">Get engineering insights, monthly.</p>
+        </div>
       </div>
-      <div class="footer-col">
-        <div class="footer-col-title">Navigation</div>
-        <a href="index.html#about">About</a>
-        <a href="services.html">Services</a>
-        <a href="index.html#solutions">Solutions</a>
-        <a href="index.html#stack">Technology</a>
-        <a href="index.html#careers">Careers</a>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Abraxis. All rights reserved.</p>
+        <p>Built with precision.</p>
       </div>
-      <div class="footer-col">
-        <div class="footer-col-title">Company</div>
-        <a href="index.html#why-choose-us">Why Choose Us</a>
-        <a href="index.html#ai-automation">AI Automation</a>
-        <a href="index.html#testimonials">Testimonials</a>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-title">Contact</div>
-        <a href="index.html#contact">Start Your Project</a>
-        <a href="mailto:hello@abraxis.solutions">hello@abraxis.solutions</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 Abraxis. All rights reserved.</p>
-      <p>Built with precision.</p>
     </div>
   </footer>
 
@@ -279,6 +286,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
   <!-- Main JS (shared) -->
-  <script src="main.js" defer></script>
+  <script src="main.js?v=12" defer></script>
 </body>
 </html>

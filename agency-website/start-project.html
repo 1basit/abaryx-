@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Start a Project | Abraxis Solutions</title>
+  <meta name="description" content="Tell us about your project — services, budget, and timeline — and the Abraxis team will follow up within one business day.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Main CSS (shared) -->
+  <link rel="stylesheet" href="styles.css?v=22">
+</head>
+<body>
+
+  <!-- Scroll Progress -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero-wrapper" style="min-height: 46vh;">
+    <div class="hero-card" style="min-height: calc(46vh - 1.7rem);">
+
+      <nav class="floating-nav" id="main-nav">
+        <a href="index.html" class="floating-nav-logo">
+          <img src="logo-mark.png" alt="" class="logo-icon">
+          <span class="logo-wordmark">abaryx</span>
+        </a>
+        <div class="floating-nav-links">
+          <a href="index.html#about">About</a>
+          <a href="services.html">Services</a>
+          <a href="index.html#process">Our Process</a>
+          <a href="index.html#contact">Contact</a>
+        </div>
+        <a href="start-project.html" class="btn btn-dark btn-sm">Start a Project</a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+
+      <div class="hero-content services-hero-content">
+        <div class="eyebrow eyebrow--on-dark">
+          <span class="eyebrow-icon">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6L22 9.6l-5 4.9 1.2 7-6.2-3.4L5.8 21.5 7 14.5l-5-4.9 7.1-1z"/></svg>
+          </span>
+          <span>Get Started</span>
+        </div>
+
+        <h1 class="hero-heading" data-split style="font-size: clamp(2.1rem, 4.6vw, 3.6rem);">Let's build something <em>exceptional</em></h1>
+
+        <p class="hero-subtext" data-split-fade>
+          A few quick questions about your project — takes about two minutes, and helps us match you with the right engineers from day one.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mobile menu overlay -->
+  <div class="nav-mobile" id="nav-mobile">
+    <a href="index.html#about">About</a>
+    <a href="services.html">Services</a>
+    <a href="index.html#process">Our Process</a>
+    <a href="index.html#contact">Contact</a>
+    <a href="start-project.html" class="nav-mobile-cta">Start a Project</a>
+  </div>
+
+  <!-- ==================== ONBOARDING FLOW ==================== -->
+  <section class="section op-section">
+    <div class="container-md">
+
+      <div class="op-progress" id="op-progress">
+        <div class="op-progress-track">
+          <div class="op-progress-fill" id="op-progress-fill"></div>
+        </div>
+        <div class="op-progress-steps">
+          <span class="op-progress-step" data-progress-step="1">Services</span>
+          <span class="op-progress-step" data-progress-step="2">Project</span>
+          <span class="op-progress-step" data-progress-step="3">Budget</span>
+          <span class="op-progress-step" data-progress-step="4">Timeline</span>
+          <span class="op-progress-step" data-progress-step="5">Contact</span>
+          <span class="op-progress-step" data-progress-step="6">Review</span>
+        </div>
+      </div>
+
+      <div class="op-card" id="op-card">
+
+        <!-- Step 1 — Services -->
+        <div class="op-step" data-step="1">
+          <h2 class="heading-md">What do you need?</h2>
+          <p class="op-step-hint">Select as many as apply — you can change these later.</p>
+          <div class="op-option-grid" data-select-group="services" data-select-mode="multi">
+            <button type="button" class="op-option-card" data-value="AI Automation">
+              <span class="op-option-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg></span>
+              <span class="op-option-label">AI Automation</span>
+            </button>
+            <button type="button" class="op-option-card" data-value="AI Chatbots">
+              <span class="op-option-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M8 3v3M16 3v3M8 12h.01M16 12h.01"/></svg></span>
+              <span class="op-option-label">AI Chatbots</span>
+            </button>
+            <button type="button" class="op-option-card" data-value="Custom Software Development">
+              <span class="op-option-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
+              <span class="op-option-label">Custom Software</span>
+            </button>
+            <button type="button" class="op-option-card" data-value="SaaS Development">
+              <span class="op-option-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg></span>
+              <span class="op-option-label">SaaS Development</span>
+            </button>
+            <button type="button" class="op-option-card" data-value="Website Development">
+              <span class="op-option-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18"/></svg></span>
+              <span class="op-option-label">Website Development</span>
+            </button>
+            <button type="button" class="op-option-card" data-value="Mobile Apps">
+              <span class="op-option-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></span>
+              <span class="op-option-label">Mobile Apps</span>
+            </button>
+            <button type="button" class="op-option-card" data-value="API Integration">
+              <span class="op-option-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 3H5a2 2 0 0 0-2 2v4M15 3h4a2 2 0 0 1 2 2v4M9 21H5a2 2 0 0 1-2-2v-4M15 21h4a2 2 0 0 0 2-2v-4"/></svg></span>
+              <span class="op-option-label">API Integration</span>
+            </button>
+            <button type="button" class="op-option-card" data-value="AI Agents">
+              <span class="op-option-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></span>
+              <span class="op-option-label">AI Agents</span>
+            </button>
+            <button type="button" class="op-option-card" data-value="Workflow Automation">
+              <span class="op-option-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 6H15M18 8.5v7"/></svg></span>
+              <span class="op-option-label">Workflow Automation</span>
+            </button>
+            <button type="button" class="op-option-card" data-value="UI/UX Design">
+              <span class="op-option-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg></span>
+              <span class="op-option-label">UI/UX Design</span>
+            </button>
+            <button type="button" class="op-option-card" data-value="Cloud Infrastructure">
+              <span class="op-option-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M17.5 19a4.5 4.5 0 0 0 0-9 6 6 0 0 0-11.4-1.5A4 4 0 0 0 6.5 19h11z"/></svg></span>
+              <span class="op-option-label">Cloud Infrastructure</span>
+            </button>
+            <button type="button" class="op-option-card" data-value="Data Engineering">
+              <span class="op-option-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></span>
+              <span class="op-option-label">Data Engineering</span>
+            </button>
+            <button type="button" class="op-option-card" data-value="Other">
+              <span class="op-option-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg></span>
+              <span class="op-option-label">Other</span>
+            </button>
+          </div>
+          <p class="op-field-error" id="op-error-services" hidden>Please select at least one service.</p>
+        </div>
+
+        <!-- Step 2 — Project details -->
+        <div class="op-step" data-step="2">
+          <h2 class="heading-md">Tell us about your project</h2>
+          <p class="op-step-hint">The more detail you share, the faster we can scope things accurately.</p>
+          <div class="op-field-grid">
+            <label class="op-field">
+              <span class="op-field-label">Project Name</span>
+              <input type="text" class="op-input" id="op-project-name" placeholder="e.g. Customer Support Copilot" required>
+            </label>
+            <label class="op-field">
+              <span class="op-field-label">Company Name</span>
+              <input type="text" class="op-input" id="op-company-name" placeholder="Your company">
+            </label>
+            <label class="op-field">
+              <span class="op-field-label">Business Website</span>
+              <input type="url" class="op-input" id="op-website" placeholder="https://yourcompany.com">
+            </label>
+            <label class="op-field">
+              <span class="op-field-label">Industry</span>
+              <select class="op-input op-select" id="op-industry">
+                <option value="">Select an industry</option>
+                <option>Technology / SaaS</option>
+                <option>Finance</option>
+                <option>Healthcare</option>
+                <option>E-commerce / Retail</option>
+                <option>Manufacturing</option>
+                <option>Education</option>
+                <option>Real Estate</option>
+                <option>Professional Services</option>
+                <option>Other</option>
+              </select>
+            </label>
+          </div>
+          <label class="op-field op-field--full">
+            <span class="op-field-label">Project Description</span>
+            <textarea class="op-textarea" id="op-description" rows="4" placeholder="What are you looking to build?" required></textarea>
+          </label>
+          <label class="op-field op-field--full">
+            <span class="op-field-label">Current Challenges</span>
+            <textarea class="op-textarea" id="op-challenges" rows="3" placeholder="What's not working today?"></textarea>
+          </label>
+          <label class="op-field op-field--full">
+            <span class="op-field-label">Desired Outcome</span>
+            <textarea class="op-textarea" id="op-outcome" rows="3" placeholder="What does success look like?"></textarea>
+          </label>
+          <p class="op-field-error" id="op-error-project" hidden>Please add a project name and description.</p>
+        </div>
+
+        <!-- Step 3 — Budget -->
+        <div class="op-step" data-step="3">
+          <h2 class="heading-md">What's your budget?</h2>
+          <p class="op-step-hint">A ballpark range helps us recommend the right scope.</p>
+          <div class="op-option-grid op-option-grid--list" data-select-group="budget" data-select-mode="single">
+            <button type="button" class="op-option-card" data-value="Under $500">Under $500</button>
+            <button type="button" class="op-option-card" data-value="$500 – $2,000">$500 – $2,000</button>
+            <button type="button" class="op-option-card" data-value="$2,000 – $5,000">$2,000 – $5,000</button>
+            <button type="button" class="op-option-card" data-value="$5,000 – $10,000">$5,000 – $10,000</button>
+            <button type="button" class="op-option-card" data-value="$10,000+">$10,000+</button>
+            <button type="button" class="op-option-card" data-value="Let's discuss">Let's discuss</button>
+          </div>
+          <p class="op-field-error" id="op-error-budget" hidden>Please select a budget range.</p>
+        </div>
+
+        <!-- Step 4 — Timeline -->
+        <div class="op-step" data-step="4">
+          <h2 class="heading-md">What's your timeline?</h2>
+          <p class="op-step-hint">Helps us plan the right team availability.</p>
+          <div class="op-option-grid op-option-grid--list" data-select-group="timeline" data-select-mode="single">
+            <button type="button" class="op-option-card" data-value="ASAP">ASAP</button>
+            <button type="button" class="op-option-card" data-value="Within 2 weeks">Within 2 weeks</button>
+            <button type="button" class="op-option-card" data-value="Within 1 month">Within 1 month</button>
+            <button type="button" class="op-option-card" data-value="2–3 months">2–3 months</button>
+            <button type="button" class="op-option-card" data-value="Flexible">Flexible</button>
+          </div>
+          <p class="op-field-error" id="op-error-timeline" hidden>Please select a timeline.</p>
+        </div>
+
+        <!-- Step 5 — Contact -->
+        <div class="op-step" data-step="5">
+          <h2 class="heading-md">How can we reach you?</h2>
+          <p class="op-step-hint">We'll send a confirmation the moment this is submitted.</p>
+          <div class="op-field-grid">
+            <label class="op-field">
+              <span class="op-field-label">Full Name</span>
+              <input type="text" class="op-input" id="op-full-name" placeholder="Jane Doe" required>
+            </label>
+            <label class="op-field">
+              <span class="op-field-label">Company</span>
+              <input type="text" class="op-input" id="op-contact-company" placeholder="Your company">
+            </label>
+            <label class="op-field">
+              <span class="op-field-label">Email Address</span>
+              <input type="email" class="op-input" id="op-email" placeholder="jane@company.com" required>
+            </label>
+            <label class="op-field">
+              <span class="op-field-label">Phone Number <em>(optional)</em></span>
+              <input type="tel" class="op-input" id="op-phone" placeholder="+1 555 000 0000">
+            </label>
+            <label class="op-field">
+              <span class="op-field-label">Country</span>
+              <input type="text" class="op-input" id="op-country" placeholder="United States">
+            </label>
+            <label class="op-field">
+              <span class="op-field-label">Preferred Contact Method</span>
+              <select class="op-input op-select" id="op-contact-method">
+                <option value="Email">Email</option>
+                <option value="Phone">Phone</option>
+                <option value="WhatsApp">WhatsApp</option>
+              </select>
+            </label>
+          </div>
+          <p class="op-field-error" id="op-error-contact" hidden>Please add your name and a valid email address.</p>
+
+          <!-- Honeypot — hidden from real visitors, catches basic bots. -->
+          <div class="op-honeypot" aria-hidden="true">
+            <label for="op-hp-field">Leave this field blank</label>
+            <input type="text" id="op-hp-field" name="companyUrlHp" tabindex="-1" autocomplete="off">
+          </div>
+        </div>
+
+        <!-- Step 6 — Review -->
+        <div class="op-step" data-step="6">
+          <h2 class="heading-md">Review your inquiry</h2>
+          <p class="op-step-hint">Take a quick look before we send this over.</p>
+          <div class="op-review" id="op-review"></div>
+        </div>
+
+        <!-- Submission states -->
+        <div class="op-success" id="op-success" hidden>
+          <div class="op-success-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#08120F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h2 class="heading-md">Thank you — we've got it!</h2>
+          <p>Your project inquiry is on its way to our team, and a confirmation email is headed to your inbox now. We typically respond within one business day.</p>
+          <a href="index.html" class="btn btn-dark">Back to Homepage</a>
+        </div>
+
+        <div class="op-error-banner" id="op-error-banner" hidden>
+          <p id="op-error-message">Something went wrong sending your inquiry. Please try again.</p>
+        </div>
+
+        <div class="op-nav" id="op-nav">
+          <button type="button" class="btn btn-outline" id="op-prev">Previous</button>
+          <button type="button" class="btn btn-dark" id="op-next">
+            <span id="op-next-label">Next</span>
+            <span class="op-spinner" id="op-next-spinner" hidden></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo">
+            <img src="logo-mark.png" alt="" class="logo-icon">
+            <span class="logo-wordmark">abaryx</span>
+          </a>
+          <p>Intelligent software architecture for ambitious global brands.</p>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Navigation</div>
+          <a href="index.html#about">About</a>
+          <a href="services.html">Services</a>
+          <a href="index.html#process">Our Process</a>
+          <a href="index.html#blog">Blog</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Company</div>
+          <a href="index.html#capabilities">Capabilities</a>
+          <a href="index.html#solutions">Why Abraxis</a>
+          <a href="index.html#contact">Contact</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Stay In The Loop</div>
+          <form class="newsletter-form" id="newsletter-form-footer" style="max-width: 100%; justify-content: flex-start;">
+            <input type="email" class="newsletter-input" placeholder="Your email" required>
+            <button type="submit" class="btn btn-dark btn-sm">Join</button>
+          </form>
+          <p class="newsletter-note" id="newsletter-note-footer">Get engineering insights, monthly.</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Abraxis. All rights reserved.</p>
+        <p>Built with precision.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+
+  <!-- Main JS (shared) -->
+  <script src="main.js?v=12" defer></script>
+
+  <!-- Onboarding flow logic -->
+  <script src="start-project.js?v=2" defer></script>
+</body>
+</html>
