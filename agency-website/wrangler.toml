@@ -1,6 +1,10 @@
-name = "abaryx-website"
-pages_build_output_dir = "."
+name = "abaryx"
+main = "worker.js"
 compatibility_date = "2024-09-23"
+
+[assets]
+directory = "."
+binding = "ASSETS"
 
 # Uncomment once you've created a KV namespace (see functions/README.md)
 # for per-IP rate limiting on the inquiry form.

@@ -1,10 +1,17 @@
-# Project inquiry backend (Cloudflare Pages Functions)
+# Project inquiry backend (Cloudflare Worker)
 
-`api/project-inquiry.js` handles the "Start a Project" form submission: spam
-checks, validation, and two emails (owner notification + client confirmation)
-sent through Zoho's HTTPS Mail API. It uses the HTTP API instead of SMTP
-because Cloudflare's edge runtime doesn't support the raw socket connections
-a library like Nodemailer needs.
+`../worker.js` (at the site root, not in this folder) handles the "Start a
+Project" form submission: spam checks, validation, and two emails (owner
+notification + client confirmation) sent through Zoho's HTTPS Mail API. It
+uses the HTTP API instead of SMTP because Cloudflare's edge runtime doesn't
+support the raw socket connections a library like Nodemailer needs.
+
+This `functions/_lib/` folder holds the shared logic (`worker.js` imports
+from it directly). The `functions/` name is a holdover from an earlier
+version built for Cloudflare Pages Functions — this project actually
+deploys as a **Worker with static assets** (Cloudflare's dashboard creates
+that project type by default now), which routes everything through
+`worker.js` instead of file-based routing.
 
 ## One-time Zoho setup (do this once, in your own Zoho account)
 
@@ -41,26 +48,30 @@ You now have everything needed: `ZOHO_CLIENT_ID`, `ZOHO_CLIENT_SECRET`,
 
 ```bash
 cp .dev.vars.example .dev.vars   # then fill in the values from above
-npx wrangler pages dev .
+npx wrangler dev
 ```
 
-If `.dev.vars` is left with placeholder values, the function logs emails to
+If `.dev.vars` is left with placeholder values, the worker logs emails to
 the console instead of sending them, so you can test the whole flow without
 the Zoho setup done yet.
 
 ## Deploying
 
-In the Cloudflare dashboard: **Workers & Pages** → **Create** → **Pages** →
-connect this GitHub repo, set the project's root directory to
-`agency-website`, and leave the build command empty (it's a static site with
-Functions, no build step). Then add the same variables from `.dev.vars` under
-**Settings → Environment variables** as **secrets** (not plain text) for the
-Production environment.
+Cloudflare dashboard: **Workers & Pages** → your `abaryx` worker → **Settings
+→ Variables and Secrets** → add the same names from `.dev.vars` as
+**secrets** (not plain text). Pushing to `main` on GitHub redeploys
+automatically since the project is connected to the repo.
+
+## Custom domain
+
+Worker → **Settings → Domains & Routes → Add** → enter `abaryx.com` (and
+`www.abaryx.com` if wanted). Cloudflare handles the DNS automatically if
+your domain's nameservers are already on Cloudflare.
 
 ## Rate limiting
 
-The function checks a `RATE_LIMIT_KV` binding if you create one (Workers &
-Pages → your project → Settings → Functions → KV namespace bindings) — 5
-requests per 15 minutes per IP. Without it, this check is skipped, so it's
-also worth adding a Cloudflare **Rate Limiting Rule** (Security → WAF) on
-`/api/project-inquiry` for infra-level protection regardless.
+The worker checks a `RATE_LIMIT_KV` binding if you create one (worker →
+Settings → Bindings → KV namespace) — 5 requests per 15 minutes per IP.
+Without it, this check is skipped, so it's also worth adding a Cloudflare
+**Rate Limiting Rule** (Security → WAF) on `/api/project-inquiry` for
+infra-level protection regardless.

@@ -1,6 +1,10 @@
-import { validateInquiry } from '../_lib/validate.js';
-import { ownerEmailHtml, clientEmailHtml } from '../_lib/email-templates.js';
-import { sendZohoMail, hasZohoCredentials } from '../_lib/zoho-mail.js';
+// Cloudflare Worker entry point. Cloudflare's dashboard created this
+// project as a "Worker with static assets" rather than classic Pages, so
+// routing is handled here directly instead of via functions/ file-based
+// routing (that convention only applies to Pages projects).
+import { validateInquiry } from './functions/_lib/validate.js';
+import { ownerEmailHtml, clientEmailHtml } from './functions/_lib/email-templates.js';
+import { sendZohoMail, hasZohoCredentials } from './functions/_lib/zoho-mail.js';
 
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -10,10 +14,9 @@ function json(data, status = 200) {
 }
 
 // Fixed-window per-IP counter in Cloudflare KV. Requires a KV namespace
-// bound as RATE_LIMIT_KV in the Pages project settings — skipped
-// gracefully if it isn't configured (e.g. local dev). For stronger,
-// infra-level protection, also add a Cloudflare Rate Limiting Rule on
-// this path from the dashboard (Security -> WAF -> Rate limiting rules).
+// bound as RATE_LIMIT_KV in the Worker's settings — skipped gracefully
+// if it isn't configured. For infra-level protection, also add a
+// Cloudflare Rate Limiting Rule on this path (Security -> WAF).
 async function checkRateLimit(env, ip) {
   if (!env.RATE_LIMIT_KV) return true;
   const key = `inquiry-rl:${ip}`;
@@ -32,18 +35,16 @@ async function sendEmail(env, { to, subject, html }) {
   await sendZohoMail(env, { to, subject, html });
 }
 
-export async function onRequestPost(context) {
-  const { request, env } = context;
+async function handleProjectInquiry(request, env) {
   const body = await request.json().catch(() => ({}));
   const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
 
-  // --- Spam protection ---
   if (typeof body.companyUrlHp === 'string' && body.companyUrlHp.trim().length > 0) {
-    console.warn('[functions] Honeypot triggered — silently discarding submission.');
+    console.warn('[worker] Honeypot triggered — silently discarding submission.');
     return json({ success: true });
   }
   if (typeof body.formLoadedAt === 'number' && Date.now() - body.formLoadedAt < 2500) {
-    console.warn('[functions] Timing check failed — silently discarding submission.');
+    console.warn('[worker] Timing check failed — silently discarding submission.');
     return json({ success: true });
   }
 
@@ -78,7 +79,7 @@ export async function onRequestPost(context) {
       })
     ]);
   } catch (err) {
-    console.error('[functions] Failed to send inquiry emails:', err);
+    console.error('[worker] Failed to send inquiry emails:', err);
     return json({
       success: false,
       message: 'We could not send your inquiry right now. Please try again in a moment or email us directly.'
@@ -87,3 +88,17 @@ export async function onRequestPost(context) {
 
   return json({ success: true });
 }
+
+export default {
+  async fetch(request, env, ctx) {
+    const url = new URL(request.url);
+
+    if (url.pathname === '/api/project-inquiry' && request.method === 'POST') {
+      return handleProjectInquiry(request, env);
+    }
+
+    // Everything else — the actual site — is served from the bound
+    // static assets (all the HTML/CSS/JS/images in this directory).
+    return env.ASSETS.fetch(request);
+  }
+};
