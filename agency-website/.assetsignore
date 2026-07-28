@@ -6,3 +6,4 @@ functions/
 .gitignore
 .wrangler/
 .assetsignore
+.git/
