@@ -1,0 +1,22 @@
+# Copy this file to .dev.vars for local `wrangler pages dev` testing.
+# .dev.vars is gitignored — never commit real credentials.
+# In production, set these same names under Cloudflare Pages ->
+# your project -> Settings -> Environment variables (as secrets).
+
+# From your Zoho API Console "Self Client" (see functions/README.md
+# for the full one-time setup walkthrough).
+ZOHO_CLIENT_ID=your_client_id
+ZOHO_CLIENT_SECRET=your_client_secret
+ZOHO_REFRESH_TOKEN=your_refresh_token
+
+# Your Zoho Mail account ID (looked up once via the Mail API — see
+# functions/README.md) and the address mail will be sent from.
+ZOHO_ACCOUNT_ID=your_account_id
+ZOHO_EMAIL=abdulbasit@abaryx.com
+
+# Only change if Zoho support says your account is on a different data
+# center (e.g. mail.zoho.eu, mail.zoho.in).
+ZOHO_MAIL_API_DOMAIN=mail.zoho.com
+
+# Where the "new project inquiry" notification email is sent.
+OWNER_EMAIL=abdulbasit@abaryx.com

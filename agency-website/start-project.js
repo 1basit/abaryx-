@@ -1,9 +1,9 @@
 (function () {
   'use strict';
 
-  // Relative path — works locally (server/server.js serves this same
-  // page + the API on http://localhost:3001) and in production, since
-  // Render serves both the static site and the API from one origin.
+  // Relative path — works locally (`wrangler pages dev` serves this
+  // page + the /api/* Function from the same origin) and in production
+  // on Cloudflare Pages, which does the same.
   const API_ENDPOINT = '/api/project-inquiry';
 
   const TOTAL_STEPS = 6;
