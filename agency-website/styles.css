@@ -103,41 +103,23 @@ em { font-style: italic; }
    ============================================ */
 .eyebrow {
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.4rem 0.9rem 0.4rem 0.6rem;
-  border-radius: 999px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  gap: 0.55rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--ink);
-  margin-bottom: 1.5rem;
-}
-
-.eyebrow--on-dark {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.14);
-  color: var(--on-dark);
-}
-
-.eyebrow-icon {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--accent-soft);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   color: var(--accent);
-  flex-shrink: 0;
+  margin-bottom: 1.1rem;
 }
 
-.eyebrow--on-dark .eyebrow-icon {
-  background: rgba(255, 255, 255, 0.12);
-  color: var(--accent);
+.eyebrow::before {
+  content: '';
+  width: 32px;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-hover));
 }
 
 .heading-xl {
@@ -304,17 +286,10 @@ em { font-style: italic; }
 }
 
 .logo-icon {
-  width: 22px;
-  height: auto;
+  height: 1.8em;
+  width: auto;
   display: block;
   flex-shrink: 0;
-}
-
-.logo-wordmark {
-  background: linear-gradient(90deg, #15803D, #6EE7A0);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
 }
 
 .floating-nav-links {
@@ -669,12 +644,61 @@ em { font-style: italic; }
 }
 
 @media (max-width: 900px) {
-  .about-visual-card--left, .about-visual-card--right { display: none; }
-  .about-visual-card--center { left: 50%; }
+  /* Keep the same fanned/overlapping look as desktop — just scaled down
+     so all three cards fit without spilling past the viewport edges. */
+  .about-visual {
+    height: clamp(360px, 82vw, 460px);
+  }
+
+  .about-visual-card {
+    width: clamp(200px, 46vw, 260px);
+    min-height: clamp(230px, 52vw, 300px);
+    padding: 1.5rem 1.65rem;
+  }
+
+  .about-visual-card--center {
+    width: clamp(220px, 52vw, 290px);
+    min-height: clamp(260px, 58vw, 330px);
+  }
 }
 
 @media (max-width: 640px) {
-  .about-visual-card { display: none; }
+  .about-visual {
+    height: clamp(230px, 72vw, 300px);
+  }
+
+  .about-visual-card {
+    width: clamp(130px, 40vw, 165px);
+    min-height: clamp(150px, 46vw, 200px);
+    padding: 0.9rem 1rem;
+  }
+
+  .about-visual-card--center {
+    width: clamp(150px, 46vw, 190px);
+    min-height: clamp(175px, 50vw, 220px);
+  }
+
+  /* The value text, bar-chart block, and label spacing below are all sized
+     via inline styles in the HTML (tuned for the desktop card size) — at
+     this much smaller mobile card they overflow past the container's
+     clipping edge, so scale them down too. */
+  .about-visual-card .float-card-value { font-size: 1.3rem !important; }
+  .about-visual-card .float-card-label { font-size: 0.62rem; }
+  .about-visual-card .float-card-sub { font-size: 0.66rem; }
+  .about-visual-card .float-card-status { font-size: 0.7rem; }
+  .about-visual-card .float-card-bars {
+    height: 42px !important;
+    margin-top: 0.55rem !important;
+  }
+  .about-visual-card--right .float-card-label { margin-top: 0.4rem !important; }
+  .about-visual-card--center .float-card-label { margin-top: 0.4rem !important; }
+
+  .about-visual-ring {
+    width: 84px;
+    height: 84px;
+  }
+  .about-visual-ring::before { inset: 8px; }
+  .about-visual-ring span { font-size: 1rem; }
 }
 
 .stats-row {
@@ -758,7 +782,92 @@ em { font-style: italic; }
 }
 
 @media (max-width: 1023px) { .capability-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 560px) { .capability-grid { grid-template-columns: 1fr; } }
+
+.capability-slider {
+  position: relative;
+}
+
+.capability-arrow,
+.capability-dots {
+  display: none;
+}
+
+/* Clones exist only to make the mobile loop seamless — never show them
+   in the desktop/tablet grid. */
+.capability-card[aria-hidden="true"] {
+  display: none;
+}
+
+@media (max-width: 560px) {
+  .capability-slider {
+    padding: 0 2.6rem;
+  }
+
+  .capability-grid {
+    display: flex;
+    grid-template-columns: none;
+    overflow-x: auto;
+    /* No scroll-snap here on purpose — the row is driven by a continuous
+       JS scroll loop (see main.js), and native snap-back would fight it. */
+    -webkit-overflow-scrolling: touch;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    scrollbar-width: none;
+  }
+
+  .capability-grid::-webkit-scrollbar { display: none; }
+
+  .capability-card {
+    flex: 0 0 100%;
+  }
+
+  /* Cloned cards (appended by JS) that make the forward loop seamless */
+  .capability-card[aria-hidden="true"] { display: block; }
+
+  .capability-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: var(--accent);
+    z-index: 3;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+
+  .capability-arrow:active { transform: translateY(-50%) scale(0.9); }
+  .capability-arrow--prev { left: 0; }
+  .capability-arrow--next { right: 0; }
+
+  .capability-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .capability-dot {
+    width: 7px;
+    height: 7px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.22);
+    transition: background 0.25s ease, transform 0.25s ease;
+  }
+
+  .capability-dot.is-active {
+    background: var(--accent);
+    transform: scale(1.35);
+  }
+}
 
 .capability-card {
   background: var(--surface);
