@@ -772,101 +772,53 @@ em { font-style: italic; }
 .panel-dark .section-head { max-width: 620px; }
 
 /* ============================================
-   CAPABILITY GRID (within panel-dark)
+   CAPABILITY CAROUSEL (within panel-dark)
+   Seamless infinite marquee — see main.js. The track's transform is
+   driven entirely by JS (translate3d), never by native scroll, so drag/
+   wheel/autoplay/keyboard all share one continuous position value with
+   no snap-back delay at the loop point.
    ============================================ */
-.capability-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.25rem;
-  margin-bottom: 2.75rem;
-}
-
-@media (max-width: 1023px) { .capability-grid { grid-template-columns: repeat(2, 1fr); } }
-
 .capability-slider {
   position: relative;
-}
-
-.capability-arrow,
-.capability-dots {
-  display: none;
-}
-
-/* Clones exist only to make the mobile loop seamless — never show them
-   in the desktop/tablet grid. */
-.capability-card[aria-hidden="true"] {
-  display: none;
+  margin-bottom: 2.75rem;
 }
 
 @media (max-width: 560px) {
   .capability-slider {
-    padding: 0 2.6rem;
+    padding: 0 1.5rem;
   }
+}
 
-  .capability-grid {
-    display: flex;
-    grid-template-columns: none;
-    overflow-x: auto;
-    /* No scroll-snap here on purpose — the row is driven by a continuous
-       JS scroll loop (see main.js), and native snap-back would fight it. */
-    -webkit-overflow-scrolling: touch;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-    scrollbar-width: none;
-  }
+.capability-viewport {
+  overflow: hidden;
+  cursor: grab;
+  touch-action: pan-y;
+  outline: none;
+}
 
-  .capability-grid::-webkit-scrollbar { display: none; }
+.capability-viewport:focus-visible {
+  box-shadow: 0 0 0 2px var(--accent-line);
+  border-radius: var(--radius-md);
+}
 
-  .capability-card {
-    flex: 0 0 100%;
-  }
+.capability-viewport.is-dragging {
+  cursor: grabbing;
+}
 
-  /* Cloned cards (appended by JS) that make the forward loop seamless */
-  .capability-card[aria-hidden="true"] { display: block; }
+.capability-track {
+  display: flex;
+  gap: 1.25rem;
+  will-change: transform;
+}
 
-  .capability-arrow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 40%;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    color: var(--accent);
-    z-index: 3;
-    transition: background 0.2s ease, transform 0.15s ease;
-  }
+.capability-track .capability-card {
+  user-select: none;
+}
 
-  .capability-arrow:active { transform: translateY(-50%) scale(0.9); }
-  .capability-arrow--prev { left: 0; }
-  .capability-arrow--next { right: 0; }
-
-  .capability-dots {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .capability-dot {
-    width: 7px;
-    height: 7px;
-    padding: 0;
-    border: none;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.22);
-    transition: background 0.25s ease, transform 0.25s ease;
-  }
-
-  .capability-dot.is-active {
-    background: var(--accent);
-    transform: scale(1.35);
-  }
+/* Cloned cards exist only to make the loop seamless — hidden from
+   assistive tech and out of tab order. */
+.capability-card[aria-hidden="true"] * {
+  pointer-events: none;
 }
 
 .capability-card {

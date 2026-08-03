@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Main CSS -->
-  <link rel="stylesheet" href="styles.css?v=31">
+  <link rel="stylesheet" href="styles.css?v=33">
 
 </head>
 <body>
@@ -169,45 +169,38 @@
         </div>
 
         <div class="capability-slider">
-          <div class="capability-grid" id="capability-grid">
-            <div class="capability-card" data-reveal>
-              <div class="capability-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          <div class="capability-viewport" id="capability-viewport" tabindex="0" role="region" aria-label="Engineering capabilities carousel — drag, swipe, or use arrow keys to browse">
+            <div class="capability-track" id="capability-track">
+              <div class="capability-card" data-reveal>
+                <div class="capability-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                </div>
+                <h3>Workflow Automation</h3>
+                <p>Eliminate repetitive manual work with intelligent automation that handles the busywork so your team can focus on what matters.</p>
               </div>
-              <h3>Workflow Automation</h3>
-              <p>Eliminate repetitive manual work with intelligent automation that handles the busywork so your team can focus on what matters.</p>
-            </div>
-            <div class="capability-card" data-reveal>
-              <div class="capability-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.1-2.8-2.8L7 14"/></svg>
+              <div class="capability-card" data-reveal>
+                <div class="capability-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.1-2.8-2.8L7 14"/></svg>
+                </div>
+                <h3>Predictive Intelligence</h3>
+                <p>Turn raw data into forward-looking insight with machine learning models that help you make smarter decisions, faster.</p>
               </div>
-              <h3>Predictive Intelligence</h3>
-              <p>Turn raw data into forward-looking insight with machine learning models that help you make smarter decisions, faster.</p>
-            </div>
-            <div class="capability-card" data-reveal>
-              <div class="capability-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+              <div class="capability-card" data-reveal>
+                <div class="capability-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+                </div>
+                <h3>Cloud-Native Transformation</h3>
+                <p>We modernize legacy systems into scalable, cloud-native architecture that adapts as fast as your business does.</p>
               </div>
-              <h3>Cloud-Native Transformation</h3>
-              <p>We modernize legacy systems into scalable, cloud-native architecture that adapts as fast as your business does.</p>
-            </div>
-            <div class="capability-card" data-reveal>
-              <div class="capability-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              <div class="capability-card" data-reveal>
+                <div class="capability-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                </div>
+                <h3>Market-Ready Scaling</h3>
+                <p>Launch into new markets and user segments on infrastructure that scales on demand, without re-architecting from scratch.</p>
               </div>
-              <h3>Market-Ready Scaling</h3>
-              <p>Launch into new markets and user segments on infrastructure that scales on demand, without re-architecting from scratch.</p>
             </div>
           </div>
-
-          <button type="button" class="capability-arrow capability-arrow--prev" id="capability-prev" aria-label="Previous capability">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
-          </button>
-          <button type="button" class="capability-arrow capability-arrow--next" id="capability-next" aria-label="Next capability">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </button>
-
-          <div class="capability-dots" id="capability-dots"></div>
         </div>
 
         <div class="center-cta">
@@ -586,6 +579,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
   <!-- Main JS -->
-  <script src="main.js?v=14" defer></script>
+  <script src="main.js?v=16" defer></script>
 </body>
 </html>

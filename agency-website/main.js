@@ -413,25 +413,24 @@
     })();
 
     // ==========================================
-    // 12. Capabilities — mobile auto-sliding carousel
-    //     (grid stays a static CSS grid on tablet/desktop;
-    //     this only drives the horizontal scroller that CSS
-    //     switches on at <=560px)
+    // 12. Capabilities — seamless infinite carousel (all breakpoints)
     //
-    //     Forward motion (autoplay + the next arrow) never reverses to
-    //     loop: a clone of the card set sits right after the real one, so
-    //     advancing past the last real card keeps scrolling rightward onto
-    //     the (pixel-identical) clone, then silently snaps back to the
-    //     real card once the scroll settles — invisible, always forward.
+    //     One continuous "position" (px) drives everything — autoplay,
+    //     drag, wheel, and keyboard all just add to the same number,
+    //     which is then applied as a single translate3d on the track.
+    //     The track holds two consecutive copies of the card set, and
+    //     position wraps via modulo against one set's width — so wherever
+    //     it lands, the content on screen is pixel-identical whether it's
+    //     "real" or "clone," and the wrap is never visible. This avoids
+    //     the old scrollLeft+snap approach entirely, which is what caused
+    //     the visible delay/jump at the loop point.
     // ==========================================
     (function () {
-      const grid = document.getElementById('capability-grid');
-      const prevBtn = document.getElementById('capability-prev');
-      const nextBtn = document.getElementById('capability-next');
-      const dotsWrap = document.getElementById('capability-dots');
-      if (!grid || !prevBtn || !nextBtn || !dotsWrap) return;
+      const viewport = document.getElementById('capability-viewport');
+      const track = document.getElementById('capability-track');
+      if (!viewport || !track) return;
 
-      const realCards = Array.from(grid.querySelectorAll('.capability-card'));
+      const realCards = Array.from(track.querySelectorAll('.capability-card'));
       const count = realCards.length;
       if (!count) return;
 
@@ -440,186 +439,162 @@
         clone.removeAttribute('data-reveal');
         clone.setAttribute('aria-hidden', 'true');
         clone.querySelectorAll('a, button').forEach((el) => el.setAttribute('tabindex', '-1'));
-        grid.appendChild(clone);
+        track.appendChild(clone);
       });
-      const allCards = Array.from(grid.querySelectorAll('.capability-card'));
+      const allCards = Array.from(track.querySelectorAll('.capability-card'));
 
-      const mobileQuery = window.matchMedia('(max-width: 560px)');
-      let currentIndex = 0; // 0..count-1 — the "real" card, for dots
-      let autoplayTimer = null;
+      let position = 0;   // px — how far the track has scrolled left
+      let cardWidth = 0;
+      let gap = 0;
+      let setWidth = 0;   // width of one full set of `count` cards (the loop period)
+
+      function getVisibleCount() {
+        const w = window.innerWidth;
+        if (w <= 560) return 1;
+        if (w <= 1023) return 2;
+        return 4;
+      }
+
+      function render() {
+        track.style.transform = `translate3d(${-position}px, 0, 0)`;
+      }
+
+      function layout() {
+        const trackGap = parseFloat(getComputedStyle(track).columnGap);
+        gap = Number.isFinite(trackGap) ? trackGap : 20;
+        const visible = getVisibleCount();
+        const viewportWidth = viewport.getBoundingClientRect().width;
+        cardWidth = (viewportWidth - gap * (visible - 1)) / visible;
+        allCards.forEach((c) => { c.style.flex = `0 0 ${cardWidth}px`; });
+        setWidth = (cardWidth + gap) * count;
+        // Re-measure the loop width from actual rendered positions once
+        // layout has settled — this is what guarantees the real-card-to-
+        // clone-card seam lines up exactly like every other card gap,
+        // regardless of any subpixel/rounding difference between our own
+        // arithmetic and what the browser actually painted.
+        requestAnimationFrame(() => {
+          if (allCards.length > count) {
+            const pitch = allCards[count].getBoundingClientRect().left - allCards[0].getBoundingClientRect().left;
+            if (Number.isFinite(pitch) && pitch > 0) setWidth = pitch;
+          }
+          position = setWidth ? ((position % setWidth) + setWidth) % setWidth : 0;
+          render();
+        });
+        position = setWidth ? ((position % setWidth) + setWidth) % setWidth : 0;
+        render();
+      }
+
+      function wrap() {
+        if (setWidth > 0) position = ((position % setWidth) + setWidth) % setWidth;
+      }
+
+      // --- Autoplay: slow, continuous, time-based (not frame-count-based
+      // so it stays a consistent speed regardless of refresh rate) ---
+      const SPEED = 37; // px/second (~32% faster than the original 28)
+      let autoplayActive = true;
+      let lastTime = null;
+      function tick(time) {
+        requestAnimationFrame(tick);
+        if (!autoplayActive) { lastTime = null; return; }
+        if (lastTime == null) { lastTime = time; return; }
+        const dt = (time - lastTime) / 1000;
+        lastTime = time;
+        position += SPEED * dt;
+        wrap();
+        render();
+      }
+      requestAnimationFrame(tick);
+
       let resumeTimer = null;
-      let wrapTimer = null;
-      let driftTimer = null;
+      function pauseAutoplay() {
+        autoplayActive = false;
+        clearTimeout(resumeTimer);
+      }
+      function scheduleResume(delay) {
+        clearTimeout(resumeTimer);
+        resumeTimer = setTimeout(() => { autoplayActive = true; lastTime = null; }, delay);
+      }
 
-      dotsWrap.innerHTML = '';
-      const dots = realCards.map((_, i) => {
-        const dot = document.createElement('button');
-        dot.type = 'button';
-        dot.className = 'capability-dot';
-        dot.setAttribute('aria-label', 'Go to capability ' + (i + 1));
-        dot.addEventListener('click', () => {
-          currentIndex = i;
-          scrollToCard(allCards[i], true);
-          updateDots(i);
-          restartAutoplay();
-        });
-        dotsWrap.appendChild(dot);
-        return dot;
+      // --- Pointer drag — unifies mouse, touch, and pen in one code path ---
+      let dragging = false;
+      let dragStartX = 0;
+      let dragStartPosition = 0;
+      let activePointerId = null;
+
+      viewport.addEventListener('pointerdown', (e) => {
+        dragging = true;
+        activePointerId = e.pointerId;
+        dragStartX = e.clientX;
+        dragStartPosition = position;
+        pauseAutoplay();
+        viewport.classList.add('is-dragging');
+        viewport.setPointerCapture(activePointerId);
       });
 
-      function updateDots(index) {
-        dots.forEach((d, i) => d.classList.toggle('is-active', i === index));
-      }
+      viewport.addEventListener('pointermove', (e) => {
+        if (!dragging) return;
+        position = dragStartPosition - (e.clientX - dragStartX);
+        wrap();
+        render();
+      });
 
-      // Card-to-card transitions glide via GSAP (matches the easing used
-      // everywhere else on the site) instead of the browser's native
-      // scrollTo smooth-scroll, which is abrupt and inconsistent across
-      // browsers. The wrap/drift corrections stay a true instant jump —
-      // those are meant to be imperceptible, not part of the glide.
-      //
-      // isProgrammatic guards the free-swipe scroll-sync below from ever
-      // reacting to scroll events OUR OWN tween/instant-jump generates —
-      // without it, the sync logic would mistake the wrap's in-flight
-      // glide for a manual swipe onto the clone and schedule its own
-      // "drift" correction, which then raced the wrap's own correction and
-      // yanked the position mid-glide (the stutter/"delay" this fixes).
-      const SCROLL_DURATION = 0.5;
-      let isProgrammatic = false;
-      function scrollToCard(card, smooth) {
-        const gridRect = grid.getBoundingClientRect();
-        const cardRect = card.getBoundingClientRect();
-        const delta = (cardRect.left + cardRect.width / 2) - (gridRect.left + gridRect.width / 2);
-        const target = grid.scrollLeft + delta;
-        isProgrammatic = true;
-        if (!smooth) {
-          gsapReady && gsap.killTweensOf(grid);
-          grid.scrollLeft = target;
-          requestAnimationFrame(() => { isProgrammatic = false; });
-        } else if (gsapReady) {
-          gsap.killTweensOf(grid);
-          gsap.to(grid, {
-            scrollLeft: target,
-            duration: SCROLL_DURATION,
-            ease: 'power2.inOut',
-            onComplete: () => { isProgrammatic = false; }
-          });
-        } else {
-          grid.scrollTo({ left: target, behavior: 'smooth' });
-          setTimeout(() => { isProgrammatic = false; }, SCROLL_DURATION * 1000 + 50);
+      function endDrag() {
+        if (!dragging) return;
+        dragging = false;
+        viewport.classList.remove('is-dragging');
+        if (activePointerId != null) {
+          try { viewport.releasePointerCapture(activePointerId); } catch (err) { /* already released */ }
         }
+        // A drag/tap can leave the (keyboard-only) focus ring showing on
+        // some mobile browsers — blur immediately after, since this was
+        // never a keyboard interaction to begin with.
+        viewport.blur();
+        scheduleResume(1800);
       }
+      viewport.addEventListener('pointerup', endDrag);
+      viewport.addEventListener('pointercancel', endDrag);
+      viewport.addEventListener('pointerleave', () => { if (dragging) endDrag(); });
+      viewport.addEventListener('dragstart', (e) => e.preventDefault());
 
-      // Forward-only: used by autoplay and the next arrow.
-      function advance(userInitiated) {
-        clearTimeout(wrapTimer);
-        const next = currentIndex + 1;
-        if (next < count) {
-          currentIndex = next;
-          scrollToCard(allCards[currentIndex], true);
-          updateDots(currentIndex);
-        } else {
-          // Scroll onto the clone of card 0 — still moving right — then
-          // once that settles, snap (no animation) to the real card 0.
-          scrollToCard(allCards[count], true);
-          updateDots(0);
-          wrapTimer = setTimeout(() => {
-            currentIndex = 0;
-            scrollToCard(allCards[0], false);
-          }, SCROLL_DURATION * 1000 + 20);
-        }
-        if (userInitiated) restartAutoplay();
-      }
+      // --- Wheel / trackpad — horizontal delta preferred, vertical wheel
+      // as a fallback so a plain mouse scroll wheel still nudges it ---
+      viewport.addEventListener('wheel', (e) => {
+        const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+        if (Math.abs(delta) < 1) return;
+        e.preventDefault();
+        position += delta;
+        wrap();
+        render();
+        pauseAutoplay();
+        scheduleResume(1800);
+      }, { passive: false });
 
-      // Manual "back" is allowed to actually move backward — only the
-      // forward auto-loop must never visibly reverse.
-      function retreat() {
-        currentIndex = (currentIndex - 1 + count) % count;
-        scrollToCard(allCards[currentIndex], true);
-        updateDots(currentIndex);
-        restartAutoplay();
-      }
+      // --- Keyboard ---
+      viewport.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        e.preventDefault();
+        position += (e.key === 'ArrowRight' ? 1 : -1) * (cardWidth + gap);
+        wrap();
+        render();
+        pauseAutoplay();
+        scheduleResume(1800);
+      });
 
-      prevBtn.addEventListener('click', retreat);
-      nextBtn.addEventListener('click', () => advance(true));
-
-      // Keep the dots (and autoplay's sense of "current") in sync when the
-      // user free-swipes the row instead of using the arrows. Driven by
-      // actual card geometry on scroll (closest card to center) rather than
-      // IntersectionObserver, which proved flaky about what it reports as
-      // "intersecting" the moment observation starts.
-      function closestCardIndex() {
-        const gridRect = grid.getBoundingClientRect();
-        const centerX = gridRect.left + gridRect.width / 2;
-        let closest = 0;
-        let closestDist = Infinity;
-        allCards.forEach((c, i) => {
-          const r = c.getBoundingClientRect();
-          const dist = Math.abs((r.left + r.width / 2) - centerX);
-          if (dist < closestDist) {
-            closestDist = dist;
-            closest = i;
-          }
-        });
-        return closest;
-      }
-
-      let scrollSyncRAF = null;
-      grid.addEventListener('scroll', () => {
-        if (isProgrammatic) return; // this is our own tween/snap, not a free-swipe
-        if (scrollSyncRAF) return;
-        scrollSyncRAF = requestAnimationFrame(() => {
-          scrollSyncRAF = null;
-          const idx = closestCardIndex();
-          if (idx >= count) {
-            // Landed on a clone while free-swiping — visually identical to
-            // its real counterpart, so correct silently once motion settles.
-            currentIndex = idx - count;
-            updateDots(currentIndex);
-            clearTimeout(driftTimer);
-            driftTimer = setTimeout(() => scrollToCard(allCards[currentIndex], false), 250);
-          } else {
-            currentIndex = idx;
-            updateDots(idx);
-          }
-        });
-      }, { passive: true });
-
-      function stopAutoplay() {
-        if (autoplayTimer) clearInterval(autoplayTimer);
-        autoplayTimer = null;
-      }
-      function startAutoplay() {
-        stopAutoplay();
-        if (!mobileQuery.matches) return;
-        autoplayTimer = setInterval(() => advance(false), 4200);
-      }
-      function restartAutoplay() {
-        clearTimeout(resumeTimer);
-        stopAutoplay();
-        resumeTimer = setTimeout(startAutoplay, 6000);
-      }
-
-      // Pause while the user is actively touching/dragging the row,
-      // resume automatically a few seconds after they let go.
-      grid.addEventListener('touchstart', stopAutoplay, { passive: true });
-      grid.addEventListener('touchend', restartAutoplay, { passive: true });
-
-      // Don't run the interval while the section is scrolled off-screen.
+      // Pause while the section is scrolled off-screen.
       const sectionObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) startAutoplay();
-          else stopAutoplay();
+          if (entry.isIntersecting) { autoplayActive = true; lastTime = null; }
+          else autoplayActive = false;
         });
-      }, { threshold: 0.3 });
-      sectionObserver.observe(grid);
+      }, { threshold: 0.2 });
+      sectionObserver.observe(viewport);
 
-      mobileQuery.addEventListener('change', () => {
-        if (mobileQuery.matches) startAutoplay();
-        else stopAutoplay();
+      layout();
+      let resizeTimer = null;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(layout, 150);
       });
-
-      currentIndex = closestCardIndex() % count;
-      updateDots(currentIndex);
     })();
 
     console.log('[Abraxis] App initialized.');
