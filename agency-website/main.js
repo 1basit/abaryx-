@@ -415,15 +415,22 @@
     // ==========================================
     // 12. Capabilities — seamless infinite carousel (all breakpoints)
     //
-    //     The track holds two consecutive copies of the card set and the
-    //     loop position is tracked as a PERCENTAGE (0–50) of the track's
-    //     own width, applied via translate3d(-N%, 0, 0) — not pixels.
-    //     A percentage transform is resolved by the browser against the
-    //     track's actual current width every time it paints, so the wrap
-    //     boundary (exactly 50%, i.e. exactly one full copy) can never
-    //     drift out of sync with reality the way a JS-measured pixel
-    //     value could. Pixel math (drag distance, autoplay speed) only
-    //     ever affects how fast/far it feels — never where the seam is.
+    //     The core loop is a pure CSS @keyframes animation (see
+    //     styles.css — capabilityMarquee, 0% to -50%, linear, infinite)
+    //     running on the compositor thread, not driven by JS on every
+    //     frame. That's deliberate: a requestAnimationFrame-polled
+    //     transform can visibly stutter under real-world main-thread
+    //     jank (GC pauses, layout work elsewhere on the page); a native
+    //     CSS animation can't, since the browser interpolates it
+    //     independently of JS execution.
+    //
+    //     Drag/wheel/keyboard don't touch the animation itself — they
+    //     update a single --cap-offset custom property that the keyframe
+    //     adds into its own transform (see the calc() in styles.css).
+    //     Custom property changes apply on the very next paint with no
+    //     restart, so nudging it never causes a visible jump. Pausing is
+    //     just animation-play-state, which freezes/resumes at the exact
+    //     frozen position, also with no discontinuity.
     // ==========================================
     (function () {
       const viewport = document.getElementById('capability-viewport');
@@ -443,9 +450,11 @@
       });
       const allCards = Array.from(track.querySelectorAll('.capability-card'));
 
-      let percent = 0;   // 0–50: how far through one copy of the set we are
+      const SPEED_PX_PER_SEC = 55; // noticeably quicker, still smooth
+
       let cardWidth = 0;
       let gap = 0;
+      let offset = 0; // px — persistent manual nudge, layered on the CSS loop
 
       function getVisibleCount() {
         const w = window.innerWidth;
@@ -454,22 +463,9 @@
         return 4;
       }
 
-      function render() {
-        track.style.transform = `translate3d(${-percent}%, 0, 0)`;
-      }
-
-      // Wrapping is pure arithmetic against a constant (50) — never a
-      // measured value — so it's exact by construction, always.
-      function wrap() {
-        percent = ((percent % 50) + 50) % 50;
-      }
-
-      // Only used to convert pixel-based inputs (drag distance, wheel
-      // delta, autoplay speed) into percent — any imprecision here only
-      // changes how fast the carousel feels, since wrap() above never
-      // depends on this value.
-      function trackWidthPx() {
-        return track.scrollWidth || 1;
+      function setOffset(px) {
+        offset = px;
+        track.style.setProperty('--cap-offset', `${offset}px`);
       }
 
       function layout() {
@@ -479,58 +475,55 @@
         const viewportWidth = viewport.getBoundingClientRect().width;
         cardWidth = (viewportWidth - gap * (visible - 1)) / visible;
         allCards.forEach((c) => { c.style.flex = `0 0 ${cardWidth}px`; });
-        render();
+        // scrollWidth accounts for the track's full overflowing content
+        // (its own box would otherwise just be `auto`-width relative to
+        // its parent) — half of that is exactly one copy of the set,
+        // which is what the CSS animation duration needs to match for
+        // SPEED_PX_PER_SEC to hold true regardless of breakpoint.
+        requestAnimationFrame(() => {
+          const halfWidth = track.scrollWidth / 2;
+          if (halfWidth > 0) {
+            track.style.animationDuration = `${halfWidth / SPEED_PX_PER_SEC}s`;
+          }
+        });
       }
 
-      // --- Autoplay: slow, continuous, time-based (not frame-count-based
-      // so it stays a consistent speed regardless of refresh rate) ---
-      const SPEED = 37; // px/second (~32% faster than the original 28)
-      let autoplayActive = true;
-      let lastTime = null;
-      function tick(time) {
-        requestAnimationFrame(tick);
-        if (!autoplayActive) { lastTime = null; return; }
-        if (lastTime == null) { lastTime = time; return; }
-        const dt = (time - lastTime) / 1000;
-        lastTime = time;
-        percent += (SPEED * dt / trackWidthPx()) * 100;
-        wrap();
-        render();
+      let isOffscreen = false;
+      let isInteracting = false;
+      function syncPauseState() {
+        track.classList.toggle('is-paused', isOffscreen || isInteracting);
       }
-      requestAnimationFrame(tick);
 
       let resumeTimer = null;
-      function pauseAutoplay() {
-        autoplayActive = false;
+      function pause() {
+        isInteracting = true;
         clearTimeout(resumeTimer);
+        syncPauseState();
       }
       function scheduleResume(delay) {
         clearTimeout(resumeTimer);
-        resumeTimer = setTimeout(() => { autoplayActive = true; lastTime = null; }, delay);
+        resumeTimer = setTimeout(() => { isInteracting = false; syncPauseState(); }, delay);
       }
 
       // --- Pointer drag — unifies mouse, touch, and pen in one code path ---
       let dragging = false;
       let dragStartX = 0;
-      let dragStartPercent = 0;
+      let dragStartOffset = 0;
       let activePointerId = null;
 
       viewport.addEventListener('pointerdown', (e) => {
         dragging = true;
         activePointerId = e.pointerId;
         dragStartX = e.clientX;
-        dragStartPercent = percent;
-        pauseAutoplay();
+        dragStartOffset = offset;
+        pause();
         viewport.classList.add('is-dragging');
         viewport.setPointerCapture(activePointerId);
       });
 
       viewport.addEventListener('pointermove', (e) => {
         if (!dragging) return;
-        const dxPercent = ((e.clientX - dragStartX) / trackWidthPx()) * 100;
-        percent = dragStartPercent - dxPercent;
-        wrap();
-        render();
+        setOffset(dragStartOffset - (e.clientX - dragStartX));
       });
 
       function endDrag() {
@@ -557,10 +550,8 @@
         const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
         if (Math.abs(delta) < 1) return;
         e.preventDefault();
-        percent += (delta / trackWidthPx()) * 100;
-        wrap();
-        render();
-        pauseAutoplay();
+        setOffset(offset + delta);
+        pause();
         scheduleResume(1800);
       }, { passive: false });
 
@@ -568,19 +559,16 @@
       viewport.addEventListener('keydown', (e) => {
         if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
         e.preventDefault();
-        const stepPercent = ((cardWidth + gap) / trackWidthPx()) * 100;
-        percent += (e.key === 'ArrowRight' ? 1 : -1) * stepPercent;
-        wrap();
-        render();
-        pauseAutoplay();
+        setOffset(offset + (e.key === 'ArrowRight' ? 1 : -1) * (cardWidth + gap));
+        pause();
         scheduleResume(1800);
       });
 
       // Pause while the section is scrolled off-screen.
       const sectionObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) { autoplayActive = true; lastTime = null; }
-          else autoplayActive = false;
+          isOffscreen = !entry.isIntersecting;
+          syncPauseState();
         });
       }, { threshold: 0.2 });
       sectionObserver.observe(viewport);

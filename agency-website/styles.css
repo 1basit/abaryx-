@@ -773,10 +773,21 @@ em { font-style: italic; }
 
 /* ============================================
    CAPABILITY CAROUSEL (within panel-dark)
-   Seamless infinite marquee — see main.js. The track's transform is
-   driven entirely by JS (translate3d), never by native scroll, so drag/
-   wheel/autoplay/keyboard all share one continuous position value with
-   no snap-back delay at the loop point.
+   Seamless infinite marquee — see main.js. The core loop is a pure CSS
+   @keyframes animation (0% -> -50%, linear, infinite) running on the
+   compositor thread, never JS-driven — so it can't stutter from main-
+   thread jank the way a requestAnimationFrame-polled transform can.
+   Drag/wheel/keyboard layer an additive --cap-offset custom property on
+   top (updated live, no animation restart), and pausing is just
+   animation-play-state, which freezes/resumes at the exact frozen
+   position with no discontinuity.
+
+   `width: max-content` on the track is load-bearing: without it, a
+   block-level flex container whose children overflow it (flex-shrink:0)
+   still reports its OWN box as 100% of its parent for the purposes of
+   resolving `%` in translateX — meaning the -50% below would resolve
+   against the wrong, too-narrow width instead of the true doubled-
+   content width, breaking the loop math.
    ============================================ */
 .capability-slider {
   position: relative;
@@ -808,7 +819,20 @@ em { font-style: italic; }
 .capability-track {
   display: flex;
   gap: 1.25rem;
+  width: max-content;
   will-change: transform;
+  animation-name: capabilityMarquee;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.capability-track.is-paused {
+  animation-play-state: paused;
+}
+
+@keyframes capabilityMarquee {
+  from { transform: translate3d(calc(0px - var(--cap-offset, 0px)), 0, 0); }
+  to   { transform: translate3d(calc(-50% - var(--cap-offset, 0px)), 0, 0); }
 }
 
 .capability-track .capability-card {
