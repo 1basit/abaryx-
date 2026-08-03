@@ -970,23 +970,20 @@ em { font-style: italic; }
   cursor: grabbing;
 }
 
-/* Two separate transform layers, deliberately. .capability-shift carries
-   ONLY the manual drag/wheel/keyboard offset (plain pixels, written by
-   JS); .capability-track carries ONLY the marquee animation (pure
-   percentages). They must not be combined onto one element: doing so
-   previously animated `translate3d(calc(-50% - var(--cap-offset)),0,0)`,
-   asking the engine to interpolate a mixed percentage+length calc
-   containing a custom property. Blink tolerated it; WebKit does not
-   interpolate length<->percentage transforms reliably, which is why the
-   loop ran to the end of the track and stopped in Safari instead of
-   repeating. One unit per layer makes the interpolation trivial and
-   identical in every engine. */
-.capability-shift {
-  width: -webkit-max-content;
-  width: max-content;
-  will-change: transform;
-}
+/* ONE transform, ONE position source.
+   The marquee is a single CSS animation on this element and nothing else
+   ever writes a transform here. An earlier version split the autoplay
+   and the manual drag onto two nested elements; because each wrapped
+   independently at one period, they could sum to TWO periods — the full
+   width of the duplicated track — leaving the viewport completely blank.
+   Manual input now seeks this same animation (see main.js) instead of
+   adding a second transform, so the rendered position is always within
+   a single period and can never run past the content.
 
+   Keyframes are percentage->percentage (never a mixed calc with a
+   length or a custom property): WebKit does not interpolate
+   length<->percentage transforms reliably, which previously made Safari
+   run to the end of the track and stop instead of looping. */
 .capability-track {
   display: flex;
   width: -webkit-max-content; /* older WebKit */

@@ -410,57 +410,50 @@
     })();
 
     // ==========================================
-    // 12. Capabilities — seamless infinite carousel (all breakpoints)
+    // 12. Capabilities — infinite marquee
     //
-    //     The core loop is a pure CSS @keyframes animation (see
-    //     styles.css — capabilityMarquee, 0% to -50%, linear, infinite)
-    //     running on the compositor thread, not driven by JS on every
-    //     frame. That's deliberate: a requestAnimationFrame-polled
-    //     transform can visibly stutter under real-world main-thread
-    //     jank (GC pauses, layout work elsewhere on the page); a native
-    //     CSS animation can't, since the browser interpolates it
-    //     independently of JS execution.
+    //     ONE position source, by design. The track holds two identical
+    //     copies of the card set and a single CSS animation translates it
+    //     0% -> -50% (exactly one copy) on an infinite loop. Nothing else
+    //     ever writes a transform to it.
     //
-    //     Drag/wheel/keyboard don't touch the animation itself — they
-    //     set a plain pixel transform on a SEPARATE wrapper element
-    //     (.capability-shift). Keeping the two off one element is what
-    //     makes this work in WebKit: combining them meant animating
-    //     translate3d(calc(-50% - var(...))), a mixed percentage+length
-    //     calc that Safari cannot interpolate reliably. Pausing is just
-    //     animation-play-state, which freezes/resumes at the exact
-    //     frozen position with no discontinuity.
+    //     Manual input (drag / wheel / keyboard) SEEKS that same animation
+    //     via the Web Animations API rather than applying its own
+    //     transform. That is the whole trick: an earlier version put the
+    //     drag offset on a separate wrapper element, and because each
+    //     layer wrapped independently at one period they could sum to two
+    //     periods — the entire duplicated track — leaving the viewport
+    //     blank. With one periodic source, currentTime is normalised into
+    //     [0, duration) and the rendered position is therefore ALWAYS
+    //     inside a single period. Running off the end is not expressible.
+    //
+    //     Keyframes are percentage->percentage with no calc() and no
+    //     custom property, because WebKit does not interpolate
+    //     length<->percentage transforms reliably (that is what made
+    //     Safari stop at the end of the track).
     // ==========================================
     (function () {
       const viewport = document.getElementById('capability-viewport');
       const track = document.getElementById('capability-track');
-      const shift = document.getElementById('capability-shift');
       if (!viewport || !track) return;
 
       const realCards = Array.from(track.querySelectorAll('.capability-card'));
       const count = realCards.length;
       if (!count) return;
 
+      // Second copy — what makes the -50% wrap invisible.
       realCards.forEach((card) => {
         const clone = card.cloneNode(true);
-        // cloneNode(true) copies inline styles too. If any animation had
-        // already written inline opacity/transform onto the original,
-        // the clone would freeze at that value forever (nothing animates
-        // clones) — which previously left an invisible, full-width card
-        // sitting at the loop seam and read as a large blank gap. Strip
-        // inline styles so a clone can never diverge from its original.
         clone.removeAttribute('style');
-        clone.removeAttribute('data-reveal');
         clone.setAttribute('aria-hidden', 'true');
         clone.querySelectorAll('a, button').forEach((el) => el.setAttribute('tabindex', '-1'));
         track.appendChild(clone);
       });
       const allCards = Array.from(track.querySelectorAll('.capability-card'));
 
-      const SPEED_PX_PER_SEC = 55; // noticeably quicker, still smooth
-
+      const SPEED_PX_PER_SEC = 55;
       let cardWidth = 0;
       let gap = 0;
-      let offset = 0; // px — persistent manual nudge, layered on the CSS loop
 
       function getVisibleCount() {
         const w = window.innerWidth;
@@ -469,17 +462,13 @@
         return 4;
       }
 
-      // The manual nudge is wrapped into one loop period so repeated
-      // dragging/scrolling can never accumulate far enough to run past
-      // the duplicated content into blank space. Wrapping by exactly one
-      // period is visually undetectable — that span of track is
-      // pixel-identical to where it wraps to.
-      function setOffset(px) {
-        const period = track.scrollWidth / 2;
-        offset = period > 0 ? ((px % period) + period) % period : px;
-        // Plain px on its own layer — never mixed into the animated
-        // percentage transform (see styles.css for why).
-        if (shift) shift.style.transform = `translate3d(${-offset}px, 0, 0)`;
+      function getAnim() {
+        // getAnimations is supported in every target browser (Chrome 84+,
+        // Safari 13.1+, Firefox 75+). If it is somehow unavailable the
+        // marquee still autoplays from CSS — only seeking is lost.
+        if (typeof track.getAnimations !== 'function') return null;
+        return track.getAnimations().find((a) => a.animationName === 'capabilityMarquee')
+            || track.getAnimations()[0] || null;
       }
 
       function layout() {
@@ -488,63 +477,77 @@
         gap = Number.isFinite(cardMargin) ? cardMargin : 20;
         const visible = getVisibleCount();
         const viewportWidth = viewport.getBoundingClientRect().width;
-        // Bail if the carousel has no width yet (hidden tab, collapsed
-        // pane, display:none ancestor). Writing flex-basis:0 here would
-        // permanently collapse every card until the next resize — the
-        // ResizeObserver below re-runs this the moment it has real size.
+        // Never write flex-basis:0 while the element has no width (hidden
+        // tab / collapsed pane) — it would permanently collapse the cards.
         if (!(viewportWidth > 0)) return;
         cardWidth = (viewportWidth - gap * (visible - 1)) / visible;
         allCards.forEach((c) => { c.style.flex = `0 0 ${cardWidth}px`; });
-        // Read scrollWidth synchronously (which forces the pending
-        // reflow from the flex writes above, so the value is already
-        // correct) rather than deferring to requestAnimationFrame —
-        // rAF does not fire in a hidden/background tab, which would
-        // leave animation-duration unset and the marquee frozen at 0s.
-        // scrollWidth spans the track's full overflowing content, and
-        // half of that is exactly one copy of the set — matching it to
-        // SPEED_PX_PER_SEC keeps speed constant across breakpoints.
-        const halfWidth = track.scrollWidth / 2;
-        if (halfWidth > 0) {
-          track.style.animationDuration = `${halfWidth / SPEED_PX_PER_SEC}s`;
+
+        // Read synchronously so the pending reflow from the writes above
+        // is flushed; rAF would not fire at all in a background tab and
+        // would leave animation-duration unset.
+        const period = track.scrollWidth / 2;
+        if (period > 0) {
+          track.style.animationDuration = `${period / SPEED_PX_PER_SEC}s`;
         }
+      }
+
+      // --- One helper for every manual movement -------------------------
+      // Converts a pixel delta into a time delta on the same animation and
+      // normalises into [0, duration). Because the animation is periodic
+      // and infinite, any value in that range is both valid and visually
+      // continuous, so this can never expose the start or end of the track.
+      function nudgeByPixels(px) {
+        const anim = getAnim();
+        if (!anim) return;
+        const duration = anim.effect.getTiming().duration;
+        const period = track.scrollWidth / 2;
+        if (!duration || !period) return;
+        const deltaTime = (px / period) * duration;
+        const t = Number(anim.currentTime) || 0;
+        anim.currentTime = (((t + deltaTime) % duration) + duration) % duration;
       }
 
       let isOffscreen = false;
       let isInteracting = false;
-      function syncPauseState() {
-        track.classList.toggle('is-paused', isOffscreen || isInteracting);
+      function syncPlayState() {
+        const anim = getAnim();
+        if (!anim) return;
+        if (isOffscreen || isInteracting) anim.pause();
+        else anim.play();
       }
 
       let resumeTimer = null;
-      function pause() {
+      function holdPlayback() {
         isInteracting = true;
         clearTimeout(resumeTimer);
-        syncPauseState();
+        syncPlayState();
       }
-      function scheduleResume(delay) {
+      function releasePlayback(delay) {
         clearTimeout(resumeTimer);
-        resumeTimer = setTimeout(() => { isInteracting = false; syncPauseState(); }, delay);
+        resumeTimer = setTimeout(() => { isInteracting = false; syncPlayState(); }, delay);
       }
 
-      // --- Pointer drag — unifies mouse, touch, and pen in one code path ---
+      // --- Pointer drag (mouse, touch and pen in one path) ---
       let dragging = false;
-      let dragStartX = 0;
-      let dragStartOffset = 0;
+      let lastX = 0;
       let activePointerId = null;
 
       viewport.addEventListener('pointerdown', (e) => {
         dragging = true;
         activePointerId = e.pointerId;
-        dragStartX = e.clientX;
-        dragStartOffset = offset;
-        pause();
+        lastX = e.clientX;
+        holdPlayback();
         viewport.classList.add('is-dragging');
-        viewport.setPointerCapture(activePointerId);
+        try { viewport.setPointerCapture(activePointerId); } catch (err) { /* not capturable */ }
       });
 
       viewport.addEventListener('pointermove', (e) => {
         if (!dragging) return;
-        setOffset(dragStartOffset - (e.clientX - dragStartX));
+        // Incremental (not absolute from a start point) so the seek stays
+        // correct no matter how far or how often the pointer moves.
+        nudgeByPixels(lastX - e.clientX);
+        lastX = e.clientX;
       });
 
       function endDrag() {
@@ -554,50 +557,39 @@
         if (activePointerId != null) {
           try { viewport.releasePointerCapture(activePointerId); } catch (err) { /* already released */ }
         }
-        // A drag/tap can leave the (keyboard-only) focus ring showing on
-        // some mobile browsers — blur immediately after, since this was
-        // never a keyboard interaction to begin with.
-        viewport.blur();
-        scheduleResume(1800);
+        viewport.blur(); // a tap should not leave the keyboard focus ring
+        releasePlayback(1200);
       }
       viewport.addEventListener('pointerup', endDrag);
       viewport.addEventListener('pointercancel', endDrag);
       viewport.addEventListener('pointerleave', () => { if (dragging) endDrag(); });
       viewport.addEventListener('dragstart', (e) => e.preventDefault());
 
-      // --- Wheel / trackpad — deliberately ONLY reacts to a clearly
-      // horizontal gesture (a two-finger sideways trackpad swipe).
-      //
-      // A vertical wheel is left completely untouched: no preventDefault,
-      // no nudge, no pause. Previously this handler consumed vertical
-      // wheel too, which meant simply scrolling the page with the cursor
-      // over the carousel both hijacked the page scroll AND paused the
-      // marquee for ~1.8s — which read as "it pauses when I hover it".
-      //
-      // A horizontal nudge also never pauses autoplay; the offset is
-      // additive on top of the running CSS animation, so the marquee
-      // keeps moving at a constant speed throughout.
+      // --- Wheel: horizontal gestures only ---
+      // A vertical wheel is left completely alone so scrolling the page
+      // with the cursor over the carousel neither hijacks the scroll nor
+      // interrupts playback.
       viewport.addEventListener('wheel', (e) => {
-        if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return; // vertical → let the page scroll
+        if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
         if (Math.abs(e.deltaX) < 1) return;
         e.preventDefault();
-        setOffset(offset + e.deltaX);
+        nudgeByPixels(e.deltaX);
       }, { passive: false });
 
       // --- Keyboard ---
       viewport.addEventListener('keydown', (e) => {
         if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
         e.preventDefault();
-        setOffset(offset + (e.key === 'ArrowRight' ? 1 : -1) * (cardWidth + gap));
-        pause();
-        scheduleResume(1800);
+        nudgeByPixels((e.key === 'ArrowRight' ? 1 : -1) * (cardWidth + gap));
+        holdPlayback();
+        releasePlayback(1200);
       });
 
-      // Pause while the section is scrolled off-screen.
+      // Don't burn frames while the section is scrolled out of view.
       const sectionObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           isOffscreen = !entry.isIntersecting;
-          syncPauseState();
+          syncPlayState();
         });
       }, { threshold: 0.2 });
       sectionObserver.observe(viewport);
@@ -609,9 +601,8 @@
         resizeTimer = setTimeout(layout, 150);
       }
       window.addEventListener('resize', scheduleLayout);
-      // Also observe the carousel's own box, not just the window: it can
-      // gain/lose width independently (container queries, a collapsed
-      // pane opening, fonts reflowing the panel) with no resize event.
+      // The carousel's own box can change size without a window resize
+      // (fonts settling, a collapsed pane opening, container queries).
       if (typeof ResizeObserver !== 'undefined') {
         new ResizeObserver(scheduleLayout).observe(viewport);
       }
