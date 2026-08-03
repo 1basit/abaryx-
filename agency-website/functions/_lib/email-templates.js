@@ -59,12 +59,14 @@ export function ownerEmailHtml(body, submittedAt) {
     <div style="${LABEL_STYLE}">Contact</div>
     <p style="${VALUE_STYLE}">
       ${escapeHtml(body.fullName)}<br>
-      ${escapeHtml(body.contactCompany) || ''}<br>
       <a href="mailto:${escapeHtml(body.email)}" style="color:#15803d;">${escapeHtml(body.email)}</a><br>
       ${escapeHtml(body.phone) || 'No phone provided'}<br>
       ${escapeHtml(body.country) || ''}<br>
       Prefers: ${escapeHtml(body.contactMethod) || 'Email'}
     </p>
+    ${(body.additionalEmails && body.additionalEmails.length) ? `
+    <div style="${LABEL_STYLE}">Also Notified</div>
+    <p style="${VALUE_STYLE}">${body.additionalEmails.map(e => escapeHtml(e)).join('<br>')}</p>` : ''}
   </div>`;
 }
 

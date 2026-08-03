@@ -30,7 +30,17 @@ export function validateInquiry(body) {
   if (!isOptionalString(body.industry, 100)) errors.push('industry');
   if (!isOptionalString(body.challenges, 5000)) errors.push('challenges');
   if (!isOptionalString(body.outcome, 5000)) errors.push('outcome');
-  if (!isOptionalString(body.contactCompany, 200)) errors.push('contactCompany');
+  // Additional confirmation recipients: optional, but each supplied
+  // address must be a real address since we actually send mail to it.
+  if (body.additionalEmails !== undefined) {
+    if (!Array.isArray(body.additionalEmails) || body.additionalEmails.length > 5) {
+      errors.push('additionalEmails');
+    } else if (!body.additionalEmails.every(
+      (e) => typeof e === 'string' && e.length <= 254 && EMAIL_RE.test(e.trim())
+    )) {
+      errors.push('additionalEmails');
+    }
+  }
   if (!isOptionalString(body.phone, 40)) errors.push('phone');
   if (!isOptionalString(body.country, 100)) errors.push('country');
   if (!isOptionalString(body.contactMethod, 40)) errors.push('contactMethod');

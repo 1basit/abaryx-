@@ -29,8 +29,17 @@ async function checkRateLimit(env, ip) {
 
 async function sendEmail(env, { to, subject, html }) {
   if (!hasZohoCredentials(env)) {
-    console.log(`[dev email] to=${to} subject="${subject}"`);
-    return;
+    // Never silently "succeed" here. This previously logged and returned,
+    // so a deploy with no secrets configured showed every visitor a
+    // success screen while sending nothing at all — a total delivery
+    // outage that looked completely healthy from the outside. Failing
+    // loudly turns that into a visible 502 instead.
+    // Local dev opts into the console fallback explicitly via .dev.vars.
+    if (env.DEV_EMAIL_FALLBACK === 'true') {
+      console.log(`[dev email] to=${to} subject="${subject}"`);
+      return;
+    }
+    throw new Error('Zoho credentials are not configured on this deployment');
   }
   await sendZohoMail(env, { to, subject, html });
 }
@@ -65,6 +74,15 @@ async function handleProjectInquiry(request, env) {
   const submittedAt = new Date().toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' });
   const ownerEmail = env.OWNER_EMAIL || 'abdulbasit@abaryx.com';
 
+  // The confirmation goes to the submitter plus any additional contacts
+  // they listed. De-duplicated (case-insensitively) so nobody who typed
+  // their own address into the extra rows gets it twice.
+  const extras = Array.isArray(body.additionalEmails) ? body.additionalEmails : [];
+  const confirmationRecipients = [...new Set(
+    [body.email, ...extras].map((e) => String(e || '').trim()).filter(Boolean)
+      .map((e) => e.toLowerCase())
+  )];
+
   try {
     await Promise.all([
       sendEmail(env, {
@@ -72,11 +90,11 @@ async function handleProjectInquiry(request, env) {
         subject: `New Project Inquiry — ${body.projectName}`,
         html: ownerEmailHtml(body, submittedAt)
       }),
-      sendEmail(env, {
-        to: body.email.trim(),
+      ...confirmationRecipients.map((to) => sendEmail(env, {
+        to,
         subject: 'We received your project inquiry — Abraxis Solutions',
         html: clientEmailHtml(body)
-      })
+      }))
     ]);
   } catch (err) {
     console.error('[worker] Failed to send inquiry emails:', err);

@@ -7,6 +7,8 @@
   const API_ENDPOINT = '/api/project-inquiry';
 
   const TOTAL_STEPS = 6;
+  const MAX_EXTRA_EMAILS = 5;
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const formLoadedAt = Date.now();
 
   function init() {
@@ -28,6 +30,61 @@
     const navWrap = document.getElementById('op-nav');
 
     let currentStep = 1;
+
+    // ------------------------------------------
+    // Additional contact emails — dynamic add/remove rows.
+    // Everyone listed here also receives the confirmation email.
+    // ------------------------------------------
+    const emailList = document.getElementById('op-email-list');
+    const addEmailBtn = document.getElementById('op-add-email');
+
+    function getExtraEmailInputs() {
+      return emailList ? Array.from(emailList.querySelectorAll('.op-extra-email')) : [];
+    }
+
+    function getExtraEmails() {
+      return getExtraEmailInputs()
+        .map((i) => i.value.trim())
+        .filter((v) => v.length > 0);
+    }
+
+    function syncAddButton() {
+      if (addEmailBtn) addEmailBtn.disabled = getExtraEmailInputs().length >= MAX_EXTRA_EMAILS;
+    }
+
+    function addEmailRow(focus) {
+      if (!emailList || getExtraEmailInputs().length >= MAX_EXTRA_EMAILS) return;
+
+      const row = document.createElement('div');
+      row.className = 'op-email-row';
+
+      const input = document.createElement('input');
+      input.type = 'email';
+      input.className = 'op-input op-extra-email';
+      input.placeholder = 'teammate@company.com';
+      input.setAttribute('aria-label', 'Additional contact email');
+      // Clear the invalid state as soon as they start correcting it.
+      input.addEventListener('input', () => input.classList.remove('is-invalid'));
+
+      const remove = document.createElement('button');
+      remove.type = 'button';
+      remove.className = 'op-email-remove';
+      remove.setAttribute('aria-label', 'Remove this email');
+      remove.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>';
+      remove.addEventListener('click', () => {
+        row.remove();
+        syncAddButton();
+      });
+
+      row.appendChild(input);
+      row.appendChild(remove);
+      emailList.appendChild(row);
+      syncAddButton();
+      if (focus) input.focus();
+    }
+
+    if (addEmailBtn) addEmailBtn.addEventListener('click', () => addEmailRow(true));
+    syncAddButton();
 
     // ------------------------------------------
     // Selectable option cards (services / budget / timeline)
@@ -90,10 +147,22 @@
       if (step === 5) {
         const name = document.getElementById('op-full-name').value.trim();
         const email = document.getElementById('op-email').value.trim();
-        const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-        const ok = name.length > 0 && emailOk;
-        if (ok) hideFieldError('op-error-contact'); else showFieldError('op-error-contact');
-        return ok;
+        const emailOk = EMAIL_RE.test(email);
+        const primaryOk = name.length > 0 && emailOk;
+        if (primaryOk) hideFieldError('op-error-contact'); else showFieldError('op-error-contact');
+
+        // Every non-empty additional email must be valid too; blank rows
+        // are simply ignored so an unused row can't block submission.
+        let extrasOk = true;
+        getExtraEmailInputs().forEach((input) => {
+          const v = input.value.trim();
+          const bad = v.length > 0 && !EMAIL_RE.test(v);
+          input.classList.toggle('is-invalid', bad);
+          if (bad) extrasOk = false;
+        });
+        if (extrasOk) hideFieldError('op-error-extra-emails'); else showFieldError('op-error-extra-emails');
+
+        return primaryOk && extrasOk;
       }
       return true;
     }
@@ -152,10 +221,11 @@
         reviewValue(`${getSelections('budget')[0] || '—'}  ·  ${getSelections('timeline')[0] || '—'}`)
       ]));
 
+      const extras = getExtraEmails();
       reviewEl.appendChild(buildReviewGroup('Contact', [
         reviewValue(document.getElementById('op-full-name').value.trim()),
-        reviewValue(document.getElementById('op-contact-company').value.trim()),
         reviewValue(document.getElementById('op-email').value.trim()),
+        reviewValue(extras.length ? 'Also notifying: ' + extras.join(', ') : ''),
         reviewValue(document.getElementById('op-phone').value.trim()),
         reviewValue(document.getElementById('op-country').value.trim()),
         reviewValue('Prefers: ' + document.getElementById('op-contact-method').value)
@@ -214,8 +284,8 @@
         budget: getSelections('budget')[0] || '',
         timeline: getSelections('timeline')[0] || '',
         fullName: document.getElementById('op-full-name').value.trim(),
-        contactCompany: document.getElementById('op-contact-company').value.trim(),
         email: document.getElementById('op-email').value.trim(),
+        additionalEmails: getExtraEmails(),
         phone: document.getElementById('op-phone').value.trim(),
         country: document.getElementById('op-country').value.trim(),
         contactMethod: document.getElementById('op-contact-method').value,

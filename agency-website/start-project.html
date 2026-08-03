@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Main CSS (shared) -->
-  <link rel="stylesheet" href="styles.css?v=39">
+  <link rel="stylesheet" href="styles.css?v=40">
 </head>
 <body>
 
@@ -231,11 +231,7 @@
           <div class="op-field-grid">
             <label class="op-field">
               <span class="op-field-label">Full Name</span>
-              <input type="text" class="op-input" id="op-full-name" placeholder="Jane Doe" required>
-            </label>
-            <label class="op-field">
-              <span class="op-field-label">Company</span>
-              <input type="text" class="op-input" id="op-contact-company" placeholder="Your company">
+              <input type="text" class="op-input" id="op-full-name" placeholder="Green Lantern" required>
             </label>
             <label class="op-field">
               <span class="op-field-label">Email Address</span>
@@ -258,7 +254,18 @@
               </select>
             </label>
           </div>
+          <div class="op-field op-field--full">
+            <span class="op-field-label">Additional Contact Emails <em>(optional)</em></span>
+            <p class="op-subhint">Anyone else who should receive the confirmation — teammates, a shared inbox, your PM.</p>
+            <div class="op-email-list" id="op-email-list"></div>
+            <button type="button" class="op-add-email" id="op-add-email">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              Add another email
+            </button>
+          </div>
+
           <p class="op-field-error" id="op-error-contact" hidden>Please add your name and a valid email address.</p>
+          <p class="op-field-error" id="op-error-extra-emails" hidden>Please check the additional email addresses — one or more looks invalid.</p>
 
           <!-- Honeypot — hidden from real visitors, catches basic bots. -->
           <div class="op-honeypot" aria-hidden="true">
@@ -346,6 +353,6 @@
   <script src="main.js?v=27" defer></script>
 
   <!-- Onboarding flow logic -->
-  <script src="start-project.js?v=2" defer></script>
+  <script src="start-project.js?v=3" defer></script>
 </body>
 </html>

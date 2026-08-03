@@ -20,3 +20,8 @@ ZOHO_MAIL_API_DOMAIN=mail.zoho.com
 
 # Where the "new project inquiry" notification email is sent.
 OWNER_EMAIL=abdulbasit@abaryx.com
+
+# Local dev only: log emails to the console instead of sending them.
+# Production deliberately has no fallback — a deploy missing credentials
+# must fail loudly rather than silently reporting success to visitors.
+DEV_EMAIL_FALLBACK=true
