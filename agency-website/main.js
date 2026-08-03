@@ -373,7 +373,7 @@
 
       if (!configured) {
         console.warn(
-          '[Abraxis] Cal.com booking link is not configured yet. ' +
+          '[Abaryx] Cal.com booking link is not configured yet. ' +
           'Set CAL_LINK in main.js (section 11) to "username/event".'
         );
         return; // leave the plain link behaviour rather than a broken modal
@@ -812,7 +812,7 @@
       });
     })();
 
-    console.log('[Abraxis] App initialized.');
+    console.log('[Abaryx] App initialized.');
   }
 
   // ==========================================

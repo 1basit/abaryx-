@@ -90,6 +90,6 @@ export function clientEmailHtml(body) {
     <p style="${VALUE_STYLE}">
       In the meantime, feel free to reply directly to this email if anything changes on your end.
     </p>
-    <p style="${VALUE_STYLE}">— The Abraxis Solutions Team</p>
+    <p style="${VALUE_STYLE}">— The Abaryx Solutions Team</p>
   </div>`;
 }

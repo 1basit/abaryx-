@@ -92,7 +92,7 @@ async function handleProjectInquiry(request, env) {
       }),
       ...confirmationRecipients.map((to) => sendEmail(env, {
         to,
-        subject: 'We received your project inquiry — Abraxis Solutions',
+        subject: 'We received your project inquiry — Abaryx Solutions',
         html: clientEmailHtml(body)
       }))
     ]);
