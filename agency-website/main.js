@@ -729,9 +729,18 @@
 
         // overwrite:'auto' so this cleanly supersedes the entrance tween
         // if the user hovers while the fan is still animating in.
+        // On phones the expanded state grows the card's height instead
+        // (the badges join its normal flow — see styles.css), so scaling
+        // on top of that would push the taller card past .about-visual's
+        // overflow:hidden edge and clip it. Growth is the emphasis there;
+        // scale stays 1 and only a small lift is applied.
+        // No lift either on phones: the grown centre card ends up within
+        // ~6px of .about-visual's clip edge, so a lift would push it
+        // straight through. Growth + glow carry the emphasis there.
+        const small = smallScreen();
         gsap.to(entry.card, {
-          scale: smallScreen() ? 1.12 : 1.04,
-          y: -12,
+          scale: small ? 1 : 1.04,
+          y: small ? 0 : -12,
           duration: 0.55,
           ease: 'back.out(1.5)',
           overwrite: 'auto'

@@ -758,11 +758,50 @@ em { font-style: italic; }
     width: clamp(220px, 52vw, 290px);
     min-height: clamp(260px, 58vw, 330px);
   }
+
+  /* Touch sizes get a different expanded layout, not a shrunken copy of
+     the desktop one. On desktop the badges are an absolute overlay
+     floating over the card; at these card sizes that overlay covered the
+     card's own metrics. Here they instead join the card's normal flow as
+     a centred vertical stack and the card grows upward to fit them, so
+     content can never overlap or spill past the card edge. Height is
+     driven by max-height (animatable) rather than display toggling. */
+  .avc-badges {
+    position: static;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    background: none;
+    border-radius: 0;
+    padding: 0;
+    gap: 0.28rem;
+    max-height: 0;
+    overflow: hidden;
+    transition:
+      max-height 0.45s var(--ease-premium),
+      padding-top 0.45s var(--ease-premium),
+      opacity 0.35s var(--ease-premium),
+      visibility 0.35s var(--ease-premium);
+  }
+
+  .about-visual-card.is-active .avc-badges {
+    max-height: 220px;
+    padding-top: 0.7rem;
+  }
+
+  .avc-badge { white-space: normal; text-align: center; }
 }
 
 @media (max-width: 640px) {
+  /* Taller than the collapsed cards strictly need, to reserve room for
+     the expanded state to grow into. The cards are bottom-anchored, so
+     the extra height lands as whitespace above them rather than moving
+     them — and reserving it statically means expanding a card never
+     pushes the stats row below it around (no layout shift on tap).
+     Without this the grown card overflows .about-visual's
+     overflow:hidden edge and gets clipped on ~320px phones. */
   .about-visual {
-    height: clamp(230px, 72vw, 300px);
+    height: clamp(285px, 82vw, 320px);
   }
 
   .about-visual-card {
@@ -798,19 +837,21 @@ em { font-style: italic; }
   .about-visual-ring::before { inset: 8px; }
   .about-visual-ring span { font-size: 1rem; }
 
-  /* Cards are only ~130-165px wide here, so the badges have to shrink
-     hard to fit. The tapped card is also scaled up more (see main.js)
-     to buy back some room. */
-  .avc-badges {
-    gap: 0.2rem;
-    padding: 1.1rem 0.45rem 0.55rem;
-    border-radius: 0 0 var(--radius-md) var(--radius-md);
-  }
+  /* Phone: ~150px-wide cards with ~87px (side) / ~66px (centre) of
+     headroom above them inside .about-visual, which clips at its bounds.
+     The stack below adds ~57px, so the grown card still clears the
+     container. main.js also drops the tapped-card scale to 1 at this
+     size — scaling a grown card would push it past that clip edge. */
+  .avc-badges { gap: 0.18rem; }
+
+  .about-visual-card.is-active .avc-badges { padding-top: 0.4rem; }
 
   .avc-badge {
-    padding: 0.15rem 0.4rem;
-    font-size: 0.47rem;
+    padding: 0.13rem 0.45rem;
+    font-size: 0.5rem;
     letter-spacing: 0;
+    line-height: 1.35;
+    max-width: 100%;
   }
 }
 
