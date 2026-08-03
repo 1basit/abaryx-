@@ -358,7 +358,7 @@
       // │ https://cal.com/abaryx/30min  =>  'abaryx/30min'.        │
       // │ This is the only place the booking link is defined.      │
       // └──────────────────────────────────────────────────────────┘
-      const CAL_LINK = 'YOUR-CAL-USERNAME/YOUR-EVENT';
+      const CAL_LINK = 'abdulbasit1/meeting';
 
       const NAMESPACE = 'abaryx-booking';
       const triggers = document.querySelectorAll('[data-cal-booking]');
