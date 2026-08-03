@@ -18,7 +18,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Main CSS -->
-  <link rel="stylesheet" href="styles.css?v=41">
+  <link rel="stylesheet" href="styles.css?v=42">
+
+  <!-- Cal.com embed loader (official snippet). The booking link itself is
+       configured in ONE place — see CAL_LINK in main.js. If this script
+       fails to load, the "Schedule a Call" button still works: it keeps a
+       real href and simply opens the booking page in a new tab. -->
+  <script>
+    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); } else p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+  </script>
 
 </head>
 <body>
@@ -517,7 +525,7 @@
           <p class="text-on-dark-muted" style="margin-bottom: 2.25rem;">Founded by engineers obsessed with craft, we build cutting-edge AI and software platforms tailored for businesses ready to move faster.</p>
           <div class="hero-actions" style="margin-bottom: 2.5rem;">
             <a href="start-project.html" class="btn btn-light">Start a Project</a>
-            <a href="https://calendar.zoho.com/zc/view/slot-booking/zz08011220685d96c762be5afa819a7a8dd71ecf08054d11825607a05caa7f40dfd404be58" class="btn btn-ghost-light" target="_blank" rel="noopener">Schedule a Call</a>
+            <a href="https://cal.com/" class="btn btn-ghost-light" data-cal-booking target="_blank" rel="noopener">Schedule a Call</a>
           </div>
           <form class="newsletter-form" id="newsletter-form-hero">
             <input type="email" class="newsletter-input" placeholder="Your work email" required>
@@ -568,32 +576,11 @@
     </div>
   </footer>
 
-  <!-- ==================== ZOHO BOOKINGS MODAL ====================
-       Powers the "Schedule a Call" popup. Configure the real booking
-       URL in main.js (search for ZOHO_BOOKING_URL). -->
-  <div class="zoho-modal" id="zoho-modal" aria-hidden="true">
-    <div class="zoho-modal-backdrop" data-zoho-close></div>
-    <div class="zoho-modal-panel" role="dialog" aria-modal="true" aria-label="Schedule a call">
-      <button type="button" class="zoho-modal-close" data-zoho-close aria-label="Close">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-      </button>
-      <div class="zoho-modal-loading" id="zoho-modal-loading">
-        <span class="zoho-spinner"></span>
-        <p>Loading availability…</p>
-      </div>
-      <div class="zoho-modal-error" id="zoho-modal-error" hidden>
-        <p>We couldn't load the scheduler here.</p>
-        <a href="#" id="zoho-modal-fallback-link" class="btn btn-dark btn-sm" target="_blank" rel="noopener">Open Booking Page</a>
-      </div>
-      <iframe id="zoho-modal-iframe" class="zoho-modal-iframe" title="Schedule a call" loading="lazy"></iframe>
-    </div>
-  </div>
-
   <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
   <!-- Main JS -->
-  <script src="main.js?v=27" defer></script>
+  <script src="main.js?v=28" defer></script>
 </body>
 </html>

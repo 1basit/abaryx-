@@ -1907,123 +1907,6 @@ em { font-style: italic; }
 }
 
 /* ============================================
-   ZOHO BOOKINGS MODAL (Schedule a Call)
-   ============================================ */
-.zoho-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 3000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s var(--ease-premium), visibility 0.3s var(--ease-premium);
-}
-
-.zoho-modal.is-open {
-  opacity: 1;
-  visibility: visible;
-}
-
-.zoho-modal-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(4, 10, 8, 0.75);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-}
-
-.zoho-modal-panel {
-  position: relative;
-  width: 100%;
-  max-width: 900px;
-  height: min(720px, 88vh);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  overflow: hidden;
-  transform: translateY(24px) scale(0.98);
-  transition: transform 0.35s var(--ease-premium);
-}
-
-.zoho-modal.is-open .zoho-modal-panel {
-  transform: translateY(0) scale(1);
-}
-
-.zoho-modal-close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  z-index: 2;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid var(--border);
-  color: var(--ink-soft);
-  transition: all 0.2s ease;
-}
-
-.zoho-modal-close:hover { color: var(--ink); background: rgba(255, 255, 255, 0.1); }
-
-.zoho-modal-iframe {
-  width: 100%;
-  height: 100%;
-  border: 0;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.zoho-modal.is-loaded .zoho-modal-iframe { opacity: 1; }
-
-.zoho-modal-loading,
-.zoho-modal-error {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  text-align: center;
-  padding: 2rem;
-  color: var(--ink-soft);
-  font-size: 0.95rem;
-}
-
-.zoho-modal.is-loaded .zoho-modal-loading,
-.zoho-modal.has-error .zoho-modal-loading {
-  display: none;
-}
-
-.zoho-modal-error { display: none; }
-.zoho-modal.has-error .zoho-modal-error { display: flex; }
-
-.zoho-spinner {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  border: 3px solid rgba(255, 255, 255, 0.1);
-  border-top-color: var(--accent);
-  animation: zohoSpin 0.8s linear infinite;
-}
-
-@keyframes zohoSpin {
-  to { transform: rotate(360deg); }
-}
-
-@media (max-width: 640px) {
-  .zoho-modal { padding: 0; }
-  .zoho-modal-panel { height: 100%; border-radius: 0; max-width: none; }
-}
-
-/* ============================================
    START A PROJECT — onboarding flow
    ============================================ */
 .op-section { padding-top: clamp(2rem, 5vw, 3rem); }
@@ -2373,8 +2256,15 @@ em { font-style: italic; }
   border-radius: 50%;
   border: 2px solid rgba(8, 18, 15, 0.25);
   border-top-color: #08120F;
-  animation: zohoSpin 0.7s linear infinite;
+  animation: spinnerRotate 0.7s linear infinite;
   vertical-align: -3px;
+}
+
+/* Shared by the submit spinner. Previously named after the Zoho modal
+   that first introduced it; renamed so removing that integration can't
+   take the keyframes out from under an unrelated component again. */
+@keyframes spinnerRotate {
+  to { transform: rotate(360deg); }
 }
 
 .op-spinner[hidden] { display: none; }

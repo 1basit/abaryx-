@@ -335,80 +335,77 @@
     });
 
     // ==========================================
-    // 11. Zoho Bookings modal (Schedule a Call)
+    // 11. Cal.com booking (Schedule a Call)
+    //
+    //     Cal.com's element-click embed opens the booking flow in an
+    //     overlay on their free plan — unlike the previous Zoho Calendar
+    //     link, which sent X-Frame-Options: SAMEORIGIN and could not be
+    //     embedded at all.
+    //
+    //     Graceful degradation is structural rather than bolted on: the
+    //     trigger is a real anchor pointing at the public booking page,
+    //     and Cal's script intercepts the click only once it has loaded.
+    //     If the script is blocked, offline, or slow, the click is never
+    //     intercepted and the browser just follows the href to the same
+    //     booking page in a new tab. Nothing to time out, nothing to
+    //     break, no blank modal.
     // ==========================================
     (function () {
-      const ZOHO_BOOKING_URL = 'https://calendar.zoho.com/zc/view/slot-booking/zz08011220685d96c762be5afa819a7a8dd71ecf08054d11825607a05caa7f40dfd404be58';
-      const LOAD_TIMEOUT_MS = 8000;
+      // ┌──────────────────────────────────────────────────────────┐
+      // │ CONFIGURE ME — your Cal.com link, as "username/event".   │
+      // │ Find it on your Cal.com event type: the public URL is    │
+      // │ https://cal.com/<username>/<event-slug>, so a page at    │
+      // │ https://cal.com/abaryx/30min  =>  'abaryx/30min'.        │
+      // │ This is the only place the booking link is defined.      │
+      // └──────────────────────────────────────────────────────────┘
+      const CAL_LINK = 'YOUR-CAL-USERNAME/YOUR-EVENT';
 
-      const modal = document.getElementById('zoho-modal');
-      const triggers = document.querySelectorAll('[data-zoho-booking]');
-      if (!modal || !triggers.length) return;
+      const NAMESPACE = 'abaryx-booking';
+      const triggers = document.querySelectorAll('[data-cal-booking]');
+      if (!triggers.length) return;
 
-      const iframe = document.getElementById('zoho-modal-iframe');
-      const fallbackLink = document.getElementById('zoho-modal-fallback-link');
-      if (fallbackLink) fallbackLink.href = ZOHO_BOOKING_URL;
+      const configured = !CAL_LINK.startsWith('YOUR-CAL-USERNAME');
+      const bookingUrl = 'https://cal.com/' + CAL_LINK;
 
-      let loadTimer = null;
-      let lastFocused = null;
+      // Always point the anchor at the real page first, so the fallback
+      // path is correct even if Cal never loads.
+      triggers.forEach((el) => { el.href = bookingUrl; });
 
-      function openModal() {
-        lastFocused = document.activeElement;
-        modal.classList.remove('is-loaded', 'has-error');
-        modal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-
-        // Set src fresh on every open so a stalled/blocked previous
-        // attempt doesn't linger, and so we don't load Zoho until needed.
-        iframe.src = ZOHO_BOOKING_URL;
-
-        requestAnimationFrame(() => modal.classList.add('is-open'));
-
-        clearTimeout(loadTimer);
-        loadTimer = setTimeout(() => {
-          // Cross-origin iframes blocked by X-Frame-Options/CSP fail
-          // silently (no load/error event), so a timeout is the only
-          // reliable way to detect "embedding didn't work" and fall
-          // back to a plain link out to the real booking page.
-          modal.classList.add('has-error');
-        }, LOAD_TIMEOUT_MS);
-
-        const closeBtn = modal.querySelector('.zoho-modal-close');
-        if (closeBtn) closeBtn.focus();
+      if (!configured) {
+        console.warn(
+          '[Abraxis] Cal.com booking link is not configured yet. ' +
+          'Set CAL_LINK in main.js (section 11) to "username/event".'
+        );
+        return; // leave the plain link behaviour rather than a broken modal
       }
 
-      function closeModal() {
-        modal.classList.remove('is-open');
-        modal.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-        clearTimeout(loadTimer);
-        setTimeout(() => {
-          iframe.src = '';
-          modal.classList.remove('is-loaded', 'has-error');
-        }, 300);
-        if (lastFocused && lastFocused.focus) lastFocused.focus();
-      }
+      if (typeof window.Cal !== 'function') return; // loader missing -> href fallback
 
-      iframe.addEventListener('load', () => {
-        if (!iframe.src) return;
-        clearTimeout(loadTimer);
-        modal.classList.add('is-loaded');
-        modal.classList.remove('has-error');
+      // Brand the overlay so it reads as part of the site rather than a
+      // third-party popup. Cal resolves these against its own tokens.
+      window.Cal('init', NAMESPACE, { origin: 'https://app.cal.com' });
+      window.Cal.ns[NAMESPACE]('ui', {
+        theme: 'dark',
+        hideEventTypeDetails: false,
+        layout: 'month_view',
+        cssVarsPerTheme: {
+          dark: {
+            'cal-brand': '#4ADE80',
+            'cal-bg': '#132820',
+            'cal-bg-emphasis': '#17332A'
+          }
+        }
       });
 
-      triggers.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          openModal();
-        });
-      });
-
-      modal.querySelectorAll('[data-zoho-close]').forEach(el => {
-        el.addEventListener('click', closeModal);
-      });
-
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+      // Cal binds these attributes via delegation, so setting them here
+      // (after init) is fine and keeps the markup free of the link.
+      triggers.forEach((el) => {
+        el.setAttribute('data-cal-link', CAL_LINK);
+        el.setAttribute('data-cal-namespace', NAMESPACE);
+        el.setAttribute('data-cal-config', JSON.stringify({
+          layout: 'month_view',
+          useSlotsViewOnSmallScreen: 'true'
+        }));
       });
     })();
 
