@@ -415,15 +415,15 @@
     // ==========================================
     // 12. Capabilities — seamless infinite carousel (all breakpoints)
     //
-    //     One continuous "position" (px) drives everything — autoplay,
-    //     drag, wheel, and keyboard all just add to the same number,
-    //     which is then applied as a single translate3d on the track.
-    //     The track holds two consecutive copies of the card set, and
-    //     position wraps via modulo against one set's width — so wherever
-    //     it lands, the content on screen is pixel-identical whether it's
-    //     "real" or "clone," and the wrap is never visible. This avoids
-    //     the old scrollLeft+snap approach entirely, which is what caused
-    //     the visible delay/jump at the loop point.
+    //     The track holds two consecutive copies of the card set and the
+    //     loop position is tracked as a PERCENTAGE (0–50) of the track's
+    //     own width, applied via translate3d(-N%, 0, 0) — not pixels.
+    //     A percentage transform is resolved by the browser against the
+    //     track's actual current width every time it paints, so the wrap
+    //     boundary (exactly 50%, i.e. exactly one full copy) can never
+    //     drift out of sync with reality the way a JS-measured pixel
+    //     value could. Pixel math (drag distance, autoplay speed) only
+    //     ever affects how fast/far it feels — never where the seam is.
     // ==========================================
     (function () {
       const viewport = document.getElementById('capability-viewport');
@@ -443,10 +443,9 @@
       });
       const allCards = Array.from(track.querySelectorAll('.capability-card'));
 
-      let position = 0;   // px — how far the track has scrolled left
+      let percent = 0;   // 0–50: how far through one copy of the set we are
       let cardWidth = 0;
       let gap = 0;
-      let setWidth = 0;   // width of one full set of `count` cards (the loop period)
 
       function getVisibleCount() {
         const w = window.innerWidth;
@@ -456,7 +455,21 @@
       }
 
       function render() {
-        track.style.transform = `translate3d(${-position}px, 0, 0)`;
+        track.style.transform = `translate3d(${-percent}%, 0, 0)`;
+      }
+
+      // Wrapping is pure arithmetic against a constant (50) — never a
+      // measured value — so it's exact by construction, always.
+      function wrap() {
+        percent = ((percent % 50) + 50) % 50;
+      }
+
+      // Only used to convert pixel-based inputs (drag distance, wheel
+      // delta, autoplay speed) into percent — any imprecision here only
+      // changes how fast the carousel feels, since wrap() above never
+      // depends on this value.
+      function trackWidthPx() {
+        return track.scrollWidth || 1;
       }
 
       function layout() {
@@ -466,26 +479,7 @@
         const viewportWidth = viewport.getBoundingClientRect().width;
         cardWidth = (viewportWidth - gap * (visible - 1)) / visible;
         allCards.forEach((c) => { c.style.flex = `0 0 ${cardWidth}px`; });
-        setWidth = (cardWidth + gap) * count;
-        // Re-measure the loop width from actual rendered positions once
-        // layout has settled — this is what guarantees the real-card-to-
-        // clone-card seam lines up exactly like every other card gap,
-        // regardless of any subpixel/rounding difference between our own
-        // arithmetic and what the browser actually painted.
-        requestAnimationFrame(() => {
-          if (allCards.length > count) {
-            const pitch = allCards[count].getBoundingClientRect().left - allCards[0].getBoundingClientRect().left;
-            if (Number.isFinite(pitch) && pitch > 0) setWidth = pitch;
-          }
-          position = setWidth ? ((position % setWidth) + setWidth) % setWidth : 0;
-          render();
-        });
-        position = setWidth ? ((position % setWidth) + setWidth) % setWidth : 0;
         render();
-      }
-
-      function wrap() {
-        if (setWidth > 0) position = ((position % setWidth) + setWidth) % setWidth;
       }
 
       // --- Autoplay: slow, continuous, time-based (not frame-count-based
@@ -499,7 +493,7 @@
         if (lastTime == null) { lastTime = time; return; }
         const dt = (time - lastTime) / 1000;
         lastTime = time;
-        position += SPEED * dt;
+        percent += (SPEED * dt / trackWidthPx()) * 100;
         wrap();
         render();
       }
@@ -518,14 +512,14 @@
       // --- Pointer drag — unifies mouse, touch, and pen in one code path ---
       let dragging = false;
       let dragStartX = 0;
-      let dragStartPosition = 0;
+      let dragStartPercent = 0;
       let activePointerId = null;
 
       viewport.addEventListener('pointerdown', (e) => {
         dragging = true;
         activePointerId = e.pointerId;
         dragStartX = e.clientX;
-        dragStartPosition = position;
+        dragStartPercent = percent;
         pauseAutoplay();
         viewport.classList.add('is-dragging');
         viewport.setPointerCapture(activePointerId);
@@ -533,7 +527,8 @@
 
       viewport.addEventListener('pointermove', (e) => {
         if (!dragging) return;
-        position = dragStartPosition - (e.clientX - dragStartX);
+        const dxPercent = ((e.clientX - dragStartX) / trackWidthPx()) * 100;
+        percent = dragStartPercent - dxPercent;
         wrap();
         render();
       });
@@ -562,7 +557,7 @@
         const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
         if (Math.abs(delta) < 1) return;
         e.preventDefault();
-        position += delta;
+        percent += (delta / trackWidthPx()) * 100;
         wrap();
         render();
         pauseAutoplay();
@@ -573,7 +568,8 @@
       viewport.addEventListener('keydown', (e) => {
         if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
         e.preventDefault();
-        position += (e.key === 'ArrowRight' ? 1 : -1) * (cardWidth + gap);
+        const stepPercent = ((cardWidth + gap) / trackWidthPx()) * 100;
+        percent += (e.key === 'ArrowRight' ? 1 : -1) * stepPercent;
         wrap();
         render();
         pauseAutoplay();
