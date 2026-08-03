@@ -643,6 +643,104 @@ em { font-style: italic; }
   color: var(--ink);
 }
 
+/* --- About card micro-interactions -------------------------------
+   IMPORTANT: no `transform` is set here, on hover or otherwise. These
+   three cards are fanned by GSAP-managed rotation (-7/0/8deg) plus
+   xPercent:-50 on the centre one; a CSS transform would replace that
+   whole matrix and collapse the fan. Scale/lift are driven from
+   main.js via GSAP, which composes them with the fan geometry.
+   Only paint-level properties (shadow, glow, opacity) live here. */
+.about-visual-card {
+  transition: box-shadow 0.45s var(--ease-premium), border-color 0.45s var(--ease-premium);
+  cursor: pointer;
+}
+
+.about-visual-card.is-active {
+  border-color: rgba(74, 222, 128, 0.28);
+  box-shadow:
+    0 34px 80px rgba(0, 0, 0, 0.5),
+    0 0 42px rgba(74, 222, 128, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Cursor-following highlight. z-index:-1 keeps it above the card's own
+   background but beneath the card's text (the card already establishes
+   a stacking context via backdrop-filter). */
+.about-visual-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-premium);
+  background: radial-gradient(
+    260px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(74, 222, 128, 0.16),
+    transparent 70%
+  );
+}
+
+.about-visual-card.is-active::after { opacity: 1; }
+
+.avc-badges {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 2.2rem 1rem 1rem;
+  pointer-events: none;
+  /* Scrim so badges stay legible if they overlap the card's own content. */
+  background: linear-gradient(to top, rgba(11, 26, 21, 0.92), rgba(11, 26, 21, 0.72) 45%, transparent);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.45s var(--ease-premium), visibility 0.45s var(--ease-premium);
+}
+
+.about-visual-card.is-active .avc-badges {
+  opacity: 1;
+  visibility: visible;
+}
+
+.avc-badge {
+  padding: 0.28rem 0.7rem;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  color: var(--ink);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+  border-radius: 999px;
+  opacity: 0;
+  transform: translateY(10px);
+  filter: blur(4px);
+  transition: opacity 0.45s var(--ease-premium), transform 0.45s var(--ease-premium), filter 0.45s var(--ease-premium);
+}
+
+.about-visual-card.is-active .avc-badge {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* Staggered so they slide in one after another rather than as a block. */
+.about-visual-card.is-active .avc-badge:nth-child(1) { transition-delay: 0.06s; }
+.about-visual-card.is-active .avc-badge:nth-child(2) { transition-delay: 0.13s; }
+.about-visual-card.is-active .avc-badge:nth-child(3) { transition-delay: 0.2s; }
+
+.float-card-bars span { transform-origin: bottom center; }
+
+@media (prefers-reduced-motion: reduce) {
+  .avc-badge { transition-duration: 0.01ms; transform: none; filter: none; }
+}
+
 @media (max-width: 900px) {
   /* Keep the same fanned/overlapping look as desktop — just scaled down
      so all three cards fit without spilling past the viewport edges. */
@@ -699,6 +797,21 @@ em { font-style: italic; }
   }
   .about-visual-ring::before { inset: 8px; }
   .about-visual-ring span { font-size: 1rem; }
+
+  /* Cards are only ~130-165px wide here, so the badges have to shrink
+     hard to fit. The tapped card is also scaled up more (see main.js)
+     to buy back some room. */
+  .avc-badges {
+    gap: 0.2rem;
+    padding: 1.1rem 0.45rem 0.55rem;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+  }
+
+  .avc-badge {
+    padding: 0.15rem 0.4rem;
+    font-size: 0.47rem;
+    letter-spacing: 0;
+  }
 }
 
 .stats-row {

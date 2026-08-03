@@ -616,6 +616,196 @@
       }
     })();
 
+    // ==========================================
+    // 13. About dashboard cards — hover / tap micro-interactions
+    //
+    //     Every transform here goes through GSAP, never a CSS :hover
+    //     rule. These three cards are fanned by GSAP-managed rotation
+    //     (-7deg / 0 / 8deg) plus xPercent:-50 on the centre one — a CSS
+    //     `transform` would replace that entire matrix and collapse the
+    //     fan. GSAP tracks scale/y/rotation/xPercent as separate
+    //     components and recomposes them, so a hover can add scale+lift
+    //     without ever disturbing the fan geometry.
+    // ==========================================
+    (function () {
+      const cards = Array.from(document.querySelectorAll('.about-visual-card'));
+      if (!cards.length) return;
+
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const smallScreen = () => window.matchMedia('(max-width: 640px)').matches;
+
+      // Snapshot each card's animatable content up front so the counters
+      // can be replayed from zero and always land back on the exact
+      // original strings (no drift from repeated float formatting).
+      const entries = cards.map((card) => {
+        const values = Array.from(card.querySelectorAll('.float-card-value'))
+          .map((el) => {
+            const raw = el.textContent.trim();
+            const m = raw.match(/^([\d.]+)(.*)$/);
+            if (!m) return null;
+            return {
+              el,
+              raw,
+              num: parseFloat(m[1]),
+              decimals: (m[1].split('.')[1] || '').length,
+              suffix: m[2]
+            };
+          })
+          .filter(Boolean);
+        const ring = card.querySelector('.about-visual-ring');
+        return {
+          card,
+          values,
+          bars: Array.from(card.querySelectorAll('.float-card-bars span')),
+          ring,
+          ringSpan: ring ? ring.querySelector('span') : null,
+          ringPct: ring ? (parseFloat(getComputedStyle(ring).getPropertyValue('--pct')) || 82) : 0,
+          baseZ: getComputedStyle(card).zIndex
+        };
+      });
+
+      function playContent(entry) {
+        if (!gsapReady || reduceMotion) return;
+
+        entry.values.forEach((v) => {
+          const proxy = { n: 0 };
+          gsap.to(proxy, {
+            n: v.num, duration: 1.05, ease: 'power2.out', overwrite: true,
+            onUpdate: () => { v.el.textContent = proxy.n.toFixed(v.decimals) + v.suffix; },
+            onComplete: () => { v.el.textContent = v.raw; }
+          });
+        });
+
+        if (entry.bars.length) {
+          gsap.fromTo(entry.bars,
+            { scaleY: 0.12 },
+            { scaleY: 1, duration: 0.7, stagger: 0.045, ease: 'back.out(1.7)', overwrite: true }
+          );
+        }
+
+        if (entry.ring) {
+          const proxy = { p: 0 };
+          gsap.to(proxy, {
+            p: entry.ringPct, duration: 1.05, ease: 'power2.out', overwrite: true,
+            onUpdate: () => {
+              entry.ring.style.setProperty('--pct', proxy.p.toFixed(2));
+              if (entry.ringSpan) entry.ringSpan.textContent = Math.round(proxy.p) + '%';
+            },
+            onComplete: () => {
+              entry.ring.style.setProperty('--pct', entry.ringPct);
+              if (entry.ringSpan) entry.ringSpan.textContent = Math.round(entry.ringPct) + '%';
+            }
+          });
+        }
+      }
+
+      function resetContent(entry) {
+        if (!gsapReady) return;
+        entry.values.forEach((v) => {
+          gsap.killTweensOf(v.el);
+          v.el.textContent = v.raw;
+        });
+        if (entry.bars.length) {
+          gsap.killTweensOf(entry.bars);
+          gsap.set(entry.bars, { scaleY: 1 });
+        }
+        if (entry.ring) {
+          entry.ring.style.setProperty('--pct', entry.ringPct);
+          if (entry.ringSpan) entry.ringSpan.textContent = Math.round(entry.ringPct) + '%';
+        }
+      }
+
+      let active = null;
+
+      function activate(entry) {
+        if (active === entry) return;
+        if (active) deactivate(active);
+        active = entry;
+
+        entry.card.classList.add('is-active');
+        entry.card.style.zIndex = '20';
+
+        if (!gsapReady || reduceMotion) return;
+
+        // overwrite:'auto' so this cleanly supersedes the entrance tween
+        // if the user hovers while the fan is still animating in.
+        gsap.to(entry.card, {
+          scale: smallScreen() ? 1.12 : 1.04,
+          y: -12,
+          duration: 0.55,
+          ease: 'back.out(1.5)',
+          overwrite: 'auto'
+        });
+
+        entries.forEach((other) => {
+          if (other === entry) return;
+          gsap.to(other.card, {
+            scale: 0.965, opacity: 0.55, duration: 0.45, ease: 'power2.out', overwrite: 'auto'
+          });
+        });
+
+        playContent(entry);
+      }
+
+      function deactivate(entry) {
+        if (!entry) return;
+        entry.card.classList.remove('is-active');
+        entry.card.style.zIndex = '';
+        if (active === entry) active = null;
+
+        if (gsapReady && !reduceMotion) {
+          entries.forEach((e) => {
+            gsap.to(e.card, {
+              scale: 1, y: 0, opacity: 1, duration: 0.5, ease: 'power3.out', overwrite: 'auto'
+            });
+          });
+        }
+        resetContent(entry);
+      }
+
+      // Both interaction styles are always bound and disambiguated by the
+      // real pointer type rather than a `(hover: hover)` media query —
+      // touchscreen laptops report hover:hover, so a media-query branch
+      // would leave them with hover-only behaviour that a finger can
+      // never trigger cleanly. pointerType is what actually happened.
+      let lastPointerType = 'mouse';
+      document.addEventListener('pointerdown', (e) => { lastPointerType = e.pointerType || 'mouse'; }, true);
+
+      entries.forEach((entry) => {
+        entry.card.addEventListener('mouseenter', () => {
+          if (lastPointerType === 'touch') return; // tap path owns this
+          activate(entry);
+        });
+        entry.card.addEventListener('mouseleave', () => {
+          if (lastPointerType === 'touch') return;
+          deactivate(entry);
+        });
+
+        // Cursor-following highlight (see .about-visual-card::after).
+        entry.card.addEventListener('pointermove', (e) => {
+          if (reduceMotion || e.pointerType === 'touch') return;
+          const r = entry.card.getBoundingClientRect();
+          entry.card.style.setProperty('--mx', ((e.clientX - r.left) / r.width) * 100 + '%');
+          entry.card.style.setProperty('--my', ((e.clientY - r.top) / r.height) * 100 + '%');
+        });
+
+        // Tap to open, tap again (or tap another card) to close. Bound to
+        // `click`, not touchstart, so a scroll gesture that happens to
+        // begin on a card never fires it.
+        entry.card.addEventListener('click', () => {
+          if (lastPointerType !== 'touch') return;
+          if (active === entry) deactivate(entry);
+          else activate(entry);
+        });
+      });
+
+      // Tapping outside also closes, so a card can't get stuck open.
+      document.addEventListener('click', (e) => {
+        if (lastPointerType !== 'touch') return;
+        if (active && !e.target.closest('.about-visual-card')) deactivate(active);
+      });
+    })();
+
     console.log('[Abraxis] App initialized.');
   }
 
