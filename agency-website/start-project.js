@@ -50,6 +50,13 @@
 
     function syncAddButton() {
       if (addEmailBtn) addEmailBtn.disabled = getExtraEmailInputs().length >= MAX_EXTRA_EMAILS;
+      // Always leave at least one visible box, so the "one email per box"
+      // pattern stays self-evident instead of collapsing to a bare button.
+      const rows = emailList ? Array.from(emailList.querySelectorAll('.op-email-row')) : [];
+      rows.forEach((row) => {
+        const btn = row.querySelector('.op-email-remove');
+        if (btn) btn.style.visibility = rows.length > 1 ? 'visible' : 'hidden';
+      });
     }
 
     function addEmailRow(focus) {
@@ -84,7 +91,9 @@
     }
 
     if (addEmailBtn) addEmailBtn.addEventListener('click', () => addEmailRow(true));
-    syncAddButton();
+    // Start with one empty box visible so it's immediately clear that each
+    // box holds a single address; blank rows are ignored on submit.
+    addEmailRow(false);
 
     // ------------------------------------------
     // Selectable option cards (services / budget / timeline)

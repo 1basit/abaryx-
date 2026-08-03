@@ -2262,6 +2262,10 @@ em { font-style: italic; }
 .op-add-email {
   display: inline-flex;
   align-items: center;
+  /* The parent .op-field is a flex column, which blockifies this button
+     and stretches it to full width — making it read as another input
+     field rather than an action. Keep it hugging its own content. */
+  align-self: flex-start;
   gap: 0.45rem;
   margin-top: 0.7rem;
   padding: 0.5rem 0.95rem;
