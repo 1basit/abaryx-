@@ -443,6 +443,13 @@
 
       realCards.forEach((card) => {
         const clone = card.cloneNode(true);
+        // cloneNode(true) copies inline styles too. If any animation had
+        // already written inline opacity/transform onto the original,
+        // the clone would freeze at that value forever (nothing animates
+        // clones) — which previously left an invisible, full-width card
+        // sitting at the loop seam and read as a large blank gap. Strip
+        // inline styles so a clone can never diverge from its original.
+        clone.removeAttribute('style');
         clone.removeAttribute('data-reveal');
         clone.setAttribute('aria-hidden', 'true');
         clone.querySelectorAll('a, button').forEach((el) => el.setAttribute('tabindex', '-1'));
@@ -463,29 +470,42 @@
         return 4;
       }
 
+      // The manual nudge is wrapped into one loop period so repeated
+      // dragging/scrolling can never accumulate far enough to run past
+      // the duplicated content into blank space. Wrapping by exactly one
+      // period is visually undetectable — that span of track is
+      // pixel-identical to where it wraps to.
       function setOffset(px) {
-        offset = px;
+        const period = track.scrollWidth / 2;
+        offset = period > 0 ? ((px % period) + period) % period : px;
         track.style.setProperty('--cap-offset', `${offset}px`);
       }
 
       function layout() {
-        const trackGap = parseFloat(getComputedStyle(track).columnGap);
-        gap = Number.isFinite(trackGap) ? trackGap : 20;
+        const firstCard = allCards[0];
+        const cardMargin = firstCard ? parseFloat(getComputedStyle(firstCard).marginRight) : NaN;
+        gap = Number.isFinite(cardMargin) ? cardMargin : 20;
         const visible = getVisibleCount();
         const viewportWidth = viewport.getBoundingClientRect().width;
+        // Bail if the carousel has no width yet (hidden tab, collapsed
+        // pane, display:none ancestor). Writing flex-basis:0 here would
+        // permanently collapse every card until the next resize — the
+        // ResizeObserver below re-runs this the moment it has real size.
+        if (!(viewportWidth > 0)) return;
         cardWidth = (viewportWidth - gap * (visible - 1)) / visible;
         allCards.forEach((c) => { c.style.flex = `0 0 ${cardWidth}px`; });
-        // scrollWidth accounts for the track's full overflowing content
-        // (its own box would otherwise just be `auto`-width relative to
-        // its parent) — half of that is exactly one copy of the set,
-        // which is what the CSS animation duration needs to match for
-        // SPEED_PX_PER_SEC to hold true regardless of breakpoint.
-        requestAnimationFrame(() => {
-          const halfWidth = track.scrollWidth / 2;
-          if (halfWidth > 0) {
-            track.style.animationDuration = `${halfWidth / SPEED_PX_PER_SEC}s`;
-          }
-        });
+        // Read scrollWidth synchronously (which forces the pending
+        // reflow from the flex writes above, so the value is already
+        // correct) rather than deferring to requestAnimationFrame —
+        // rAF does not fire in a hidden/background tab, which would
+        // leave animation-duration unset and the marquee frozen at 0s.
+        // scrollWidth spans the track's full overflowing content, and
+        // half of that is exactly one copy of the set — matching it to
+        // SPEED_PX_PER_SEC keeps speed constant across breakpoints.
+        const halfWidth = track.scrollWidth / 2;
+        if (halfWidth > 0) {
+          track.style.animationDuration = `${halfWidth / SPEED_PX_PER_SEC}s`;
+        }
       }
 
       let isOffscreen = false;
@@ -544,15 +564,23 @@
       viewport.addEventListener('pointerleave', () => { if (dragging) endDrag(); });
       viewport.addEventListener('dragstart', (e) => e.preventDefault());
 
-      // --- Wheel / trackpad — horizontal delta preferred, vertical wheel
-      // as a fallback so a plain mouse scroll wheel still nudges it ---
+      // --- Wheel / trackpad — deliberately ONLY reacts to a clearly
+      // horizontal gesture (a two-finger sideways trackpad swipe).
+      //
+      // A vertical wheel is left completely untouched: no preventDefault,
+      // no nudge, no pause. Previously this handler consumed vertical
+      // wheel too, which meant simply scrolling the page with the cursor
+      // over the carousel both hijacked the page scroll AND paused the
+      // marquee for ~1.8s — which read as "it pauses when I hover it".
+      //
+      // A horizontal nudge also never pauses autoplay; the offset is
+      // additive on top of the running CSS animation, so the marquee
+      // keeps moving at a constant speed throughout.
       viewport.addEventListener('wheel', (e) => {
-        const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-        if (Math.abs(delta) < 1) return;
+        if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return; // vertical → let the page scroll
+        if (Math.abs(e.deltaX) < 1) return;
         e.preventDefault();
-        setOffset(offset + delta);
-        pause();
-        scheduleResume(1800);
+        setOffset(offset + e.deltaX);
       }, { passive: false });
 
       // --- Keyboard ---
@@ -575,10 +603,17 @@
 
       layout();
       let resizeTimer = null;
-      window.addEventListener('resize', () => {
+      function scheduleLayout() {
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(layout, 150);
-      });
+      }
+      window.addEventListener('resize', scheduleLayout);
+      // Also observe the carousel's own box, not just the window: it can
+      // gain/lose width independently (container queries, a collapsed
+      // pane opening, fonts reflowing the panel) with no resize event.
+      if (typeof ResizeObserver !== 'undefined') {
+        new ResizeObserver(scheduleLayout).observe(viewport);
+      }
     })();
 
     console.log('[Abraxis] App initialized.');

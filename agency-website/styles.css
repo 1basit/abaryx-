@@ -818,12 +818,21 @@ em { font-style: italic; }
 
 .capability-track {
   display: flex;
-  gap: 1.25rem;
   width: max-content;
   will-change: transform;
   animation-name: capabilityMarquee;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
+}
+
+/* Spacing is a per-card margin-right, NOT a flex `gap`, and that is
+   load-bearing for the loop math. With `gap`, N cards produce only
+   N-1 gaps, so half the track width lands gap/2 short of one full
+   copy — a small but visible twitch every loop. With a trailing
+   margin on every card, 2N cards produce exactly 2N gaps, so
+   translateX(-50%) equals exactly one copy's period. */
+.capability-track .capability-card {
+  margin-right: var(--cap-gap, 1.25rem);
 }
 
 .capability-track.is-paused {
