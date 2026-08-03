@@ -970,8 +970,26 @@ em { font-style: italic; }
   cursor: grabbing;
 }
 
+/* Two separate transform layers, deliberately. .capability-shift carries
+   ONLY the manual drag/wheel/keyboard offset (plain pixels, written by
+   JS); .capability-track carries ONLY the marquee animation (pure
+   percentages). They must not be combined onto one element: doing so
+   previously animated `translate3d(calc(-50% - var(--cap-offset)),0,0)`,
+   asking the engine to interpolate a mixed percentage+length calc
+   containing a custom property. Blink tolerated it; WebKit does not
+   interpolate length<->percentage transforms reliably, which is why the
+   loop ran to the end of the track and stopped in Safari instead of
+   repeating. One unit per layer makes the interpolation trivial and
+   identical in every engine. */
+.capability-shift {
+  width: -webkit-max-content;
+  width: max-content;
+  will-change: transform;
+}
+
 .capability-track {
   display: flex;
+  width: -webkit-max-content; /* older WebKit */
   width: max-content;
   will-change: transform;
   animation-name: capabilityMarquee;
@@ -993,9 +1011,12 @@ em { font-style: italic; }
   animation-play-state: paused;
 }
 
+/* Both keyframes are percentages of the track's own width, so this is a
+   percentage->percentage interpolation — unambiguous in every engine.
+   50% is exactly one copy of the duplicated card set. */
 @keyframes capabilityMarquee {
-  from { transform: translate3d(calc(0px - var(--cap-offset, 0px)), 0, 0); }
-  to   { transform: translate3d(calc(-50% - var(--cap-offset, 0px)), 0, 0); }
+  from { transform: translate3d(0%, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
 }
 
 .capability-track .capability-card {

@@ -422,16 +422,18 @@
     //     independently of JS execution.
     //
     //     Drag/wheel/keyboard don't touch the animation itself — they
-    //     update a single --cap-offset custom property that the keyframe
-    //     adds into its own transform (see the calc() in styles.css).
-    //     Custom property changes apply on the very next paint with no
-    //     restart, so nudging it never causes a visible jump. Pausing is
-    //     just animation-play-state, which freezes/resumes at the exact
-    //     frozen position, also with no discontinuity.
+    //     set a plain pixel transform on a SEPARATE wrapper element
+    //     (.capability-shift). Keeping the two off one element is what
+    //     makes this work in WebKit: combining them meant animating
+    //     translate3d(calc(-50% - var(...))), a mixed percentage+length
+    //     calc that Safari cannot interpolate reliably. Pausing is just
+    //     animation-play-state, which freezes/resumes at the exact
+    //     frozen position with no discontinuity.
     // ==========================================
     (function () {
       const viewport = document.getElementById('capability-viewport');
       const track = document.getElementById('capability-track');
+      const shift = document.getElementById('capability-shift');
       if (!viewport || !track) return;
 
       const realCards = Array.from(track.querySelectorAll('.capability-card'));
@@ -475,7 +477,9 @@
       function setOffset(px) {
         const period = track.scrollWidth / 2;
         offset = period > 0 ? ((px % period) + period) % period : px;
-        track.style.setProperty('--cap-offset', `${offset}px`);
+        // Plain px on its own layer — never mixed into the animated
+        // percentage transform (see styles.css for why).
+        if (shift) shift.style.transform = `translate3d(${-offset}px, 0, 0)`;
       }
 
       function layout() {

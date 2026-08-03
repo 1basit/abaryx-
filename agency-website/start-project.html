@@ -32,7 +32,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Main CSS (shared) -->
-  <link rel="stylesheet" href="styles.css?v=43">
+  <link rel="stylesheet" href="styles.css?v=44">
 </head>
 <body>
 
@@ -168,15 +168,15 @@
           <div class="op-field-grid">
             <label class="op-field">
               <span class="op-field-label">Project Name</span>
-              <input type="text" class="op-input" id="op-project-name" placeholder="e.g. Customer Support Copilot" required>
+              <input type="text" class="op-input" id="op-project-name" placeholder="e.g. Customer Support Copilot" required maxlength="200" autocomplete="off">
             </label>
             <label class="op-field">
               <span class="op-field-label">Company Name</span>
-              <input type="text" class="op-input" id="op-company-name" placeholder="Your company">
+              <input type="text" class="op-input" id="op-company-name" placeholder="Your company" maxlength="200" autocomplete="organization">
             </label>
             <label class="op-field">
               <span class="op-field-label">Business Website</span>
-              <input type="url" class="op-input" id="op-website" placeholder="https://yourcompany.com">
+              <input type="url" class="op-input" id="op-website" placeholder="https://yourcompany.com" maxlength="300" inputmode="url" autocomplete="url">
             </label>
             <label class="op-field">
               <span class="op-field-label">Industry</span>
@@ -196,15 +196,15 @@
           </div>
           <label class="op-field op-field--full">
             <span class="op-field-label">Project Description</span>
-            <textarea class="op-textarea" id="op-description" rows="4" placeholder="What are you looking to build?" required></textarea>
+            <textarea class="op-textarea" id="op-description" rows="4" placeholder="What are you looking to build?" required maxlength="5000"></textarea>
           </label>
           <label class="op-field op-field--full">
             <span class="op-field-label">Current Challenges</span>
-            <textarea class="op-textarea" id="op-challenges" rows="3" placeholder="What's not working today?"></textarea>
+            <textarea class="op-textarea" id="op-challenges" rows="3" placeholder="What's not working today?" maxlength="5000"></textarea>
           </label>
           <label class="op-field op-field--full">
             <span class="op-field-label">Desired Outcome</span>
-            <textarea class="op-textarea" id="op-outcome" rows="3" placeholder="What does success look like?"></textarea>
+            <textarea class="op-textarea" id="op-outcome" rows="3" placeholder="What does success look like?" maxlength="5000"></textarea>
           </label>
           <p class="op-field-error" id="op-error-project" hidden>Please add a project name and description.</p>
         </div>
@@ -245,19 +245,19 @@
           <div class="op-field-grid">
             <label class="op-field">
               <span class="op-field-label">Full Name</span>
-              <input type="text" class="op-input" id="op-full-name" placeholder="Green Lantern" required>
+              <input type="text" class="op-input" id="op-full-name" placeholder="Green Lantern" required maxlength="200" autocomplete="name">
             </label>
             <label class="op-field">
               <span class="op-field-label">Email Address</span>
-              <input type="email" class="op-input" id="op-email" placeholder="jane@company.com" required>
+              <input type="email" class="op-input" id="op-email" placeholder="jane@company.com" required maxlength="254" autocomplete="email">
             </label>
             <label class="op-field">
               <span class="op-field-label">Phone Number <em>(optional)</em></span>
-              <input type="tel" class="op-input" id="op-phone" placeholder="+1 555 000 0000">
+              <input type="tel" class="op-input" id="op-phone" placeholder="+1 555 000 0000" maxlength="40" inputmode="tel" autocomplete="tel">
             </label>
             <label class="op-field">
               <span class="op-field-label">Country</span>
-              <input type="text" class="op-input" id="op-country" placeholder="United States">
+              <input type="text" class="op-input" id="op-country" placeholder="United States" maxlength="100" autocomplete="country-name">
             </label>
             <label class="op-field">
               <span class="op-field-label">Preferred Contact Method</span>
@@ -364,9 +364,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
   <!-- Main JS (shared) -->
-  <script src="main.js?v=30" defer></script>
+  <script src="main.js?v=31" defer></script>
 
   <!-- Onboarding flow logic -->
-  <script src="start-project.js?v=4" defer></script>
+  <script src="start-project.js?v=5" defer></script>
 </body>
 </html>

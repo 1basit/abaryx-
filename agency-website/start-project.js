@@ -9,6 +9,8 @@
   const TOTAL_STEPS = 6;
   const MAX_EXTRA_EMAILS = 5;
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const URL_RE = /^https?:\/\/[^\s.]+\.[^\s]{2,}$/i;
+  const PHONE_RE = /^[0-9+()\-.\s]{6,40}$/;
   const formLoadedAt = Date.now();
 
   function init() {
@@ -90,6 +92,10 @@
       if (focus) input.focus();
     }
 
+    card.addEventListener('input', (e) => {
+      if (e.target.classList) e.target.classList.remove('is-invalid');
+    });
+
     if (addEmailBtn) addEmailBtn.addEventListener('click', () => addEmailRow(true));
     // Start with one empty box visible so it's immediately clear that each
     // box holds a single address; blank rows are ignored on submit.
@@ -125,9 +131,29 @@
       if (el) el.hidden = true;
     }
 
-    function showFieldError(id) {
+    function showFieldError(id, message) {
       const el = document.getElementById(id);
-      if (el) el.hidden = false;
+      if (!el) return;
+      // Remember the markup's default text so a specific message can be
+      // swapped in and later restored.
+      if (!el.dataset.defaultMsg) el.dataset.defaultMsg = el.textContent;
+      el.textContent = message || el.dataset.defaultMsg;
+      el.hidden = false;
+    }
+
+    // Mark/unmark a single input and collect a specific reason. Keeps the
+    // messages actionable ("Website must start with http") instead of one
+    // generic "check your submission".
+    function checkField(el, rules) {
+      if (!el) return null;
+      const v = el.value.trim();
+      let reason = null;
+      if (rules.required && !v) reason = rules.label + ' is required.';
+      else if (v && rules.min && v.length < rules.min) reason = rules.label + ' is too short.';
+      else if (v && rules.max && v.length > rules.max) reason = rules.label + ' is too long (max ' + rules.max + ' characters).';
+      else if (v && rules.test && !rules.test(v)) reason = rules.message;
+      el.classList.toggle('is-invalid', Boolean(reason));
+      return reason;
     }
 
     function validateStep(step) {
@@ -137,11 +163,24 @@
         return ok;
       }
       if (step === 2) {
-        const name = document.getElementById('op-project-name').value.trim();
-        const desc = document.getElementById('op-description').value.trim();
-        const ok = name.length > 0 && desc.length > 0;
-        if (ok) hideFieldError('op-error-project'); else showFieldError('op-error-project');
-        return ok;
+        const reasons = [
+          checkField(document.getElementById('op-project-name'), {
+            label: 'Project name', required: true, min: 2, max: 200
+          }),
+          checkField(document.getElementById('op-description'), {
+            label: 'Project description', required: true, min: 10, max: 5000
+          }),
+          checkField(document.getElementById('op-website'), {
+            label: 'Business website', max: 300, test: URL_RE,
+            message: 'Website should look like https://yourcompany.com'
+          }),
+          checkField(document.getElementById('op-company-name'), { label: 'Company name', max: 200 }),
+          checkField(document.getElementById('op-challenges'), { label: 'Current challenges', max: 5000 }),
+          checkField(document.getElementById('op-outcome'), { label: 'Desired outcome', max: 5000 })
+        ].filter(Boolean);
+        if (!reasons.length) hideFieldError('op-error-project');
+        else showFieldError('op-error-project', reasons[0]);
+        return reasons.length === 0;
       }
       if (step === 3) {
         const ok = getSelections('budget').length > 0;
@@ -154,11 +193,23 @@
         return ok;
       }
       if (step === 5) {
-        const name = document.getElementById('op-full-name').value.trim();
-        const email = document.getElementById('op-email').value.trim();
-        const emailOk = EMAIL_RE.test(email);
-        const primaryOk = name.length > 0 && emailOk;
-        if (primaryOk) hideFieldError('op-error-contact'); else showFieldError('op-error-contact');
+        const reasons = [
+          checkField(document.getElementById('op-full-name'), {
+            label: 'Full name', required: true, min: 2, max: 200
+          }),
+          checkField(document.getElementById('op-email'), {
+            label: 'Email address', required: true, max: 254, test: EMAIL_RE,
+            message: 'Please enter a valid email address.'
+          }),
+          checkField(document.getElementById('op-phone'), {
+            label: 'Phone number', max: 40, test: PHONE_RE,
+            message: 'Phone number can only contain digits, spaces and + ( ) -'
+          }),
+          checkField(document.getElementById('op-country'), { label: 'Country', max: 100 })
+        ].filter(Boolean);
+        const primaryOk = reasons.length === 0;
+        if (primaryOk) hideFieldError('op-error-contact');
+        else showFieldError('op-error-contact', reasons[0]);
 
         // Every non-empty additional email must be valid too; blank rows
         // are simply ignored so an unused row can't block submission.

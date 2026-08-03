@@ -6,8 +6,10 @@ compatibility_date = "2024-09-23"
 directory = "."
 binding = "ASSETS"
 
-# Uncomment once you've created a KV namespace (see functions/README.md)
-# for per-IP rate limiting on the inquiry form.
-# [[kv_namespaces]]
-# binding = "RATE_LIMIT_KV"
-# id = "your-kv-namespace-id"
+# Backs per-IP rate limiting on /api/project-inquiry. Without this
+# binding checkRateLimit() short-circuits to "allowed", so the endpoint
+# looked rate-limited in code while being completely unlimited in
+# production — this binding is what actually makes it enforce.
+[[kv_namespaces]]
+binding = "RATE_LIMIT_KV"
+id = "f82fc1e3ff564051bdfff1b471856808"
