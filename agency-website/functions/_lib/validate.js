@@ -1,5 +1,7 @@
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const URL_RE = /^https?:\/\/[^\s.]+\.[^\s]{2,}$/i;
+// Protocol optional — the browser normalizes to https:// before sending, but
+// the API is public, so accept the bare-domain form here too.
+const URL_RE = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(:\d{2,5})?([/?#][^\s]*)?$/i;
 const PHONE_RE = /^[0-9+()\-.\s]{6,40}$/;
 // CR/LF in any field that could reach an email header is a header-injection
 // vector; NUL and other C0 controls have no legitimate use in this form.
@@ -27,7 +29,7 @@ export function validateInquiry(body) {
   }
 
   if (!isNonEmptyString(body.projectName, 200)) errors.push('projectName');
-  if (!isNonEmptyString(body.description, 5000)) errors.push('description');
+  if (!isOptionalString(body.description, 5000)) errors.push('description');
   if (!isNonEmptyString(body.budget, 100)) errors.push('budget');
   if (!isNonEmptyString(body.timeline, 100)) errors.push('timeline');
   if (!isNonEmptyString(body.fullName, 200)) errors.push('fullName');

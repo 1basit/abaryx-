@@ -40,7 +40,7 @@ export function ownerEmailHtml(body, submittedAt) {
     <p style="${VALUE_STYLE}">${escapeHtml(body.industry) || '—'}</p>
 
     <div style="${LABEL_STYLE}">Description</div>
-    <p style="${VALUE_STYLE}">${nl2br(body.description)}</p>
+    <p style="${VALUE_STYLE}">${nl2br(body.description) || '—'}</p>
 
     <div style="${LABEL_STYLE}">Current Challenges</div>
     <p style="${VALUE_STYLE}">${nl2br(body.challenges) || '—'}</p>

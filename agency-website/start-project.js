@@ -9,7 +9,9 @@
   const TOTAL_STEPS = 6;
   const MAX_EXTRA_EMAILS = 5;
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const URL_RE = /^https?:\/\/[^\s.]+\.[^\s]{2,}$/i;
+  // Protocol optional — "basitcuts.com" is what people actually type.
+  // normalizeWebsite() adds https:// before the value is sent.
+  const URL_RE = /^(https?:\/\/)?([a-z0-9-]+\.)+[a-z]{2,}(:\d{2,5})?([/?#][^\s]*)?$/i;
   const PHONE_RE = /^[0-9+()\-.\s]{6,40}$/;
   const formLoadedAt = Date.now();
 
@@ -144,6 +146,15 @@
     // Mark/unmark a single input and collect a specific reason. Keeps the
     // messages actionable ("Website must start with http") instead of one
     // generic "check your submission".
+    // Users type "basitcuts.com"; links in the notification email need a
+    // scheme or they resolve relative to the mail client. Added at send time
+    // rather than rewriting the input, so the field keeps what they typed.
+    function normalizeWebsite(value) {
+      const v = (value || '').trim();
+      if (!v) return '';
+      return /^https?:\/\//i.test(v) ? v : 'https://' + v;
+    }
+
     function checkField(el, rules) {
       if (!el) return null;
       const v = el.value.trim();
@@ -168,11 +179,13 @@
             label: 'Project name', required: true, min: 2, max: 200
           }),
           checkField(document.getElementById('op-description'), {
-            label: 'Project description', required: true, min: 10, max: 5000
+            label: 'Project description', max: 5000
           }),
           checkField(document.getElementById('op-website'), {
-            label: 'Business website', max: 300, pattern: URL_RE,
-            message: 'Website should look like https://yourcompany.com'
+            // 292 not 300: normalizeWebsite() may prepend 8 chars ("https://")
+            // and the API caps the stored value at 300.
+            label: 'Business website', max: 292, pattern: URL_RE,
+            message: 'Website should look like yourcompany.com'
           }),
           checkField(document.getElementById('op-company-name'), { label: 'Company name', max: 200 }),
           checkField(document.getElementById('op-challenges'), { label: 'Current challenges', max: 5000 }),
@@ -336,7 +349,7 @@
         services: getSelections('services'),
         projectName: document.getElementById('op-project-name').value.trim(),
         companyName: document.getElementById('op-company-name').value.trim(),
-        businessWebsite: document.getElementById('op-website').value.trim(),
+        businessWebsite: normalizeWebsite(document.getElementById('op-website').value),
         industry: document.getElementById('op-industry').value.trim(),
         description: document.getElementById('op-description').value.trim(),
         challenges: document.getElementById('op-challenges').value.trim(),
