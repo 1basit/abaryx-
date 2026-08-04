@@ -151,7 +151,7 @@
       if (rules.required && !v) reason = rules.label + ' is required.';
       else if (v && rules.min && v.length < rules.min) reason = rules.label + ' is too short.';
       else if (v && rules.max && v.length > rules.max) reason = rules.label + ' is too long (max ' + rules.max + ' characters).';
-      else if (v && rules.test && !rules.test(v)) reason = rules.message;
+      else if (v && rules.pattern && !rules.pattern.test(v)) reason = rules.message;
       el.classList.toggle('is-invalid', Boolean(reason));
       return reason;
     }
@@ -171,7 +171,7 @@
             label: 'Project description', required: true, min: 10, max: 5000
           }),
           checkField(document.getElementById('op-website'), {
-            label: 'Business website', max: 300, test: URL_RE,
+            label: 'Business website', max: 300, pattern: URL_RE,
             message: 'Website should look like https://yourcompany.com'
           }),
           checkField(document.getElementById('op-company-name'), { label: 'Company name', max: 200 }),
@@ -198,11 +198,11 @@
             label: 'Full name', required: true, min: 2, max: 200
           }),
           checkField(document.getElementById('op-email'), {
-            label: 'Email address', required: true, max: 254, test: EMAIL_RE,
+            label: 'Email address', required: true, max: 254, pattern: EMAIL_RE,
             message: 'Please enter a valid email address.'
           }),
           checkField(document.getElementById('op-phone'), {
-            label: 'Phone number', max: 40, test: PHONE_RE,
+            label: 'Phone number', max: 40, pattern: PHONE_RE,
             message: 'Phone number can only contain digits, spaces and + ( ) -'
           }),
           checkField(document.getElementById('op-country'), { label: 'Country', max: 100 })
