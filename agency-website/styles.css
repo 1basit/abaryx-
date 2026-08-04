@@ -954,20 +954,10 @@ em { font-style: italic; }
   }
 }
 
+/* Purely a clipping box. No cursor/touch-action/focus styling: the
+   carousel is not interactive, so touch scrolling stays fully native. */
 .capability-viewport {
   overflow: hidden;
-  cursor: grab;
-  touch-action: pan-y;
-  outline: none;
-}
-
-.capability-viewport:focus-visible {
-  box-shadow: 0 0 0 2px var(--accent-line);
-  border-radius: var(--radius-md);
-}
-
-.capability-viewport.is-dragging {
-  cursor: grabbing;
 }
 
 /* ONE transform, ONE position source.
@@ -1004,13 +994,15 @@ em { font-style: italic; }
   margin-right: var(--cap-gap, 1.25rem);
 }
 
-.capability-track.is-paused {
-  animation-play-state: paused;
-}
-
 /* Both keyframes are percentages of the track's own width, so this is a
    percentage->percentage interpolation — unambiguous in every engine.
    50% is exactly one copy of the duplicated card set. */
+/* Respect the OS "reduce motion" setting: hold the track still rather
+   than scrolling it indefinitely. */
+@media (prefers-reduced-motion: reduce) {
+  .capability-track { animation: none; }
+}
+
 @keyframes capabilityMarquee {
   from { transform: translate3d(0%, 0, 0); }
   to   { transform: translate3d(-50%, 0, 0); }
@@ -2321,4 +2313,48 @@ em { font-style: italic; }
   max-width: 480px;
   margin: 0 auto 2rem;
   line-height: 1.7;
+}
+
+/* ============================================
+   PAGE TRANSITIONS
+   Cross-document View Transitions: the browser snapshots the old page,
+   loads the new one, then cross-fades between them natively. This is the
+   standards-based approach for a multi-page site — it needs no router,
+   no JS, and no interception of link clicks, so navigation stays a plain
+   browser navigation (nothing for SEO or the back button to trip over).
+
+   Browsers without support (currently Firefox) simply navigate as before:
+   the at-rule is ignored and nothing is hidden or delayed, so there is no
+   fallback path that can leave content invisible.
+
+   Snapshots animate on the compositor, and because they are rendered in a
+   separate top layer they cannot cause layout shift in the page itself.
+   ============================================ */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root) {
+  animation: pageFadeOut 180ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+::view-transition-new(root) {
+  animation: pageFadeIn 320ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes pageFadeOut {
+  from { opacity: 1; transform: translate3d(0, 0, 0); }
+  to   { opacity: 0; transform: translate3d(0, -8px, 0); }
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translate3d(0, 10px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
 }

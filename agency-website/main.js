@@ -410,27 +410,25 @@
     })();
 
     // ==========================================
-    // 12. Capabilities — infinite marquee
+    // 12. Capabilities — infinite auto-scrolling marquee
     //
-    //     ONE position source, by design. The track holds two identical
+    //     Deliberately non-interactive. The track holds two identical
     //     copies of the card set and a single CSS animation translates it
-    //     0% -> -50% (exactly one copy) on an infinite loop. Nothing else
-    //     ever writes a transform to it.
+    //     0% -> -50% (exactly one copy) forever. There are no pointer,
+    //     wheel, keyboard or visibility handlers, and JS never writes a
+    //     transform or toggles play state — so there is no second source
+    //     of position and no runtime state that can drift. Every
+    //     cross-browser bug this section has had traced back to exactly
+    //     that kind of extra state.
     //
-    //     Manual input (drag / wheel / keyboard) SEEKS that same animation
-    //     via the Web Animations API rather than applying its own
-    //     transform. That is the whole trick: an earlier version put the
-    //     drag offset on a separate wrapper element, and because each
-    //     layer wrapped independently at one period they could sum to two
-    //     periods — the entire duplicated track — leaving the viewport
-    //     blank. With one periodic source, currentTime is normalised into
-    //     [0, duration) and the rendered position is therefore ALWAYS
-    //     inside a single period. Running off the end is not expressible.
+    //     JS does two things only, at load and on resize: size the cards
+    //     so N of them fill the viewport, and set animation-duration so
+    //     the speed is a constant px/sec at every breakpoint. Both are
+    //     layout-time; nothing runs per frame.
     //
     //     Keyframes are percentage->percentage with no calc() and no
     //     custom property, because WebKit does not interpolate
-    //     length<->percentage transforms reliably (that is what made
-    //     Safari stop at the end of the track).
+    //     length<->percentage transforms reliably.
     // ==========================================
     (function () {
       const viewport = document.getElementById('capability-viewport');
@@ -438,10 +436,9 @@
       if (!viewport || !track) return;
 
       const realCards = Array.from(track.querySelectorAll('.capability-card'));
-      const count = realCards.length;
-      if (!count) return;
+      if (!realCards.length) return;
 
-      // Second copy — what makes the -50% wrap invisible.
+      // The second copy is what makes the -50% wrap invisible.
       realCards.forEach((card) => {
         const clone = card.cloneNode(true);
         clone.removeAttribute('style');
@@ -452,8 +449,6 @@
       const allCards = Array.from(track.querySelectorAll('.capability-card'));
 
       const SPEED_PX_PER_SEC = 55;
-      let cardWidth = 0;
-      let gap = 0;
 
       function getVisibleCount() {
         const w = window.innerWidth;
@@ -462,139 +457,32 @@
         return 4;
       }
 
-      function getAnim() {
-        // getAnimations is supported in every target browser (Chrome 84+,
-        // Safari 13.1+, Firefox 75+). If it is somehow unavailable the
-        // marquee still autoplays from CSS — only seeking is lost.
-        if (typeof track.getAnimations !== 'function') return null;
-        return track.getAnimations().find((a) => a.animationName === 'capabilityMarquee')
-            || track.getAnimations()[0] || null;
-      }
-
       function layout() {
         const firstCard = allCards[0];
         const cardMargin = firstCard ? parseFloat(getComputedStyle(firstCard).marginRight) : NaN;
-        gap = Number.isFinite(cardMargin) ? cardMargin : 20;
+        const gap = Number.isFinite(cardMargin) ? cardMargin : 20;
         const visible = getVisibleCount();
         const viewportWidth = viewport.getBoundingClientRect().width;
         // Never write flex-basis:0 while the element has no width (hidden
-        // tab / collapsed pane) — it would permanently collapse the cards.
+        // tab, collapsed pane, display:none ancestor) — it would collapse
+        // every card until the next resize. The ResizeObserver below
+        // re-runs this as soon as it has real size.
         if (!(viewportWidth > 0)) return;
-        cardWidth = (viewportWidth - gap * (visible - 1)) / visible;
+
+        const cardWidth = (viewportWidth - gap * (visible - 1)) / visible;
         allCards.forEach((c) => { c.style.flex = `0 0 ${cardWidth}px`; });
 
         // Read synchronously so the pending reflow from the writes above
-        // is flushed; rAF would not fire at all in a background tab and
-        // would leave animation-duration unset.
+        // is flushed. requestAnimationFrame would not fire at all in a
+        // background tab and would leave animation-duration unset.
         const period = track.scrollWidth / 2;
         if (period > 0) {
           track.style.animationDuration = `${period / SPEED_PX_PER_SEC}s`;
         }
       }
 
-      // --- One helper for every manual movement -------------------------
-      // Converts a pixel delta into a time delta on the same animation and
-      // normalises into [0, duration). Because the animation is periodic
-      // and infinite, any value in that range is both valid and visually
-      // continuous, so this can never expose the start or end of the track.
-      function nudgeByPixels(px) {
-        const anim = getAnim();
-        if (!anim) return;
-        const duration = anim.effect.getTiming().duration;
-        const period = track.scrollWidth / 2;
-        if (!duration || !period) return;
-        const deltaTime = (px / period) * duration;
-        const t = Number(anim.currentTime) || 0;
-        anim.currentTime = (((t + deltaTime) % duration) + duration) % duration;
-      }
-
-      let isOffscreen = false;
-      let isInteracting = false;
-      function syncPlayState() {
-        const anim = getAnim();
-        if (!anim) return;
-        if (isOffscreen || isInteracting) anim.pause();
-        else anim.play();
-      }
-
-      let resumeTimer = null;
-      function holdPlayback() {
-        isInteracting = true;
-        clearTimeout(resumeTimer);
-        syncPlayState();
-      }
-      function releasePlayback(delay) {
-        clearTimeout(resumeTimer);
-        resumeTimer = setTimeout(() => { isInteracting = false; syncPlayState(); }, delay);
-      }
-
-      // --- Pointer drag (mouse, touch and pen in one path) ---
-      let dragging = false;
-      let lastX = 0;
-      let activePointerId = null;
-
-      viewport.addEventListener('pointerdown', (e) => {
-        dragging = true;
-        activePointerId = e.pointerId;
-        lastX = e.clientX;
-        holdPlayback();
-        viewport.classList.add('is-dragging');
-        try { viewport.setPointerCapture(activePointerId); } catch (err) { /* not capturable */ }
-      });
-
-      viewport.addEventListener('pointermove', (e) => {
-        if (!dragging) return;
-        // Incremental (not absolute from a start point) so the seek stays
-        // correct no matter how far or how often the pointer moves.
-        nudgeByPixels(lastX - e.clientX);
-        lastX = e.clientX;
-      });
-
-      function endDrag() {
-        if (!dragging) return;
-        dragging = false;
-        viewport.classList.remove('is-dragging');
-        if (activePointerId != null) {
-          try { viewport.releasePointerCapture(activePointerId); } catch (err) { /* already released */ }
-        }
-        viewport.blur(); // a tap should not leave the keyboard focus ring
-        releasePlayback(1200);
-      }
-      viewport.addEventListener('pointerup', endDrag);
-      viewport.addEventListener('pointercancel', endDrag);
-      viewport.addEventListener('pointerleave', () => { if (dragging) endDrag(); });
-      viewport.addEventListener('dragstart', (e) => e.preventDefault());
-
-      // --- Wheel: horizontal gestures only ---
-      // A vertical wheel is left completely alone so scrolling the page
-      // with the cursor over the carousel neither hijacks the scroll nor
-      // interrupts playback.
-      viewport.addEventListener('wheel', (e) => {
-        if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
-        if (Math.abs(e.deltaX) < 1) return;
-        e.preventDefault();
-        nudgeByPixels(e.deltaX);
-      }, { passive: false });
-
-      // --- Keyboard ---
-      viewport.addEventListener('keydown', (e) => {
-        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-        e.preventDefault();
-        nudgeByPixels((e.key === 'ArrowRight' ? 1 : -1) * (cardWidth + gap));
-        holdPlayback();
-        releasePlayback(1200);
-      });
-
-      // Don't burn frames while the section is scrolled out of view.
-      const sectionObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          isOffscreen = !entry.isIntersecting;
-          syncPlayState();
-        });
-      }, { threshold: 0.2 });
-      sectionObserver.observe(viewport);
-
       layout();
+
       let resizeTimer = null;
       function scheduleLayout() {
         clearTimeout(resizeTimer);
